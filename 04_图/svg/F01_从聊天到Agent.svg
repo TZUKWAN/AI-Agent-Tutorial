@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-18T16:59:29.600702</dc:date>
+    <dc:date>2026-09-18T18:39:33.014980</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -32,32 +32,32 @@ z
    <g id="patch_2">
     <path d="M 183.292798 194.31 
 Q 199.427393 194.31 212.878707 194.31 
-" clip-path="url(#pc206825616)" style="fill: none; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
+" clip-path="url(#pd9155346d8)" style="fill: none; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
     <path d="M 206.478707 191.11 
 L 212.878707 194.31 
 L 206.478707 197.51 
 z
-" clip-path="url(#pc206825616)" style="fill: #263238; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
+" clip-path="url(#pd9155346d8)" style="fill: #263238; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
    </g>
    <g id="patch_3">
     <path d="M 350.134798 194.31 
 Q 366.269393 194.31 379.720707 194.31 
-" clip-path="url(#pc206825616)" style="fill: none; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
+" clip-path="url(#pd9155346d8)" style="fill: none; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
     <path d="M 373.320707 191.11 
 L 379.720707 194.31 
 L 373.320707 197.51 
 z
-" clip-path="url(#pc206825616)" style="fill: #263238; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
+" clip-path="url(#pd9155346d8)" style="fill: #263238; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
    </g>
    <g id="patch_4">
     <path d="M 516.976798 194.31 
 Q 533.111393 194.31 546.562707 194.31 
-" clip-path="url(#pc206825616)" style="fill: none; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
+" clip-path="url(#pd9155346d8)" style="fill: none; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
     <path d="M 540.162707 191.11 
 L 546.562707 194.31 
 L 540.162707 197.51 
 z
-" clip-path="url(#pc206825616)" style="fill: #263238; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
+" clip-path="url(#pd9155346d8)" style="fill: #263238; stroke: #263238; stroke-width: 2.4; stroke-linecap: round"/>
    </g>
    <g id="patch_5">
     <path d="M 84.4551 415.9314 
@@ -70,7 +70,7 @@ Q 80.8281 405.1206 80.8281 407.1996
 L 80.8281 413.8524 
 Q 80.8281 415.9314 84.4551 415.9314 
 z
-" clip-path="url(#pc206825616)" style="fill: #e8f2f5; stroke: #58727d; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #e8f2f5; stroke: #58727d; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
     <path d="M 193.2651 415.9314 
@@ -83,7 +83,7 @@ Q 189.6381 405.1206 189.6381 407.1996
 L 189.6381 413.8524 
 Q 189.6381 415.9314 193.2651 415.9314 
 z
-" clip-path="url(#pc206825616)" style="fill: #eaf0f6; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #eaf0f6; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
     <path d="M 302.0751 415.9314 
@@ -96,7 +96,7 @@ Q 298.4481 405.1206 298.4481 407.1996
 L 298.4481 413.8524 
 Q 298.4481 415.9314 302.0751 415.9314 
 z
-" clip-path="url(#pc206825616)" style="fill: #ede9f4; stroke: #7b6a9a; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #ede9f4; stroke: #7b6a9a; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
     <path d="M 410.8851 415.9314 
@@ -109,7 +109,7 @@ Q 407.2581 405.1206 407.2581 407.1996
 L 407.2581 413.8524 
 Q 407.2581 415.9314 410.8851 415.9314 
 z
-" clip-path="url(#pc206825616)" style="fill: #f4eedc; stroke: #9a7b3f; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #f4eedc; stroke: #9a7b3f; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
     <path d="M 519.6951 415.9314 
@@ -122,7 +122,7 @@ Q 516.0681 405.1206 516.0681 407.1996
 L 516.0681 413.8524 
 Q 516.0681 415.9314 519.6951 415.9314 
 z
-" clip-path="url(#pc206825616)" style="fill: #f1d7d4; stroke: #b44948; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #f1d7d4; stroke: #b44948; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
     <path d="M 628.5051 415.9314 
@@ -135,7 +135,7 @@ Q 624.8781 405.1206 624.8781 407.1996
 L 624.8781 413.8524 
 Q 624.8781 415.9314 628.5051 415.9314 
 z
-" clip-path="url(#pc206825616)" style="fill: #e5f1e3; stroke: #5a8a55; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #e5f1e3; stroke: #5a8a55; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_11">
     <path d="M 57.2526 249.6114 
@@ -148,7 +148,7 @@ Q 48.5478 139.0086 48.5478 143.9982
 L 48.5478 244.6218 
 Q 48.5478 249.6114 57.2526 249.6114 
 z
-" clip-path="url(#pc206825616)" style="fill: #e8f2f5; stroke: #58727d; stroke-width: 1.6; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #e8f2f5; stroke: #58727d; stroke-width: 1.6; stroke-linejoin: miter"/>
    </g>
    <g id="patch_12">
     <path d="M 224.0946 249.6114 
@@ -161,7 +161,7 @@ Q 215.3898 139.0086 215.3898 143.9982
 L 215.3898 244.6218 
 Q 215.3898 249.6114 224.0946 249.6114 
 z
-" clip-path="url(#pc206825616)" style="fill: #eaf0f6; stroke: #63758a; stroke-width: 1.6; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #eaf0f6; stroke: #63758a; stroke-width: 1.6; stroke-linejoin: miter"/>
    </g>
    <g id="patch_13">
     <path d="M 390.9366 249.6114 
@@ -174,7 +174,7 @@ Q 382.2318 139.0086 382.2318 143.9982
 L 382.2318 244.6218 
 Q 382.2318 249.6114 390.9366 249.6114 
 z
-" clip-path="url(#pc206825616)" style="fill: #ede9f4; stroke: #7b6a9a; stroke-width: 1.6; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #ede9f4; stroke: #7b6a9a; stroke-width: 1.6; stroke-linejoin: miter"/>
    </g>
    <g id="patch_14">
     <path d="M 557.7786 249.6114 
@@ -187,73 +187,81 @@ Q 549.0738 139.0086 549.0738 143.9982
 L 549.0738 244.6218 
 Q 549.0738 249.6114 557.7786 249.6114 
 z
-" clip-path="url(#pc206825616)" style="fill: #f1d7d4; stroke: #b44948; stroke-width: 1.6; stroke-linejoin: miter"/>
+" clip-path="url(#pd9155346d8)" style="fill: #f1d7d4; stroke: #b44948; stroke-width: 1.6; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="369.9" y="29.379109" transform="rotate(-0 369.9 29.379109)">F01  从聊天到 Agent：能力四级递增</text>
    </g>
    <g id="text_2">
-    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="116.01" y="192.27213" transform="rotate(-0 116.01 192.27213)">聊天机器人</text>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="116.01" y="171.06633" transform="rotate(-0 116.01 171.06633)">聊天机器人</text>
    </g>
    <g id="text_3">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(97.689102 192.237167)">Chatbot</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(97.01 202.623339)">你问一句</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(97.01 213.055527)">它答一句</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(85.480859 223.311073)">无记忆/无工具</text>
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #333333" x="116.01" y="192.838194" transform="rotate(-0 116.01 192.838194)">Chatbot</text>
    </g>
    <g id="text_4">
-    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="282.852" y="192.240646" transform="rotate(-0 282.852 192.240646)">副驾驶</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(97.01 210.529637)">你问一句</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(97.01 224.699852)">它答一句</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(85.480859 238.754285)">无记忆/无工具</text>
    </g>
    <g id="text_5">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(266.303445 192.120644)">Copilot</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(259.102 202.581034)">能引用文档</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(259.102 213.041425)">能补全建议</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(259.102 223.427597)">你主导执行</text>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="282.852" y="171.034846" transform="rotate(-0 282.852 171.034846)">副驾驶</text>
    </g>
    <g id="text_6">
-    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="449.694" y="192.278224" transform="rotate(-0 449.694 192.278224)">智能体</text>
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #333333" x="282.852" y="191.658506" transform="rotate(-0 282.852 191.658506)">Copilot</text>
    </g>
    <g id="text_7">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(435.921969 192.264535)">Agent</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(421.194 202.734018)">能自己拆任务</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(430.694 212.897533)">调用工具</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(430.694 223.283705)">多步执行</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(259.102 210.502176)">能引用文档</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(259.102 224.713953)">能补全建议</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(259.102 238.847059)">你主导执行</text>
    </g>
    <g id="text_8">
-    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="616.536" y="192.303614" transform="rotate(-0 616.536 192.303614)">自主工作流</text>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="449.694" y="171.072424" transform="rotate(-0 449.694 171.072424)">智能体</text>
    </g>
    <g id="text_9">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(586.972445 187.108744)">Autonomous</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(594.724594 197.272074)">Workflow</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(578.536 207.658246)">触发→执行→检查</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(588.036 218.053324)">→修复→交付</text>
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(592.786 228.439496)">人只定边界</text>
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #333333" x="449.694" y="191.414756" transform="rotate(-0 449.694 191.414756)">Agent</text>
    </g>
    <g id="text_10">
-    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #b44948" x="369.9" y="331.524" transform="rotate(-0 369.9 331.524)">自主度 ↑  |  你从「每步都操作」变成「只定目标和验收」</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(421.194 210.506629)">能自己拆任务</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(430.694 224.523953)">调用工具</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(430.694 238.814402)">多步执行</text>
    </g>
    <g id="text_11">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="109.1187" y="413.281093" transform="rotate(-0 109.1187 413.281093)">输入/原始</text>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="616.536" y="171.097814" transform="rotate(-0 616.536 171.097814)">自主工作流</text>
    </g>
    <g id="text_12">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="217.9287" y="413.309296" transform="rotate(-0 217.9287 413.309296)">已有/标准</text>
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #333333" transform="translate(585.416469 186.230772)">Autonomous</text>
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #333333" transform="translate(593.576625 199.289366)">Workflow</text>
    </g>
    <g id="text_13">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="326.7387" y="413.299647" transform="rotate(-0 326.7387 413.299647)">变换/处理</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(578.536 210.488074)">触发→执行→检查</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(588.036 224.653836)">→修复→交付</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; fill: #444444" transform="translate(592.786 238.828504)">人只定边界</text>
    </g>
    <g id="text_14">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="435.5487" y="413.323397" transform="rotate(-0 435.5487 413.323397)">任务/输出头</text>
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #b44948" x="369.9" y="331.524" transform="rotate(-0 369.9 331.524)">自主度 ↑  |  你从「每步都操作」变成「只定目标和验收」</text>
    </g>
    <g id="text_15">
-    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="544.3587" y="413.309296" transform="rotate(-0 544.3587 413.309296)">核心/重点</text>
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="109.1187" y="413.281093" transform="rotate(-0 109.1187 413.281093)">输入/原始</text>
    </g>
    <g id="text_16">
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="217.9287" y="413.309296" transform="rotate(-0 217.9287 413.309296)">已有/标准</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="326.7387" y="413.299647" transform="rotate(-0 326.7387 413.299647)">变换/处理</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="435.5487" y="413.323397" transform="rotate(-0 435.5487 413.323397)">任务/输出头</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="544.3587" y="413.309296" transform="rotate(-0 544.3587 413.309296)">核心/重点</text>
+   </g>
+   <g id="text_20">
     <text style="font-size: 9.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #222222" x="653.1687" y="413.304843" transform="rotate(-0 653.1687 413.304843)">输出/结果</text>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pc206825616">
+  <clipPath id="pd9155346d8">
    <rect x="7.2" y="7.2" width="725.4" height="415.8"/>
   </clipPath>
  </defs>

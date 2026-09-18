@@ -1,0 +1,15 @@
+2026-09-18 18:35:37,890 [INFO] === 监控开始 repo=psf/requests offline=True ===
+2026-09-18 18:35:37,890 [INFO] 离线模式：使用内置样例数据（2 条）
+2026-09-18 18:35:37,890 [INFO] 首次运行：建立基准快照（2 条），不生成通知。
+2026-09-18 18:35:37,995 [INFO] === 监控开始 repo=psf/requests offline=True ===
+2026-09-18 18:35:37,995 [INFO] 离线模式：使用内置样例数据（3 条）
+2026-09-18 18:35:37,996 [INFO] 发现 1 条新 Release，摘要已写入：D:\AISOP\AI-Agent-Tutorial\examples\automation\reports\change_20260918_183537.md
+2026-09-18 18:35:38,116 [INFO] === 监控开始 repo=psf/requests offline=True ===
+2026-09-18 18:35:38,117 [INFO] 离线模式：使用内置样例数据（3 条）
+2026-09-18 18:35:38,121 [INFO] 无新 Release，静默退出。started=2026-09-18T18:35:38
+2026-09-18 18:40:59,873 [INFO] === 监控开始 repo=psf/requests offline=True ===
+2026-09-18 18:40:59,873 [INFO] 离线模式：使用内置样例数据（2 条）
+2026-09-18 18:40:59,873 [INFO] 首次运行：建立基准快照（2 条），不生成通知。
+2026-09-18 18:41:00,018 [INFO] === 监控开始 repo=psf/requests offline=True ===
+2026-09-18 18:41:00,018 [INFO] 离线模式：使用内置样例数据（3 条）
+2026-09-18 18:41:00,019 [INFO] 发现 1 条新 Release，摘要已写入：D:\AISOP\AI-Agent-Tutorial\examples\automation\reports\change_20260918_184100.md

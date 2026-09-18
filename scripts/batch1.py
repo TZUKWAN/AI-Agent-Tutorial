@@ -43,13 +43,13 @@ def f31():
         ("L7", "会建自己的Agent", "设计并部署工作流", "OUT"),
     ]
     n = len(levels)
-    xs = np.linspace(7, 93, n)
+    xs = np.linspace(8, 92, n)
     y_base = 50
     for i, (lv, name, desc, k) in enumerate(levels):
         y = y_base + (i % 2) * 16
-        rbox(ax, xs[i], y, 10.5, 15, k, name, fs=12.5, fw="bold", sub=f"{lv}\n{desc}", sub_fs=8.8)
+        rbox(ax, xs[i], y, 11.5, 15, k, name, fs=11, fw="bold", sub=f"{lv}\n{desc}", sub_fs=8.6)
         if i < n-1:
-            arrow(ax, (xs[i]+5.3, y), (xs[i+1]-5.3, y_base + ((i+1) % 2)*16),
+            arrow(ax, (xs[i]+5.8, y), (xs[i+1]-5.8, y_base + ((i+1) % 2)*16),
                   curve=0.15 if (i % 2) != ((i+1) % 2) else 0)
     ax.text(50, 88, "能力进阶（每一级都在前一级可用的前提下才成立）",
             ha="center", fontsize=11, color="#444")
@@ -95,7 +95,13 @@ def f01():
         ("Autonomous\nWorkflow", "自主工作流", "触发→执行→检查\n→修复→交付\n人只定边界", "CORE", 84),
     ]
     for name, cn, desc, k, x in cols:
-        rbox(ax, x, 55, 18, 26, k, cn, fs=13, fw="bold", sub=f"{name}\n{desc}", sub_fs=9.5)
+        rbox(ax, x, 55, 18, 26, k, "", fs=13, fw="bold")
+        ax.text(x, 61.5, cn, ha="center", va="center", fontsize=13,
+                fontweight="bold", color=TXT, zorder=3)
+        ax.text(x, 56.3, name, ha="center", va="center", fontsize=10,
+                color="#333", zorder=3, linespacing=1.2)
+        ax.text(x, 48.5, desc, ha="center", va="center", fontsize=9.5,
+                color="#444", zorder=3, linespacing=1.4)
     for x1, x2 in [(24, 29), (47, 52), (70, 75)]:
         arrow(ax, (x1, 55), (x2, 55), lw=2.4)
     ax.text(50, 22, "自主度 ↑  |  你从「每步都操作」变成「只定目标和验收」",
@@ -112,7 +118,7 @@ def f02():
     ax.text(50, 55, "工作区\nWorkspace", ha="center", va="center",
             fontsize=14, fontweight="bold", color=C["HEAD_E"])
     # 周围资源
-    res = [("本地文件", 20, 78), ("上传文件", 80, 78),
+    res = [("本地文件", 20, 71), ("上传文件", 80, 71),
            ("云盘", 82, 32), ("代码仓库 Repo", 18, 32)]
     for name, x, y in res:
         rbox(ax, x, y, 15, 10, "STD", name, fs=11)
@@ -123,10 +129,10 @@ def f02():
              ("写 Write", "新建/修改", "PROC", 40),
              ("删 Delete", "删除/覆盖", "CORE", 62),
              ("发送 Send", "对外发消息", "CORE", 84)]
-    ax.text(50, 88, "四级权限（逐级升高，风险递增）", ha="center",
+    ax.text(50, 92, "四级权限（逐级升高，风险递增）", ha="center",
             fontsize=12, fontweight="bold", color="#444")
     for name, desc, k, x in perms:
-        rbox(ax, x, 82, 16, 7, k, name, fs=10.5, sub=desc, sub_fs=8.8)
+        rbox(ax, x, 86, 16, 7, k, name, fs=10.5, sub=desc, sub_fs=8.8)
     ax.text(50, 18, "原则：默认最小权限；危险动作（删/发送）前停下来问人",
             ha="center", fontsize=11, color=C["CORE_E"])
     legend_row(ax, ALL_LEGEND, y=8)

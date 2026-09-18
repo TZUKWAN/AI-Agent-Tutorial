@@ -1,0 +1,465 @@
+2026-09-18 18:37:57,058 [INFO] 用户输入：现在几点了
+2026-09-18 18:37:57,059 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:37:57', 'error': None}
+2026-09-18 18:37:57,059 [INFO] 回复：[工具:now] 2026-09-18 18:37:57
+2026-09-18 18:37:57,059 [INFO] 用户输入：计算 2+3*4
+2026-09-18 18:37:57,060 [INFO] 调用工具 calculator 参数=2+3*4 -> {'ok': False, 'result': None, 'error': "计算失败：module 'ast' has no attribute 'Num'"}
+2026-09-18 18:37:57,060 [INFO] 回复：[工具:calculator] 失败：计算失败：module 'ast' has no attribute 'Num'
+2026-09-18 18:37:57,324 [INFO] 用户输入：现在几点了
+2026-09-18 18:37:57,326 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:37:57', 'error': None}
+2026-09-18 18:37:57,328 [INFO] 回复：[工具:now] 2026-09-18 18:37:57
+2026-09-18 18:37:57,328 [INFO] 用户输入：计算 1+2*3
+2026-09-18 18:37:57,328 [INFO] 调用工具 calculator 参数=1+2*3 -> {'ok': False, 'result': None, 'error': "计算失败：module 'ast' has no attribute 'Num'"}
+2026-09-18 18:37:57,329 [INFO] 回复：[工具:calculator] 失败：计算失败：module 'ast' has no attribute 'Num'
+2026-09-18 18:38:06,990 [INFO] 用户输入：现在几点了
+2026-09-18 18:38:06,990 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:38:06', 'error': None}
+2026-09-18 18:38:06,991 [INFO] 回复：[工具:now] 2026-09-18 18:38:06
+2026-09-18 18:38:06,991 [INFO] 用户输入：计算 2+3*4
+2026-09-18 18:38:06,992 [INFO] 调用工具 calculator 参数=2+3*4 -> {'ok': True, 'result': 14, 'error': None}
+2026-09-18 18:38:06,993 [INFO] 回复：[工具:calculator] 14
+2026-09-18 18:38:06,993 [INFO] 用户输入：10/2
+2026-09-18 18:38:06,993 [INFO] 调用工具 calculator 参数=10/2 -> {'ok': True, 'result': 5.0, 'error': None}
+2026-09-18 18:38:06,994 [INFO] 回复：[工具:calculator] 5.0
+2026-09-18 18:38:06,994 [INFO] 用户输入：计算 __import__('os').system('echo hi')
+2026-09-18 18:38:06,994 [INFO] 调用工具 calculator 参数=__import__('os').system('echo hi') -> {'ok': False, 'result': None, 'error': '计算失败：表达式只允许数字和 + - * / // % ** 运算'}
+2026-09-18 18:38:06,994 [INFO] 回复：[工具:calculator] 失败：计算失败：表达式只允许数字和 + - * / // % ** 运算
+2026-09-18 18:38:06,995 [INFO] 用户输入：读文件 tools.py
+2026-09-18 18:38:06,996 [INFO] 调用工具 read_file 参数=tools.py -> {'ok': True, 'result': '#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n"""\ntools.py — my-agent 的工具函数集合。\n\n三个工具：\n  - read_file(rel_path)  在允许的工作目录内读一个文本文件\n  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）\n  - now()               返回当前日期时间\n\n每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，\n这样上层 Agent 可以统一处理成功与失败。\n"""\n\nfrom __future__ import annotations\n\nimport ast\nimport operator\nfrom datetime import datetime\nfrom pathlib import Path\n\n# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置\nWORKSPACE = Path(__file__).resolve().parent\n\n\n# ---- 安全计算器：只允许算术运算 -----------------------------------------\n_ALLOWED_BIN_OPS = {\n    ast.Add: operator.add,\n    ast.Sub: operator.sub,\n    ast.Mult: operator.mul,\n    ast.Div: operator.truediv,\n    ast.FloorDiv: operator.floordiv,\n    ast.Mod: operator.mod,\n    ast.Pow: operator.pow,\n}\n_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}\n\n\ndef _eval_node(node):\n    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）\n        if isinstance(node.value, (int, float)):\n            return node.value\n        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")\n    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:\n        left = _eval_node(node.left)\n        right = _eval_node(node.right)\n        return _ALLOWED_BIN_OPS[type(node.op)](left, right)\n    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:\n        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))\n    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")\n\n\ndef calculator(expr: str):\n    """安全计算算术表达式。任何非算术语法直接拒绝。"""\n    try:\n        tree = ast.parse(expr, mode="eval")\n        value = _eval_node(tree.body)\n        return {"ok": True, "result": value, "error": None}\n    except Exception as exc:  # noqa: BLE001\n        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}\n\n\n# ---- 文件读取（限定工作目录） -------------------------------------------\ndef read_file(rel_path: str, max_bytes: int = 8000):\n    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""\n    target = (WORKSPACE / rel_path).resolve()\n    try:\n        target.relative_to(WORKSPACE.resolve())\n    except ValueError:\n        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}\n\n    if not target.exists():\n        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}\n\n    text = target.read_text(encoding="utf-8", errors="replace")\n    if len(text) > max_bytes:\n        text = text[:max_bytes] + "\\n...（已截断）"\n    return {"ok": True, "result": text, "error": None}\n\n\n# ---- 时间 ----------------------------------------------------------------\ndef now():\n    """返回当前日期时间字符串。"""\n    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}\n\n\n# 工具注册表：名字 -> (函数, 一句话说明)\nTOOLS = {\n    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),\n    "calculator": (calculator, "计算算术表达式，参数：如 \'2+3*4\'"),\n    "now": (now, "返回当前日期时间，无参数"),\n}\n\n\nif __name__ == "__main__":\n    # 简单自检\n    print(calculator("2+3*4"))\n    print(calculator("__import__(\'os\').system(\'echo hi\')"))  # 应被拒绝\n    print(now())\n', 'error': None}
+2026-09-18 18:38:06,997 [INFO] 回复：[工具:read_file] #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+tools.py — my-agent 的工具函数集合。
+
+三个工具：
+  - read_file(rel_path)  在允许的工作目录内读一个文本文件
+  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）
+  - now()               返回当前日期时间
+
+每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，
+这样上层 Agent 可以统一处理成功与失败。
+"""
+
+from __future__ import annotations
+
+import ast
+import operator
+from datetime import datetime
+from pathlib import Path
+
+# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置
+WORKSPACE = Path(__file__).resolve().parent
+
+
+# ---- 安全计算器：只允许算术运算 -----------------------------------------
+_ALLOWED_BIN_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+}
+_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def _eval_node(node):
+    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）
+        if isinstance(node.value, (int, float)):
+            return node.value
+        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")
+    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:
+        left = _eval_node(node.left)
+        right = _eval_node(node.right)
+        return _ALLOWED_BIN_OPS[type(node.op)](left, right)
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:
+        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))
+    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")
+
+
+def calculator(expr: str):
+    """安全计算算术表达式。任何非算术语法直接拒绝。"""
+    try:
+        tree = ast.parse(expr, mode="eval")
+        value = _eval_node(tree.body)
+        return {"ok": True, "result": value, "error": None}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}
+
+
+# ---- 文件读取（限定工作目录） -------------------------------------------
+def read_file(rel_path: str, max_bytes: int = 8000):
+    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""
+    target = (WORKSPACE / rel_path).resolve()
+    try:
+        target.relative_to(WORKSPACE.resolve())
+    except ValueError:
+        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}
+
+    if not target.exists():
+        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}
+
+    text = target.read_text(encoding="utf-8", errors="replace")
+    if len(text) > max_bytes:
+        text = text[:max_bytes] + "\n...（已截断）"
+    return {"ok": True, "result": text, "error": None}
+
+
+# ---- 时间 ----------------------------------------------------------------
+def now():
+    """返回当前日期时间字符串。"""
+    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}
+
+
+# 工具注册表：名字 -> (函数, 一句话说明)
+TOOLS = {
+    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),
+    "calculator": (calculator, "计算算术表达式，参数：如 '2+3*4'"),
+    "now": (now, "返回当前日期时间，无参数"),
+}
+
+
+if __name__ == "__main__":
+    # 简单自检
+    print(calculator("2+3*4"))
+    print(calculator("__import__('os').system('echo hi')"))  # 应被拒绝
+    print(now())
+
+2026-09-18 18:38:06,997 [INFO] 用户输入：读文件 ../../etc/passwd
+2026-09-18 18:38:06,998 [INFO] 调用工具 read_file 参数=../../etc/passwd -> {'ok': False, 'result': None, 'error': '拒绝访问工作目录之外的文件：../../etc/passwd'}
+2026-09-18 18:38:06,998 [INFO] 回复：[工具:read_file] 失败：拒绝访问工作目录之外的文件：../../etc/passwd
+2026-09-18 18:38:06,998 [INFO] 用户输入：删除旧备份 config.bak
+2026-09-18 18:38:06,999 [WARNING] 危险动作已获批准：删除旧备份 config.bak
+2026-09-18 18:38:06,999 [INFO] 回复：已获人工批准：你要求执行“删除旧备份 config.bak”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:38:06,999 [INFO] 用户输入：发送全部客户邮件
+2026-09-18 18:38:06,999 [WARNING] 危险动作被拒绝：发送全部客户邮件
+2026-09-18 18:38:07,000 [INFO] 回复：人工拒绝：未执行“发送全部客户邮件”。
+2026-09-18 18:38:07,000 [INFO] 用户输入：今天天气怎么样
+2026-09-18 18:38:07,000 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。
+2026-09-18 18:38:07,256 [INFO] 用户输入：现在几点了
+2026-09-18 18:38:07,257 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:38:07', 'error': None}
+2026-09-18 18:38:07,257 [INFO] 回复：[工具:now] 2026-09-18 18:38:07
+2026-09-18 18:38:07,258 [INFO] 用户输入：计算 1+2*3
+2026-09-18 18:38:07,258 [INFO] 调用工具 calculator 参数=1+2*3 -> {'ok': True, 'result': 7, 'error': None}
+2026-09-18 18:38:07,258 [INFO] 回复：[工具:calculator] 7
+2026-09-18 18:38:07,258 [INFO] 用户输入：计算 100/4
+2026-09-18 18:38:07,259 [INFO] 调用工具 calculator 参数=100/4 -> {'ok': True, 'result': 25.0, 'error': None}
+2026-09-18 18:38:07,262 [INFO] 回复：[工具:calculator] 25.0
+2026-09-18 18:38:07,262 [INFO] 用户输入：读文件 state.json
+2026-09-18 18:38:07,265 [INFO] 调用工具 read_file 参数=state.json -> {'ok': True, 'result': '{\n  "task_status": "done",\n  "turns": 3,\n  "last_message": "计算 100/4"\n}', 'error': None}
+2026-09-18 18:38:07,266 [INFO] 回复：[工具:read_file] {
+  "task_status": "done",
+  "turns": 3,
+  "last_message": "计算 100/4"
+}
+2026-09-18 18:38:07,266 [INFO] 用户输入：删除临时文件
+2026-09-18 18:38:07,266 [WARNING] 危险动作已获批准：删除临时文件
+2026-09-18 18:38:07,268 [INFO] 回复：已获人工批准：你要求执行“删除临时文件”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:38:07,268 [INFO] 用户输入：发邮件给客户
+2026-09-18 18:38:07,268 [WARNING] 危险动作被拒绝：发邮件给客户
+2026-09-18 18:38:07,269 [INFO] 回复：人工拒绝：未执行“发邮件给客户”。
+2026-09-18 18:38:07,269 [INFO] 用户输入：讲个笑话
+2026-09-18 18:38:07,270 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。
+2026-09-18 18:38:39,873 [INFO] 用户输入：现在几点了
+2026-09-18 18:38:39,873 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:38:39', 'error': None}
+2026-09-18 18:38:39,874 [INFO] 回复：[工具:now] 2026-09-18 18:38:39
+2026-09-18 18:38:39,874 [INFO] 用户输入：删除旧备份 config.bak
+2026-09-18 18:38:39,874 [WARNING] 危险动作已获批准：删除旧备份 config.bak
+2026-09-18 18:38:39,874 [INFO] 回复：已获人工批准：你要求执行“删除旧备份 config.bak”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:38:39,996 [INFO] 用户输入：现在几点了
+2026-09-18 18:38:39,997 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:38:39', 'error': None}
+2026-09-18 18:38:39,997 [INFO] 回复：[工具:now] 2026-09-18 18:38:39
+2026-09-18 18:38:39,997 [INFO] 用户输入：计算 2+3*4
+2026-09-18 18:38:39,997 [INFO] 调用工具 calculator 参数=2+3*4 -> {'ok': True, 'result': 14, 'error': None}
+2026-09-18 18:38:39,998 [INFO] 回复：[工具:calculator] 14
+2026-09-18 18:38:39,998 [INFO] 用户输入：10/2
+2026-09-18 18:38:39,998 [INFO] 调用工具 calculator 参数=10/2 -> {'ok': True, 'result': 5.0, 'error': None}
+2026-09-18 18:38:39,998 [INFO] 回复：[工具:calculator] 5.0
+2026-09-18 18:38:39,999 [INFO] 用户输入：计算 __import__('os').system('echo hi')
+2026-09-18 18:38:39,999 [INFO] 调用工具 calculator 参数=__import__('os').system('echo hi') -> {'ok': False, 'result': None, 'error': '计算失败：表达式只允许数字和 + - * / // % ** 运算'}
+2026-09-18 18:38:39,999 [INFO] 回复：[工具:calculator] 失败：计算失败：表达式只允许数字和 + - * / // % ** 运算
+2026-09-18 18:38:39,999 [INFO] 用户输入：读文件 tools.py
+2026-09-18 18:38:40,000 [INFO] 调用工具 read_file 参数=tools.py -> {'ok': True, 'result': '#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n"""\ntools.py — my-agent 的工具函数集合。\n\n三个工具：\n  - read_file(rel_path)  在允许的工作目录内读一个文本文件\n  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）\n  - now()               返回当前日期时间\n\n每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，\n这样上层 Agent 可以统一处理成功与失败。\n"""\n\nfrom __future__ import annotations\n\nimport ast\nimport operator\nfrom datetime import datetime\nfrom pathlib import Path\n\n# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置\nWORKSPACE = Path(__file__).resolve().parent\n\n\n# ---- 安全计算器：只允许算术运算 -----------------------------------------\n_ALLOWED_BIN_OPS = {\n    ast.Add: operator.add,\n    ast.Sub: operator.sub,\n    ast.Mult: operator.mul,\n    ast.Div: operator.truediv,\n    ast.FloorDiv: operator.floordiv,\n    ast.Mod: operator.mod,\n    ast.Pow: operator.pow,\n}\n_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}\n\n\ndef _eval_node(node):\n    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）\n        if isinstance(node.value, (int, float)):\n            return node.value\n        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")\n    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:\n        left = _eval_node(node.left)\n        right = _eval_node(node.right)\n        return _ALLOWED_BIN_OPS[type(node.op)](left, right)\n    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:\n        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))\n    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")\n\n\ndef calculator(expr: str):\n    """安全计算算术表达式。任何非算术语法直接拒绝。"""\n    try:\n        tree = ast.parse(expr, mode="eval")\n        value = _eval_node(tree.body)\n        return {"ok": True, "result": value, "error": None}\n    except Exception as exc:  # noqa: BLE001\n        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}\n\n\n# ---- 文件读取（限定工作目录） -------------------------------------------\ndef read_file(rel_path: str, max_bytes: int = 8000):\n    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""\n    target = (WORKSPACE / rel_path).resolve()\n    try:\n        target.relative_to(WORKSPACE.resolve())\n    except ValueError:\n        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}\n\n    if not target.exists():\n        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}\n\n    text = target.read_text(encoding="utf-8", errors="replace")\n    if len(text) > max_bytes:\n        text = text[:max_bytes] + "\\n...（已截断）"\n    return {"ok": True, "result": text, "error": None}\n\n\n# ---- 时间 ----------------------------------------------------------------\ndef now():\n    """返回当前日期时间字符串。"""\n    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}\n\n\n# 工具注册表：名字 -> (函数, 一句话说明)\nTOOLS = {\n    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),\n    "calculator": (calculator, "计算算术表达式，参数：如 \'2+3*4\'"),\n    "now": (now, "返回当前日期时间，无参数"),\n}\n\n\nif __name__ == "__main__":\n    # 简单自检\n    print(calculator("2+3*4"))\n    print(calculator("__import__(\'os\').system(\'echo hi\')"))  # 应被拒绝\n    print(now())\n', 'error': None}
+2026-09-18 18:38:40,000 [INFO] 回复：[工具:read_file] #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+tools.py — my-agent 的工具函数集合。
+
+三个工具：
+  - read_file(rel_path)  在允许的工作目录内读一个文本文件
+  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）
+  - now()               返回当前日期时间
+
+每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，
+这样上层 Agent 可以统一处理成功与失败。
+"""
+
+from __future__ import annotations
+
+import ast
+import operator
+from datetime import datetime
+from pathlib import Path
+
+# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置
+WORKSPACE = Path(__file__).resolve().parent
+
+
+# ---- 安全计算器：只允许算术运算 -----------------------------------------
+_ALLOWED_BIN_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+}
+_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def _eval_node(node):
+    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）
+        if isinstance(node.value, (int, float)):
+            return node.value
+        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")
+    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:
+        left = _eval_node(node.left)
+        right = _eval_node(node.right)
+        return _ALLOWED_BIN_OPS[type(node.op)](left, right)
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:
+        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))
+    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")
+
+
+def calculator(expr: str):
+    """安全计算算术表达式。任何非算术语法直接拒绝。"""
+    try:
+        tree = ast.parse(expr, mode="eval")
+        value = _eval_node(tree.body)
+        return {"ok": True, "result": value, "error": None}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}
+
+
+# ---- 文件读取（限定工作目录） -------------------------------------------
+def read_file(rel_path: str, max_bytes: int = 8000):
+    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""
+    target = (WORKSPACE / rel_path).resolve()
+    try:
+        target.relative_to(WORKSPACE.resolve())
+    except ValueError:
+        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}
+
+    if not target.exists():
+        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}
+
+    text = target.read_text(encoding="utf-8", errors="replace")
+    if len(text) > max_bytes:
+        text = text[:max_bytes] + "\n...（已截断）"
+    return {"ok": True, "result": text, "error": None}
+
+
+# ---- 时间 ----------------------------------------------------------------
+def now():
+    """返回当前日期时间字符串。"""
+    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}
+
+
+# 工具注册表：名字 -> (函数, 一句话说明)
+TOOLS = {
+    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),
+    "calculator": (calculator, "计算算术表达式，参数：如 '2+3*4'"),
+    "now": (now, "返回当前日期时间，无参数"),
+}
+
+
+if __name__ == "__main__":
+    # 简单自检
+    print(calculator("2+3*4"))
+    print(calculator("__import__('os').system('echo hi')"))  # 应被拒绝
+    print(now())
+
+2026-09-18 18:38:40,001 [INFO] 用户输入：读文件 ../../etc/passwd
+2026-09-18 18:38:40,001 [INFO] 调用工具 read_file 参数=../../etc/passwd -> {'ok': False, 'result': None, 'error': '拒绝访问工作目录之外的文件：../../etc/passwd'}
+2026-09-18 18:38:40,001 [INFO] 回复：[工具:read_file] 失败：拒绝访问工作目录之外的文件：../../etc/passwd
+2026-09-18 18:38:40,001 [INFO] 用户输入：删除旧备份 config.bak
+2026-09-18 18:38:40,001 [WARNING] 危险动作已获批准：删除旧备份 config.bak
+2026-09-18 18:38:40,002 [INFO] 回复：已获人工批准：你要求执行“删除旧备份 config.bak”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:38:40,002 [INFO] 用户输入：发送全部客户邮件
+2026-09-18 18:38:40,002 [WARNING] 危险动作被拒绝：发送全部客户邮件
+2026-09-18 18:38:40,002 [INFO] 回复：人工拒绝：未执行“发送全部客户邮件”。
+2026-09-18 18:38:40,002 [INFO] 用户输入：今天天气怎么样
+2026-09-18 18:38:40,002 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。
+2026-09-18 18:38:40,168 [INFO] 用户输入：现在几点了
+2026-09-18 18:38:40,169 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:38:40', 'error': None}
+2026-09-18 18:38:40,169 [INFO] 回复：[工具:now] 2026-09-18 18:38:40
+2026-09-18 18:38:40,169 [INFO] 用户输入：计算 1+2*3
+2026-09-18 18:38:40,169 [INFO] 调用工具 calculator 参数=1+2*3 -> {'ok': True, 'result': 7, 'error': None}
+2026-09-18 18:38:40,170 [INFO] 回复：[工具:calculator] 7
+2026-09-18 18:38:40,170 [INFO] 用户输入：计算 100/4
+2026-09-18 18:38:40,170 [INFO] 调用工具 calculator 参数=100/4 -> {'ok': True, 'result': 25.0, 'error': None}
+2026-09-18 18:38:40,170 [INFO] 回复：[工具:calculator] 25.0
+2026-09-18 18:38:40,170 [INFO] 用户输入：读文件 state.json
+2026-09-18 18:38:40,171 [INFO] 调用工具 read_file 参数=state.json -> {'ok': True, 'result': '{\n  "task_status": "done",\n  "turns": 3,\n  "last_message": "计算 100/4"\n}', 'error': None}
+2026-09-18 18:38:40,171 [INFO] 回复：[工具:read_file] {
+  "task_status": "done",
+  "turns": 3,
+  "last_message": "计算 100/4"
+}
+2026-09-18 18:38:40,171 [INFO] 用户输入：删除临时文件
+2026-09-18 18:38:40,172 [WARNING] 危险动作已获批准：删除临时文件
+2026-09-18 18:38:40,172 [INFO] 回复：已获人工批准：你要求执行“删除临时文件”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:38:40,172 [INFO] 用户输入：发邮件给客户
+2026-09-18 18:38:40,172 [WARNING] 危险动作被拒绝：发邮件给客户
+2026-09-18 18:38:40,172 [INFO] 回复：人工拒绝：未执行“发邮件给客户”。
+2026-09-18 18:38:40,172 [INFO] 用户输入：讲个笑话
+2026-09-18 18:38:40,172 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。
+2026-09-18 18:41:00,177 [INFO] 用户输入：现在几点了
+2026-09-18 18:41:00,177 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:41:00', 'error': None}
+2026-09-18 18:41:00,177 [INFO] 回复：[工具:now] 2026-09-18 18:41:00
+2026-09-18 18:41:00,177 [INFO] 用户输入：计算 2+3*4
+2026-09-18 18:41:00,178 [INFO] 调用工具 calculator 参数=2+3*4 -> {'ok': True, 'result': 14, 'error': None}
+2026-09-18 18:41:00,178 [INFO] 回复：[工具:calculator] 14
+2026-09-18 18:41:00,178 [INFO] 用户输入：10/2
+2026-09-18 18:41:00,178 [INFO] 调用工具 calculator 参数=10/2 -> {'ok': True, 'result': 5.0, 'error': None}
+2026-09-18 18:41:00,178 [INFO] 回复：[工具:calculator] 5.0
+2026-09-18 18:41:00,178 [INFO] 用户输入：计算 __import__('os').system('echo hi')
+2026-09-18 18:41:00,179 [INFO] 调用工具 calculator 参数=__import__('os').system('echo hi') -> {'ok': False, 'result': None, 'error': '计算失败：表达式只允许数字和 + - * / // % ** 运算'}
+2026-09-18 18:41:00,179 [INFO] 回复：[工具:calculator] 失败：计算失败：表达式只允许数字和 + - * / // % ** 运算
+2026-09-18 18:41:00,179 [INFO] 用户输入：读文件 tools.py
+2026-09-18 18:41:00,180 [INFO] 调用工具 read_file 参数=tools.py -> {'ok': True, 'result': '#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n"""\ntools.py — my-agent 的工具函数集合。\n\n三个工具：\n  - read_file(rel_path)  在允许的工作目录内读一个文本文件\n  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）\n  - now()               返回当前日期时间\n\n每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，\n这样上层 Agent 可以统一处理成功与失败。\n"""\n\nfrom __future__ import annotations\n\nimport ast\nimport operator\nfrom datetime import datetime\nfrom pathlib import Path\n\n# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置\nWORKSPACE = Path(__file__).resolve().parent\n\n\n# ---- 安全计算器：只允许算术运算 -----------------------------------------\n_ALLOWED_BIN_OPS = {\n    ast.Add: operator.add,\n    ast.Sub: operator.sub,\n    ast.Mult: operator.mul,\n    ast.Div: operator.truediv,\n    ast.FloorDiv: operator.floordiv,\n    ast.Mod: operator.mod,\n    ast.Pow: operator.pow,\n}\n_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}\n\n\ndef _eval_node(node):\n    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）\n        if isinstance(node.value, (int, float)):\n            return node.value\n        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")\n    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:\n        left = _eval_node(node.left)\n        right = _eval_node(node.right)\n        return _ALLOWED_BIN_OPS[type(node.op)](left, right)\n    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:\n        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))\n    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")\n\n\ndef calculator(expr: str):\n    """安全计算算术表达式。任何非算术语法直接拒绝。"""\n    try:\n        tree = ast.parse(expr, mode="eval")\n        value = _eval_node(tree.body)\n        return {"ok": True, "result": value, "error": None}\n    except Exception as exc:  # noqa: BLE001\n        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}\n\n\n# ---- 文件读取（限定工作目录） -------------------------------------------\ndef read_file(rel_path: str, max_bytes: int = 8000):\n    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""\n    target = (WORKSPACE / rel_path).resolve()\n    try:\n        target.relative_to(WORKSPACE.resolve())\n    except ValueError:\n        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}\n\n    if not target.exists():\n        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}\n\n    text = target.read_text(encoding="utf-8", errors="replace")\n    if len(text) > max_bytes:\n        text = text[:max_bytes] + "\\n...（已截断）"\n    return {"ok": True, "result": text, "error": None}\n\n\n# ---- 时间 ----------------------------------------------------------------\ndef now():\n    """返回当前日期时间字符串。"""\n    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}\n\n\n# 工具注册表：名字 -> (函数, 一句话说明)\nTOOLS = {\n    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),\n    "calculator": (calculator, "计算算术表达式，参数：如 \'2+3*4\'"),\n    "now": (now, "返回当前日期时间，无参数"),\n}\n\n\nif __name__ == "__main__":\n    # 简单自检\n    print(calculator("2+3*4"))\n    print(calculator("__import__(\'os\').system(\'echo hi\')"))  # 应被拒绝\n    print(now())\n', 'error': None}
+2026-09-18 18:41:00,180 [INFO] 回复：[工具:read_file] #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+tools.py — my-agent 的工具函数集合。
+
+三个工具：
+  - read_file(rel_path)  在允许的工作目录内读一个文本文件
+  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）
+  - now()               返回当前日期时间
+
+每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，
+这样上层 Agent 可以统一处理成功与失败。
+"""
+
+from __future__ import annotations
+
+import ast
+import operator
+from datetime import datetime
+from pathlib import Path
+
+# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置
+WORKSPACE = Path(__file__).resolve().parent
+
+
+# ---- 安全计算器：只允许算术运算 -----------------------------------------
+_ALLOWED_BIN_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+}
+_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def _eval_node(node):
+    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）
+        if isinstance(node.value, (int, float)):
+            return node.value
+        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")
+    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:
+        left = _eval_node(node.left)
+        right = _eval_node(node.right)
+        return _ALLOWED_BIN_OPS[type(node.op)](left, right)
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:
+        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))
+    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")
+
+
+def calculator(expr: str):
+    """安全计算算术表达式。任何非算术语法直接拒绝。"""
+    try:
+        tree = ast.parse(expr, mode="eval")
+        value = _eval_node(tree.body)
+        return {"ok": True, "result": value, "error": None}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}
+
+
+# ---- 文件读取（限定工作目录） -------------------------------------------
+def read_file(rel_path: str, max_bytes: int = 8000):
+    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""
+    target = (WORKSPACE / rel_path).resolve()
+    try:
+        target.relative_to(WORKSPACE.resolve())
+    except ValueError:
+        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}
+
+    if not target.exists():
+        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}
+
+    text = target.read_text(encoding="utf-8", errors="replace")
+    if len(text) > max_bytes:
+        text = text[:max_bytes] + "\n...（已截断）"
+    return {"ok": True, "result": text, "error": None}
+
+
+# ---- 时间 ----------------------------------------------------------------
+def now():
+    """返回当前日期时间字符串。"""
+    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}
+
+
+# 工具注册表：名字 -> (函数, 一句话说明)
+TOOLS = {
+    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),
+    "calculator": (calculator, "计算算术表达式，参数：如 '2+3*4'"),
+    "now": (now, "返回当前日期时间，无参数"),
+}
+
+
+if __name__ == "__main__":
+    # 简单自检
+    print(calculator("2+3*4"))
+    print(calculator("__import__('os').system('echo hi')"))  # 应被拒绝
+    print(now())
+
+2026-09-18 18:41:00,180 [INFO] 用户输入：读文件 ../../etc/passwd
+2026-09-18 18:41:00,181 [INFO] 调用工具 read_file 参数=../../etc/passwd -> {'ok': False, 'result': None, 'error': '拒绝访问工作目录之外的文件：../../etc/passwd'}
+2026-09-18 18:41:00,182 [INFO] 回复：[工具:read_file] 失败：拒绝访问工作目录之外的文件：../../etc/passwd
+2026-09-18 18:41:00,182 [INFO] 用户输入：删除旧备份 config.bak
+2026-09-18 18:41:00,182 [WARNING] 危险动作已获批准：删除旧备份 config.bak
+2026-09-18 18:41:00,182 [INFO] 回复：已获人工批准：你要求执行“删除旧备份 config.bak”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:41:00,182 [INFO] 用户输入：发送全部客户邮件
+2026-09-18 18:41:00,182 [WARNING] 危险动作被拒绝：发送全部客户邮件
+2026-09-18 18:41:00,183 [INFO] 回复：人工拒绝：未执行“发送全部客户邮件”。
+2026-09-18 18:41:00,183 [INFO] 用户输入：今天天气怎么样
+2026-09-18 18:41:00,183 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。
+2026-09-18 18:41:00,323 [INFO] 用户输入：现在几点了
+2026-09-18 18:41:00,323 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 18:41:00', 'error': None}
+2026-09-18 18:41:00,324 [INFO] 回复：[工具:now] 2026-09-18 18:41:00
+2026-09-18 18:41:00,324 [INFO] 用户输入：计算 1+2*3
+2026-09-18 18:41:00,324 [INFO] 调用工具 calculator 参数=1+2*3 -> {'ok': True, 'result': 7, 'error': None}
+2026-09-18 18:41:00,324 [INFO] 回复：[工具:calculator] 7
+2026-09-18 18:41:00,324 [INFO] 用户输入：计算 100/4
+2026-09-18 18:41:00,324 [INFO] 调用工具 calculator 参数=100/4 -> {'ok': True, 'result': 25.0, 'error': None}
+2026-09-18 18:41:00,325 [INFO] 回复：[工具:calculator] 25.0
+2026-09-18 18:41:00,325 [INFO] 用户输入：读文件 state.json
+2026-09-18 18:41:00,325 [INFO] 调用工具 read_file 参数=state.json -> {'ok': True, 'result': '{\n  "task_status": "done",\n  "turns": 3,\n  "last_message": "计算 100/4"\n}', 'error': None}
+2026-09-18 18:41:00,326 [INFO] 回复：[工具:read_file] {
+  "task_status": "done",
+  "turns": 3,
+  "last_message": "计算 100/4"
+}
+2026-09-18 18:41:00,326 [INFO] 用户输入：删除临时文件
+2026-09-18 18:41:00,326 [WARNING] 危险动作已获批准：删除临时文件
+2026-09-18 18:41:00,326 [INFO] 回复：已获人工批准：你要求执行“删除临时文件”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 18:41:00,326 [INFO] 用户输入：发邮件给客户
+2026-09-18 18:41:00,326 [WARNING] 危险动作被拒绝：发邮件给客户
+2026-09-18 18:41:00,326 [INFO] 回复：人工拒绝：未执行“发邮件给客户”。
+2026-09-18 18:41:00,326 [INFO] 用户输入：讲个笑话
+2026-09-18 18:41:00,327 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。

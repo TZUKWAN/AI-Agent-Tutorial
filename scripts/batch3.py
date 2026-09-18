@@ -213,13 +213,19 @@ def f24():
 # ========== F25 Planner-Executor-Evaluator 三角 ==========
 def f25():
     fig, ax = new_canvas(11, 8, "F25  Planner - Executor - Evaluator 三角架构")
-    tri = [("Planner\n规划", "拆任务\n定步骤", "HEAD", 50, 78),
-           ("Executor\n执行", "调工具\n做动作", "PROC", 22, 32),
-           ("Evaluator\n评估", "对照标准\n判好坏", "CORE", 78, 32)]
+    tri = [("Planner", "规划", "拆任务\n定步骤", "HEAD", 50, 78),
+           ("Executor", "执行", "调工具\n做动作", "PROC", 22, 32),
+           ("Evaluator", "评估", "对照标准\n判好坏", "CORE", 78, 32)]
     pts = []
-    for t, d, k, x, y in tri:
+    for en, cn, d, k, x, y in tri:
         pts.append((x, y))
-        rbox(ax, x, y, 24, 16, k, t, fs=12, fw="bold", sub=d, sub_fs=9.5)
+        rbox(ax, x, y, 24, 16, k, "", fs=12)
+        ax.text(x, y+4.2, en, ha="center", va="center", fontsize=12,
+                fontweight="bold", color=TXT, zorder=3)
+        ax.text(x, y+1.3, cn, ha="center", va="center", fontsize=12,
+                fontweight="bold", color=TXT, zorder=3)
+        ax.text(x, y-3.2, d, ha="center", va="center", fontsize=9.5,
+                color="#444", zorder=3, linespacing=1.4)
     # Planner -> Executor
     arrow(ax, (43, 71), (27, 40), label="任务计划")
     # Executor -> Evaluator

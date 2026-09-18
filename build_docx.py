@@ -1042,25 +1042,9 @@ def setup_header_footer(doc):
             run2 = hp.add_run("\t")
             set_run_font(run2, '宋体', 'Times New Roman', 9)
 
-            # 右侧: STYLEREF Heading 1
-            run3 = hp.add_run()
-            fldChar1 = OxmlElement('w:fldChar')
-            fldChar1.set(qn('w:fldCharType'), 'begin')
-            run3._element.append(fldChar1)
-            instrText = OxmlElement('w:instrText')
-            instrText.set(qn('xml:space'), 'preserve')
-            instrText.text = ' STYLEREF "Heading 1" \\* MERGEFORMAT '
-            run3._element.append(instrText)
-            fldChar2 = OxmlElement('w:fldChar')
-            fldChar2.set(qn('w:fldCharType'), 'separate')
-            run3._element.append(fldChar2)
-            run4 = hp.add_run("")
-            fldChar3 = OxmlElement('w:fldChar')
-            fldChar3.set(qn('w:fldCharType'), 'end')
-            run4._element.append(fldChar3)
-            for r in hp.runs:
-                r.font.size = Pt(9)
-                r.font.color.rgb = DARK_GRAY
+            # 右侧: 静态Part名（避免STYLEREF样式名不匹配问题）
+            run3 = hp.add_run("\t教程正文")
+            set_run_font(run3, '宋体', 'Times New Roman', 9, color=DARK_GRAY)
 
             # 页眉下边框线
             pPr = hp._element.get_or_add_pPr()
