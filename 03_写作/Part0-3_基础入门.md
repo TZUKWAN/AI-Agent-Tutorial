@@ -1,6 +1,6 @@
 # PART 0：为什么要学 Agent
 
-> 先导图：AI 能力演进谱系图（Chatbot → Copilot → Agent → Automation → Autonomous Workflow）（待插入 F001）
+> 先导图：AI 能力演进谱系图（Chatbot → Copilot → Agent → Automation → Autonomous Workflow）（待插入 F01）
 
 ---
 
@@ -220,7 +220,7 @@ Agent（智能体）和聊天 AI 的根本区别，不在于它说得更好，�
 
 # PART 1：第一次让 Agent 真正完成工作
 
-> 先导图：工作区、文件流向与四级权限示意图（待插入 F002）
+> 先导图：工作区、文件流向与四级权限示意图（待插入 F02）
 
 ---
 
@@ -512,7 +512,7 @@ PART 0 你学会了"先让它问，别让它先做"。但对话里聊得再好�
 
 # PART 2：怎样给 Agent 下任务
 
-> 先导图：8 要素任务法结构图（目标/材料/环境/权限/约束/过程/验收/交付）（待插入 F003）
+> 先导图：8 要素任务法结构图（目标/材料/环境/权限/约束/过程/验收/交付）（待插入 F03）
 
 ---
 
@@ -823,7 +823,7 @@ PART 1 已经讲过读、写、删、对外发送四级。这里再强调一次�
 
 # PART 3：怎样管理长任务
 
-> 先导图：长任务时间轴（Plan → Milestone → Checkpoint → 中间成果 → 交付）（待插入 F004）
+> 先导图：长任务时间轴（Plan → Milestone → Checkpoint → 中间成果 → 交付）（待插入 F05）
 
 ---
 

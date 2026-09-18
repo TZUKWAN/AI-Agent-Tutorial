@@ -1,6 +1,6 @@
 # PART 6：Agent 到底由什么组成
 
-> 先导图：Agent 组成分层结构图（待插入 F01：Model 在上，Context / Tools / Memory 在中层，Agent 居中，Workflow 在下，Result 垫底的六层关系图）
+> 先导图：Agent 组成分层结构图（待插入 F11：Model 在上，Context / Tools / Memory 在中层，Agent 居中，Workflow 在下，Result 垫底的六层关系图）
 
 ## 本章你要解决什么问题
 
@@ -555,7 +555,7 @@ Workflow 是"步骤怎么排"，Automation 是"什么时候自动跑这条 Workf
 
 # PART 7：给 Agent 安装和扩展能力
 
-> 先导图：Agent 能力扩展安装与授权流程图（待插入 F02：从发现资源 → 读说明 → 查安全 → 授权/装密钥 → 最小权限 → 验证 → 交付/卸载的闭环）
+> 先导图：Agent 能力扩展安装与授权流程图（待插入 F15：从发现资源 → 读说明 → 查安全 → 授权/装密钥 → 最小权限 → 验证 → 交付/卸载的闭环）
 
 ## 本章你要解决什么问题
 

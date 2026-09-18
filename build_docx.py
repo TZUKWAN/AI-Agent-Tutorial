@@ -16,9 +16,9 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 # ============================================================
-# 路径配置
+# 路径配置（仓库相对路径，支持从任意位置运行）
 # ============================================================
-BASE = Path(r"D:\AISOP\AI-Agent-Tutorial")
+BASE = Path(__file__).resolve().parent
 PNG_DIR = BASE / "04_图" / "png"
 OUTPUT = BASE / "05_Word" / "AI-Agent零基础工作方法教程.docx"
 
@@ -43,40 +43,17 @@ LIGHT_GRAY_HEX = "F2F2F2"
 QUOTE_BG_HEX = "F8F9FA"
 
 # ============================================================
-# 图片映射: 占位符编号 -> 文件名
-# 注意: Part6-7中的F01/F02与Part0-3中的F001-F004不冲突
+# 图片映射: F编号 -> 文件名（按前缀查找，如 F11 -> F11_*.png）
 # ============================================================
-PLACEHOLDER_IMAGE_MAP = {
-    # Part0-3
-    "F001": "F00_认知框架.png",
-    "F002": "F02_工作区与权限模型.png",
-    "F003": "F03_8要素任务法闭环.png",
-    "F004": "F05_长任务管理仪表盘.png",
-    # Part4-5
-    "F07": "F07_验证三层证据模型.png",
-    "F08": "F08_验收闭环.png",
-    "F09": "F09_失败模式分类.png",
-    "F10": "F10_恢复策略决策树.png",
-    # Part6-7 (F01/F02在该文件中指架构和安全审查)
-    "F01": "F11_Agent架构全景.png",
-    "F02": "F15_Skill安装安全审查.png",
-    # Part8-10
-    "F16": "F16_场景实验室导航.png",
-    "F17": "F17_科研Agent链路.png",
-    "F18": "F18_数据分析Agent流程.png",
-    "F19": "F19_软件开发Agent流程.png",
-    "F20": "F20_四大铁律警示.png",
-    "F21": "F21_自动化闭环.png",
-    "F22": "F22_每日信息监控.png",
-    "F23": "F23_邮件处理审批.png",
-    "F24": "F24_构建Agent蓝图.png",
-    "F25": "F25_Planner-Executor-Evaluator.png",
-}
+def find_image_by_id(img_id):
+    """根据F编号查找对应PNG文件，如 F11 -> F11_Agent架构全景.png"""
+    matches = list(PNG_DIR.glob(f"{img_id}_*.png"))
+    return matches[0] if matches else None
 
-# 无占位符图片: (文件匹配关键词, 段落文本匹配关键词, 图片文件名, 图注)
+# 无占位符图片: (文件名关键词, 段落/H2/H3文本匹配关键词, 图注)
+# 这些图不在正文中有占位符，按文本关键词自动插入
 EXTRA_IMAGE_RULES = [
     # Part0-3
-    ("Part0-3", "0.3", "F01_从聊天到Agent.png", "从聊天到Agent的本质转变"),
     ("Part0-3", "好任务与坏任务", "F04_好任务vs坏任务.png", "好任务与坏任务对比"),
     ("Part0-3", "多阶段工作流", "F06_多阶段工作流.png", "多阶段工作流示意"),
     # Part6-7
@@ -544,6 +521,11 @@ def build_preface(doc):
                                line_spacing=1.5, first_line_indent=Cm(0.74))
             add_formatted_runs(p, ptext)
 
+    # 在前言末尾插入全书认知框架图 F00
+    f00_path = PNG_DIR / "F00_认知框架.png"
+    if f00_path.exists():
+        add_image_to_doc(doc, f00_path, "全书统一认知框架：Goal → Context → Resources → Capabilities → Workflow → Verification → Reuse")
+
 
 # ============================================================
 # TOC 域
@@ -569,7 +551,7 @@ def build_toc(doc):
     # instrText
     instrText = OxmlElement('w:instrText')
     instrText.set(qn('xml:space'), 'preserve')
-    instrText.text = r' TOC \o "1-2" \h \z \u '
+    instrText.text = r' TOC \o "1-3" \h \z \u '
     run._element.append(instrText)
     # separate
     fldChar2 = OxmlElement('w:fldChar')
@@ -773,18 +755,16 @@ def parse_md_file(doc, filepath):
             img_match = re.search(r'待插入\s*(F\d+)', quote_text)
             if img_match:
                 img_key = img_match.group(1)
-                if img_key in PLACEHOLDER_IMAGE_MAP:
-                    img_file = PLACEHOLDER_IMAGE_MAP[img_key]
-                    img_path = PNG_DIR / img_file
-                    # 从文本中提取图注
+                img_path = find_image_by_id(img_key)
+                if img_path:
                     caption = re.sub(r'（待插入\s*F\d+[:：].*?）', '', quote_text)
                     caption = re.sub(r'（待插入\s*F\d+）', '', caption)
                     caption = caption.replace('先导图：', '').strip()
                     if not caption:
-                        caption = img_file.replace('.png', '')
+                        caption = img_path.stem
                     add_image_to_doc(doc, img_path, caption)
                 else:
-                    print(f"  [WARN] 未知图片占位符: {img_key}")
+                    print(f"  [WARN] 未找到图片: {img_key}")
             else:
                 # 普通提示框
                 add_quote_box(doc, quote_text)
@@ -814,17 +794,16 @@ def parse_md_file(doc, filepath):
             img_match = re.search(r'待插入\s*(F\d+)', stripped)
             if img_match:
                 img_key = img_match.group(1)
-                if img_key in PLACEHOLDER_IMAGE_MAP:
-                    img_file = PLACEHOLDER_IMAGE_MAP[img_key]
-                    img_path = PNG_DIR / img_file
+                img_path = find_image_by_id(img_key)
+                if img_path:
                     caption = re.sub(r'（待插入\s*F\d+[:：].*?）', '', stripped)
                     caption = re.sub(r'（待插入\s*F\d+）', '', caption)
                     caption = caption.replace('先导图：', '').strip()
                     if not caption:
-                        caption = img_file.replace('.png', '')
+                        caption = img_path.stem
                     add_image_to_doc(doc, img_path, caption)
                 else:
-                    print(f"  [WARN] 未知图片占位符: {img_key}")
+                    print(f"  [WARN] 未找到图片: {img_key}")
             i += 1
             continue
 
@@ -890,33 +869,60 @@ def build_appendix_glossary(doc):
 
 
 def build_appendix_resources(doc):
-    """附录B: 资源地图摘要(前50条)"""
+    """附录B: 资源地图精选（按Tier和类型真实筛选，非简单截取）"""
     h = doc.add_paragraph()
     h.style = doc.styles['Heading 1']
     set_paragraph_format(h, space_before=14, space_after=6,
                        keep_with_next=True, page_break_before=True)
-    run = h.add_run("附录B  资源地图摘要")
+    run = h.add_run("附录B  资源地图精选")
     set_run_font(run, '黑体', 'Times New Roman', 22, color=DARK_BLUE, bold=True)
 
     p = doc.add_paragraph()
     set_paragraph_format(p, line_spacing=1.5, first_line_indent=Cm(0.74))
-    add_formatted_runs(p, "以下从全书资源索引中精选前 50 条关键资源，按 Tier（质量分级）标注。完整资源索引与调研报告见项目原始文件。")
+    add_formatted_runs(p, """以下资源按 Tier 分级（A=官方基础、B=社区发现平台、C=专业工具集成、D=社区实验），
+优先选取官方文档、高价值发现平台和常用工具集成。筛选规则：Tier A 全部保留；Tier B 每个类别选 2-3 个最常用的；
+Tier C 选与教程章节直接相关的；Tier D 仅选有明确学习价值的。完整 98 条索引见 01_调研/02_Agent资源索引.csv。
+所有资源核验日期：2026-09-18。""")
 
-    # 读取CSV
-    with open(CSV_PATH, 'r', encoding='utf-8') as f:
+    # 读取CSV并按规则筛选
+    with open(CSV_PATH, 'r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
-        rows = []
-        for idx, row in enumerate(reader):
-            if idx >= 50:
-                break
-            rows.append(row)
+        all_rows = list(reader)
 
-    if rows:
-        # 选取关键列: Name, Type, MainPurpose, Tier
-        table = doc.add_table(rows=len(rows) + 1, cols=4)
+    # 筛选规则：
+    # 1. Tier A 全部保留
+    # 2. Tier B 按 Type 分组，每组最多3个
+    # 3. Tier C 只保留与教程核心章节相关的（Skill/MCP/Connector/Workflow）
+    # 4. Tier D 最多保留5个有代表性的
+    tier_a = [r for r in all_rows if r.get('Tier','').strip() == 'A']
+    tier_b = [r for r in all_rows if r.get('Tier','').strip() == 'B']
+    tier_c = [r for r in all_rows if r.get('Tier','').strip() == 'C']
+    tier_d = [r for r in all_rows if r.get('Tier','').strip() == 'D']
+
+    # Tier B 按类型分组，每组最多3个
+    from collections import OrderedDict
+    b_by_type = OrderedDict()
+    for r in tier_b:
+        t = r.get('Type', '其他')
+        if t not in b_by_type:
+            b_by_type[t] = []
+        if len(b_by_type[t]) < 3:
+            b_by_type[t].append(r)
+    tier_b_filtered = [r for group in b_by_type.values() for r in group]
+
+    # Tier C 取前10个最相关的
+    tier_c_filtered = tier_c[:10]
+
+    # Tier D 取前5个
+    tier_d_filtered = tier_d[:5]
+
+    selected = tier_a + tier_b_filtered + tier_c_filtered + tier_d_filtered
+
+    if selected:
+        # 列: 资源名称/类型/官方或社区/用途/等级
+        table = doc.add_table(rows=len(selected) + 1, cols=5)
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
-        # 表头
-        headers = ["资源名称", "类型", "用途", "等级"]
+        headers = ["资源名称", "类型", "来源", "用途", "等级"]
         for ci, htext in enumerate(headers):
             cell = table.cell(0, ci)
             cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
@@ -927,11 +933,12 @@ def build_appendix_resources(doc):
             run = p.add_run(htext)
             set_run_font(run, '宋体', 'Times New Roman', 10, bold=True)
 
-        for ri, row in enumerate(rows):
+        for ri, row in enumerate(selected):
             vals = [
-                row.get('Name', ''),
-                row.get('Type', ''),
-                row.get('MainPurpose', '')[:60],
+                row.get('Name', '')[:30],
+                row.get('Type', '')[:15],
+                row.get('OfficialOrCommunity', '')[:8],
+                row.get('MainPurpose', '')[:50],
                 row.get('Tier', ''),
             ]
             for ci, val in enumerate(vals):
