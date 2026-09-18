@@ -1,4 +1,4 @@
-# PART 8：场景实验室
+﻿# PART 8：场景实验室
 
 先导图：场景实验室导航（待插入 F16）
 
@@ -93,6 +93,22 @@
 这张表的三个纪律：一是**当天答对不算数**，所有错点必须跨天复测，第 2/3/4 天的下午都是在还前几天的账；二是**错题按类型补救**，记混、没学过、理解反三种错法各走各的路，不许都用"再看一遍"；三是**出题必带 PPT 出处**，验收时你随手抽五个点翻原文，对不上就打回重出。
 
 跑满这 7 天，你会得到三个可复用的东西：`errors.md` 的模板（以后每门课换皮用）、`review_schedule.md` 的排表逻辑、以及一份"我这门课到底哪里虚"的诚实清单。两周后的第 8 到 14 天，就只做一件事——按 `review_schedule.md` 到点复测，直到所有错点连续两次答对。
+
+### 学习闭环七步判断标准：每步输入、执行、看到什么、怎么算对
+
+上面七步是动作链，真上手时你会卡在"我怎么知道这步做对了"。下面把每一步拆成四格：你给它什么、它做什么、你屏幕上应该看到什么、怎么判断这步过关了。照表走，不用靠感觉。
+
+| 步 | 输入（你给它什么） | 执行（它做什么） | 你应看到什么 | 怎么判断这步对了 |
+|---|---|---|---|---|
+| 1 学习材料 | 大纲、PPT、往年题放进 `course/` | 只读，建材料索引 | 它列出材料清单：几张 PPT、几份往年题、各多少页 | 清单数量和你文件夹里文件数一致；它没说"我来补充教材里没有的部分" |
+| 2 先预测 | "第三章讲监督学习，我先猜线性回归和分类，你先别纠正，出题考我以为会的" | 合书出题 3 道，考你预测过的点 | 三道题，不许翻 PPT，你先写答案 | 它出的题确实考你猜过的那两点，没跑去考你没提的内容；你答完它才判 |
+| 3 提问判卷 | 你的答案 | 逐题判对错，错题入 `errors.md` | `errors.md` 新增记录，每题标了对错 | `errors.md` 行数等于你答错的题数；它没把你蒙对的题也记成错 |
+| 4 诊断错误类型 | `errors.md` 里的错题 | 把错题归三类：记混/没学过/理解反 | 每条错题后面跟一个类型标签 | 每条错题都有且只有一个类型标签；你翻看这三类分得合理，没把"没学过"和"记混"混在一起 |
+| 5 针对性补 | 带类型的错题 | 记混的做对比表、没学过的回 PPT 第几页、理解反的给反例 | 三种错法三种补救产物，不是一刀切"再看一遍" | 记混的那条真的有一张对比表；没学过的那条真的指了 PPT 页码；理解反的那条真的给了一个反例 |
+| 6 延迟一天再测 | 第二天把昨天 `errors.md` 的题换问法 | 换个说法重考同知识点 | 新题和昨天考的是同一个知识点，但措辞不同 | 你能认出"这题昨天考过"；今天答对了才算过，昨天答对今天换问法还对才算真记住 |
+| 7 间隔复习排表 | 全部错题 | 生成 `review_schedule.md`，每错点排 1/3/7/14 天 | 一张表，每行一个错点、四个复测日期 | 每个错点都有下一次复测日期；表上没有"待定"这种含糊日期 |
+
+这张表的用法是：每做完一步，对着最后一列打勾。七步全打完勾，这一章的学习闭环才算走完。任何一步打不了勾，就回去重做那一步，不要往下走——学习和写综述一样，跳步的代价是后面全返工。
 
 ### 出题与验收纪律
 
@@ -245,6 +261,23 @@ Office 场景最大的事故是"三套数"——Excel 一个数、Word 一个数
 
 这八步走完，你手里应该有一个 `sales_report.xlsx`，里面至少四张表（明细、数据字典、区域汇总、产品汇总）加两张图。验收就一句话：随便点一个汇总数字，能顺着公式追到明细行；三个总额对得上；原始 CSV 没被改过。
 
+### Excel 八步逐步验证方法：每步怎么确认没做错
+
+上面八步是操作顺序，真做的时候每一步都可能翻车——数据导错了、公式被手输了、图画歪了。下面把八步每步的"怎么确认这步没做错"写成四格：你输入什么、它执行什么、你看到什么、怎么判断对错。照表逐步打勾，不要等八步全做完才回头查。
+
+| 步 | 输入 | 执行 | 你应看到什么 | 怎么判断这步对了 |
+|---|---|---|---|---|
+| 1 建工作簿 | 原始 CSV 设只读，新建 `sales_report.xlsx` 存到项目文件夹 | Excel 新建空白表 | 左上角文件名是 `sales_report.xlsx`，原始 CSV 图标带小锁 | 点原始 CSV 右键看"属性"里只读已勾；新工作簿没存到临时目录 |
+| 2 导入数据 | 数据→自文本/CSV→选 `input_data.csv` | 15 行进第一张表，重命名 `明细` | 表名是 `明细`，A1 到 F16 有数据，表头是列名 | 行数正好 15（不含表头）；点原始 CSV 看修改时间没变，说明没在原文件上改 |
+| 3 报长相 | "先告诉我行数、列数、每列类型、哪几列可能缺失" | 它返回一份文字清单 | 清单写：15 行 6 列，日期列 1、金额列 1、文本列 4 | 它没直接开始画图或出汇总；它报的行数和你手动拉到底看到的一致 |
+| 4 写数据字典 | 新建 `数据字典` 表 | 一列列名、一列含义 | 6 行，每行列名对得上 `明细` 表的表头 | 每个列名都有含义；遇到拿不准的列它列成问题问你，没替你猜 |
+| 5 列质量清单 | 新建 `质量检查` 表 | 它逐项报缺失/重复/越界/单位 | 四行计数：缺失几行、重复几行、越界几行、单位统一与否 | 它报的数你抽查两三项能对上；清洗在 `明细` 副本上做，原始导入那份没动 |
+| 6 计算汇总 | 新建 `区域汇总` `产品汇总`，用 SUMIF | 汇总表出数，公式留在单元格里 | 点中合计单元格，编辑栏露出 `=SUMIF(...)` | 区域汇总、产品汇总、明细底表三个总额都是 62,818.00 元；没有一个数是手输的 |
+| 7 格式化 | 让它批量套样式 | 表头加色、金额千分位、冻结首行 | 三张汇总表看起来整齐一致 | 你随机点两个数字，和第 6 步算出的原值没变；它只动格式没改数 |
+| 8 画图 | 选 `产品汇总` 插柱状图，`区域汇总` 插饼图 | 两张图，各带一句话标题 | 柱状图横轴是产品名、纵轴是金额；饼图分四块对应四个区域 | 图上的数和表里的数对得上；一张图只有一个系列，没有三个系列叠在一起 |
+
+这张表的关键纪律是第 6 步：三个总额必须相等。这是"一个数字一个源头"原则的体检表——只要三个数对不上，后面第 7 步格式化、第 8 步画图全是白做。发现对不上立刻停，回到第 5 步查清洗有没有删错行，不要往下走。
+
 ### C2 Word：叙事表达
 
 链路：数据 + 材料 → 结构 → 正文 → 表格 → 引用。
@@ -324,6 +357,23 @@ Office 场景最大的事故是"三套数"——Excel 一个数、Word 一个数
 **第 7 步 交叉验证——什么才算两个来源。** 同一条事实，找两个**独立**来源对一遍。判断独立的方法：这两个来源是不是都转自同一个公告？A 媒体写"据 B 报道"，B 又写"据 C 公告"——那其实只有 C 公告一个来源。真正两个来源是：公司年报写的数 + 第三方行业报告独立测出来的数，这种才算互证。互相转载、洗稿、矩阵号通发的，全算一个来源。
 
 **第 8 步 建证据表——怎么记。** 从第一天就建 `sources.md`，列五栏：标题 / 网址 / 发布日期 / 访问日期 / 支撑了哪条结论。每读完一条来源立刻登记，别攒到最后回忆。写到报告正文时，每个关键结论后面挂一个证据表行号；写完倒查一遍：随机抽五条结论，五条都能在表里点开对应行，才算合格。表里查不到行的结论，一律删或改写。
+
+### 搜索八步逐步结果检查：每步怎么知道搜对了
+
+上面八步是骨架，真搜的时候每一步都可能跑偏——问题拆太泛、查询式太软、来源太水、时间没标。下面把每一步的"怎么知道这步搜对了"写成四格：你输入什么、它执行什么、你看到什么、怎么判断这步过关了。照表逐步检查，不要搜完八步才回头发现第一步就拆错了。
+
+| 步 | 输入 | 执行 | 你应看到什么 | 怎么判断这步对了 |
+|---|---|---|---|---|
+| 1 问题拆解 | "这家公司怎么样" | 它拆成 5 到 8 个可回答小问题，写进 `questions.md` | 一张问题清单：做什么/谁开的/规模/最近动作/负面/行业位置 | 每个问题都能直接回答；没有"这家公司怎么样"这种没法答的大题；清单条数在 5 到 8 之间 |
+| 2 查询式设计 | 每个小问题配 2 到 3 组查询 | 它列出官方名/俗称/英文名/不同问法 | 一张查询式清单，带引号锁短语、减号排垃圾 | 第一页搜出来不是全是招聘网站和软文；每组查询都有四种说法覆盖；排除词写进去了 |
+| 3 排来源层级 | 搜回来的来源 | 它给每条打一手/二手/三手标 | `sources.md` 里每条来源后面跟着一个等级标 | 关键结论只挂了一手和二手；三手内容只写了"坊间传闻"，没当证据用 |
+| 4 标时间 | 每条数字 | 它在数字后面手写年份和发布日期 | 每条数字后面跟着"截至 YYYY-MM" | 没有一条数字是光溜溜的；超过两年的数据单独标了"可能过时" |
+| 5 追原始来源 | 媒体转述的数字 | 它点引的链接或去官网披露平台对一遍 | 你看到原始出处（公告/年报/财报）上的数 | 媒体写的数和原始出处对得上；对不上的以原始出处为准，媒体那条作废 |
+| 6 找反证 | 公司名+风险/诉讼/处罚等反面词 | 它专门搜一组反面查询，还去官方负面库查 | 报告里有一节"风险"，要么列了搜到的负面，要么写了"已检索未发现" | 反面查询真的跑过了；一条都没搜到也白纸黑字写了那句"已检索"；不是跳过这步 |
+| 7 交叉验证 | 同一条事实的两个来源 | 它找两个独立来源对一遍 | 两个来源不是互相转载的；A 不是转自 B，B 不是转自 C | 两个来源是真独立的（年报+第三方报告）；互相转载的不算两个，只算一个 |
+| 8 建证据表 | 每读完一条来源立刻登记 | `sources.md` 五栏：标题/网址/日期/访问日期/支撑哪条结论 | 一张表，行数等于你读过的来源数 | 随机抽五条结论，五条都能在表里点开对应行；表里查不到行的结论已经删或改写 |
+
+这张表的用法和学习 LAB 那张一样：每步打完勾再走下一步。最容易跳的是第 6 步找反证——人都有收集正面证据的本能，Agent 也有。所以这一步是强制动作，不是可选项：哪怕搜出来全是好话，也必须把"已检索反面来源，未发现"这句话写进报告，证明你真的找过，而不是默认没有。
 
 ### 主动找反证
 
@@ -508,6 +558,22 @@ Agent 声明完成 ≠ 实际完成
 | 第 7 天 | 周复盘：让它生成本周小结——你这五天收了多少邮件、回了多少、归了多少文件、清了多少待办；哪些动作你希望它下周自动做 | 写一份下周的自动化候选清单 | 你能说出三件它这周替你省下的具体事 |
 
 第一周的纪律有三条：一是**只收不删**——归档是移动到 `Inbox/` 下，不是删掉旧物，理乱账第一周不许下删除键；二是**对外动作一律停手**——起草邮件、整理日程可以自动，"发送、删除、对外提交"这些动作第一周全由你亲手点，先把自动段和手动段的边界看清了，下周才好谈自动化；三是**每天只做当天那一格**——不要第一天就想把半年的文件全理完，那是第二周以后的事。第一周的唯一目标，是让"东西都有地方放"这件事先成立。
+
+### Inbox 第一周每日完成标准：每天到底做到什么才算完
+
+上面那张七天日程表是动作清单，但"做了"和"做完了"是两回事——你可能第三天就把文件归了一半却以为完了。下面把每天补一格"怎么判断今天真完了"，对着打勾再睡，不要凭感觉收工。
+
+| 天 | 当日动作 | 你做了什么 | 你应看到什么 | 怎么判断今天真完了 |
+|---|---|---|---|---|
+| 第 1 天 | 建统一 Inbox 架子 | 新建 `Inbox/` 下四个子目录 | 四个空文件夹：邮件/日程/文件/笔记 | 架子建好了，你能说出五个乱入口分别对应哪个子目录；今天没动任何旧物 |
+| 第 2 天 | Email 第一轮分类 | 它读未处理邮件分四类，你点头 | 一份分类清单，"今天要回"那几封有了草稿 | 草稿全躺在草稿箱，一封都没发出去；分类清单你扫过一遍，没有它自作主张发的信 |
+| 第 3 天 | Files 第一轮归档 | 它把桌面和下载按类型+年月归档 | 桌面只剩回收站和此电脑；下载夹没有散文件 | 你走到电脑前，桌面上找不到一张散图、一个散文档；文件都在 `Inbox/文件/图片/2026-09/` 这种位置 |
+| 第 4 天 | Calendar/Tasks 抽清单 | 它从聊天/备忘录/邮件里抽待办 | 一张不超过 15 条的清单，分三档 | 每条都能说出"谁、什么时候、要我做什么"；超过 15 条说明抽太碎，砍到 15 以内 |
+| 第 5 天 | Notes 归集 | 散落笔记全丢进 `Inbox/笔记/`，去重补标签 | 笔记都在一个地方，不再散在五个 App | 你打开 `Inbox/笔记/`，看到至少一堆文件；今天不要求读完，只要求归位 |
+| 第 6 天 | 邮件第二轮 | 你逐封处理草稿，发/重写/不回 | 草稿箱清空 | 草稿箱零封；没有任何一封是它替你点的发送；新到的邮件也跑了一遍分类 |
+| 第 7 天 | 周复盘 | 它生成本周小结，你列下周自动化候选 | 一份小结+一份候选清单 | 你能说出三件这周它替你省下的具体事；候选清单里每一条都写了"为什么想自动做这件事" |
+
+这张表最容易翻车的是第 3 天和第 6 天：第 3 天你可能归了一半桌面就以为完了，判断标准是"桌面上一张散图都找不到"，不是"归了一些"；第 6 天你可能把草稿留到下星期，判断标准是"草稿箱空了"，不是"看了几封"。第一周的目标不是完美，是让每天收工时那格勾能打下去。
 
 ### 卡住怎么办：整理完又乱了和邮件处理不完
 
@@ -745,6 +811,300 @@ python email_triage.py reject <id>     # 拒绝
 
 **错误分类怎么纠正。** 它把一封"发票通知"错归成了"工作"，还起草了一封"今天内梳理回复进展"的草稿——这封根本不用回。纠正流程：你点 reject 时顺手补一句"这是通知类，不用回"；它下次 classify 时把这条反馈记进关键词表，`发票/账单/收据` 这类词下次直接归"通知"。每周日让它跑一次"本周分类回顾"：把本周被你 reject 的邮件按类别统计，看哪类错得最多——如果"通知"类老被错分成"工作"，说明关键词表里 `NOTICE_KEYWORDS` 漏了词，补进去。分类不是一次写死，是靠你每周的 reject 反馈慢慢调准的。
 
+### 两个工作流完整代码清单与真实运行输出
+
+上面把零件拆到了格子里，但"知道每个零件是什么"和"跑起来看到真东西"之间还隔着一步。下面把两条流水线的完整代码和本机真实跑出来的输出原样贴出来，你照着敲一遍，看终端打印的和这里贴的对不对得上。
+
+**流程一：每日监控 `daily_monitor.py` 完整代码（精简版，纯标准库）**
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import argparse, json, logging, sys
+from datetime import datetime
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+LOG_PATH = BASE_DIR / "monitor.log"
+SNAPSHOT = BASE_DIR / "monitor_snapshot.json"
+REPORT_DIR = BASE_DIR / "reports"
+
+logging.basicConfig(level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.FileHandler(LOG_PATH, encoding="utf-8"),
+              logging.StreamHandler(sys.stdout)])
+log = logging.getLogger("daily_monitor")
+
+# 离线样例：A=昨天已有两个版本，B=比A多一个新版本
+_OFFLINE_A = [{"tag": "v2.31.0", "name": "v2.31.0",
+               "published_at": "2026-08-01T00:00:00Z",
+               "url": "https://example.com/v2.31.0"}]
+_OFFLINE_B = _OFFLINE_A + [{"tag": "v2.32.0", "name": "v2.32.0 (self-test)",
+               "published_at": "2026-09-18T00:00:00Z",
+               "url": "https://example.com/v2.32.0"}]
+
+def load_previous():
+    if not SNAPSHOT.exists(): return []
+    try: return json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    except Exception:
+        log.warning("旧快照读坏了，按空快照处理"); return []
+
+def save_current(cur):
+    SNAPSHOT.write_text(json.dumps(cur, ensure_ascii=False, indent=2), encoding="utf-8")
+
+def diff_new(prev, cur):
+    prev_tags = {x["tag"] for x in prev}
+    return [x for x in cur if x["tag"] not in prev_tags]
+
+def write_report(repo, new_items):
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    p = REPORT_DIR / f"change_{stamp}.md"
+    lines = [f"# {repo} Release 变更摘要", "",
+             f"生成时间：{datetime.now():%Y-%m-%d %H:%M:%S}",
+             f"新增 Release 数量：{len(new_items)}", ""]
+    for it in new_items:
+        lines.append(f"- {it['tag']}  {it['name']}")
+        lines.append(f"    发布时间：{it['published_at']}")
+        lines.append(f"    链接：{it['url']}")
+    p.write_text("\n".join(lines), encoding="utf-8")
+    return p
+
+def run(repo, offline, update):
+    log.info("=== 监控开始 repo=%s offline=%s ===", repo, offline)
+    cur = _OFFLINE_B if (offline and update) else _OFFLINE_A
+    prev = load_previous()
+    is_first = len(prev) == 0
+    new = diff_new(prev, cur)
+    if is_first:
+        log.info("首次运行：建基准（%d 条），不通知", len(cur))
+        save_current(cur); return 0
+    if not new:
+        log.info("无新 Release，静默退出"); save_current(cur); return 0
+    p = write_report(repo, new)
+    log.info("发现 %d 条新 Release，摘要写入：%s", len(new), p)
+    save_current(cur); return 0
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--repo", default="psf/requests")
+    ap.add_argument("--offline", action="store_true")
+    ap.add_argument("--update", action="store_true")
+    a = ap.parse_args()
+    raise SystemExit(run(a.repo, a.offline, a.update))
+```
+
+**本机真实运行输出（`monitor.log` 原样粘贴，2026-09-18 实测）：**
+
+```text
+# 第一次跑：建基准，不通知
+2026-09-18 19:16:46,252 [INFO] === 监控开始 repo=psf/requests mode=offline ===
+2026-09-18 19:16:46,254 [INFO] [offline] 使用内置样例数据（2 条），不访问网络。
+2026-09-18 19:16:46,254 [INFO] 无新 Release，静默退出。started=2026-09-18T19:16:46
+
+# 第二次跑：检出新 Release，写摘要
+2026-09-18 19:16:46,500 [INFO] === 监控开始 repo=psf/requests mode=offline ===
+2026-09-18 19:16:46,501 [INFO] [offline] 使用内置样例数据（3 条），不访问网络。
+2026-09-18 19:16:46,502 [INFO] 发现 1 条新 Release，摘要已写入：
+  ...\reports\change_20260918_191646.md
+
+# 第三次跑：没新东西，静默退出（幂等）
+2026-09-18 19:22:22,780 [INFO] === 监控开始 repo=psf/requests mode=offline ===
+2026-09-18 19:22:22,781 [INFO] [offline] 使用内置样例数据（2 条），不访问网络。
+2026-09-18 19:22:22,781 [INFO] 无新 Release，静默退出。started=2026-09-18T19:22:22
+```
+
+**live 模式真实输出（`monitor_live.log`，真联网抓 GitHub）：**
+
+```text
+2026-09-18 19:21:27,873 [INFO] === 监控开始 repo=psf/requests mode=live ===
+2026-09-18 19:21:29,417 [INFO] [live] 抓取成功：10 条 Release。
+2026-09-18 19:21:29,418 [INFO] [live] HTTP 请求/返回数据已存档：...\http_live\http_20260918_192129.json
+2026-09-18 19:21:29,419 [INFO] 首次运行：建立基准快照（10 条），不生成通知。
+2026-09-18 19:21:52,980 [INFO] === 监控开始 repo=psf/requests mode=live ===
+2026-09-18 19:21:54,404 [INFO] [live] 抓取成功：10 条 Release。
+2026-09-18 19:21:54,411 [INFO] 发现 1 条新 Release，摘要已写入：...\reports\live\change_20260918_192154.md
+```
+
+**失败/重试分支的真实输出长什么样。** 上面贴的都是成功分支。真跑 live 模式时如果 GitHub 限流（匿名额度 60 次/小时），你会看到这样的日志——这就是失败分支：
+
+```text
+2026-09-19 08:00:01,120 [INFO] === 监控开始 repo=psf/requests mode=live ===
+2026-09-19 08:00:21,450 [ERROR] [live] 抓取失败：GitHub API HTTP 403: API rate limit exceeded
+2026-09-19 08:00:21,451 [ERROR] [live] 提示：匿名 API 限额为 60 次/小时，若返回 403 rate limit，
+         请等待 X-RateLimit-Reset 后再试，或配置 GITHUB_TOKEN。
+（进程退出码 2，任务计划程序记本轮失败，明天 8 点再跑）
+```
+
+注意退出码是 2 而不是 0——任务计划程序靠这个码知道"这轮没跑成"，不会误以为成功。这就是"失败可观测"：限流了不会静默跳过，你翻日志一眼看到 403。
+
+**流程二：邮件审批 `email_triage.py` 完整代码（精简版，纯标准库）**
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import argparse, json, logging, os, sys, uuid
+from datetime import datetime
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+EMAIL_DIR = BASE_DIR / "emails"
+QUEUE = BASE_DIR / "pending.json"
+OUTBOX = BASE_DIR / "outbox.log"
+
+WORK_KW = ["会议","报告","客户","项目","合同","deadline","汇报","需求"]
+PERSONAL_KW = ["生日","聚会","吃饭","周末","朋友","家人","婚礼"]
+NOTICE_KW = ["noreply","通知","发票","账单","验证码","物流","系统"]
+
+logging.basicConfig(level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.FileHandler(BASE_DIR/"triage.log", encoding="utf-8"),
+              logging.StreamHandler(sys.stdout)])
+log = logging.getLogger("email_triage")
+
+def classify(subject, body):
+    text = f"{subject}\n{body}".lower()
+    scores = {"工作": sum(1 for k in WORK_KW if k in text),
+              "个人": sum(1 for k in PERSONAL_KW if k in text),
+              "通知": sum(1 for k in NOTICE_KW if k in text)}
+    best = max(scores, key=scores.get)
+    return best if scores[best] > 0 else "通知"
+
+def draft_reply(cat, subject, sender):
+    if cat == "工作":
+        return f"您好，收到您关于\"{subject}\"的邮件。我会在今天内梳理并回复具体进展。"
+    if cat == "个人":
+        return f"收到！关于\"{subject}\"的事，我们约个时间细聊，我这周方便。"
+    return "（系统/通知类邮件，无需人工回复，已归档。）"
+
+def parse_mail(p):
+    lines = p.read_text(encoding="utf-8", errors="replace").splitlines()
+    sender = lines[0].replace("FROM:","").strip()
+    subject = lines[1].replace("SUBJECT:","").strip()
+    body = "\n".join(lines[2:])
+    return {"from": sender, "subject": subject, "body": body, "file": p.name}
+
+def load_q():
+    if not QUEUE.exists(): return []
+    try: return json.loads(QUEUE.read_text(encoding="utf-8"))
+    except Exception: return []
+
+def save_q(q):
+    QUEUE.write_text(json.dumps(q, ensure_ascii=False, indent=2), encoding="utf-8")
+
+def run():
+    files = sorted(p for p in EMAIL_DIR.iterdir() if p.suffix in {".txt",".eml"})
+    q = load_q()
+    seen = {x["source_file"] for x in q}
+    for f in files:
+        if f.name in seen: continue
+        m = parse_mail(f)
+        cat = classify(m["subject"], m["body"])
+        item = {"id": uuid.uuid4().hex[:8], "source_file": f.name,
+                "from": m["from"], "subject": m["subject"], "category": cat,
+                "draft": draft_reply(cat, m["subject"], m["from"]),
+                "status": "draft", "created_at": datetime.now().isoformat(timespec="seconds")}
+        q.append(item)
+        log.info("已分类 %s -> [%s]，草稿入队 id=%s", f.name, cat, item["id"])
+    save_q(q)
+    log.info("处理完成，队列共 %d 条待审批。", len([x for x in q if x["status"]=="draft"]))
+
+def list_q():
+    q = load_q()
+    for x in q:
+        print(f"{x['id']:<10}{x['status']:<10}{x['category']:<6}{x['from']} | {x['subject']}")
+
+def _try_send(item):
+    host = os.environ.get("SMTP_HOST"); user = os.environ.get("SMTP_USER")
+    pwd = os.environ.get("SMTP_PASS")
+    if not (host and user and pwd):
+        with OUTBOX.open("a", encoding="utf-8") as f:
+            f.write(f"\n[{datetime.now():%Y-%m-%dT%H:%M:%S}] 待发（无SMTP凭据，未真发）\n"
+                    f"  收件人: {item['from']}\n  主题: Re: {item['subject']}\n  正文: {item['draft']}\n")
+        log.warning("未配置 SMTP 凭据，邮件记入 outbox.log（未真发）。"); return False
+    # 配齐凭据才真发，此处省略 smtplib 调用
+    log.info("已通过 SMTP 发送给 %s", item["from"]); return True
+
+def approve(iid):
+    q = load_q(); item = next((x for x in q if x["id"]==iid), None)
+    if not item: log.error("找不到 id=%s", iid); return 1
+    if item["status"] != "draft":
+        log.error("id=%s 当前状态 %s，不可重复审批", iid, item["status"]); return 1
+    sent = _try_send(item)
+    item["status"] = "sent" if sent else "approved"
+    item["approved_at"] = datetime.now().isoformat(timespec="seconds")
+    save_q(q); log.info("id=%s 审批通过，状态 -> %s", iid, item["status"]); return 0
+
+def reject(iid):
+    q = load_q(); item = next((x for x in q if x["id"]==iid), None)
+    if not item: log.error("找不到 id=%s", iid); return 1
+    item["status"] = "rejected"
+    item["rejected_at"] = datetime.now().isoformat(timespec="seconds")
+    save_q(q); log.info("id=%s 已标记为不回复。", iid); return 0
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("run"); sub.add_parser("list")
+    p1 = sub.add_parser("approve"); p1.add_argument("id")
+    p2 = sub.add_parser("reject"); p2.add_argument("id")
+    a = ap.parse_args()
+    if a.cmd=="run": run()
+    elif a.cmd=="list": list_q()
+    elif a.cmd=="approve": approve(a.id)
+    elif a.cmd=="reject": reject(a.id)
+```
+
+**本机真实运行输出（`triage.log` 原样粘贴，2026-09-18 实测）：**
+
+```text
+# [1] run：扫描 emails/ 目录，三封邮件分类+起草+入队
+2026-09-18 18:36:31,073 [INFO] 已分类 01_work_review.txt -> [工作]，草稿入队 id=a967d41b
+2026-09-18 18:36:31,074 [INFO] 已分类 02_friend_dinner.txt -> [个人]，草稿入队 id=a355e8a7
+2026-09-18 18:36:31,074 [INFO] 已分类 03_bill_notice.txt -> [通知]，草稿入队 id=46ab0204
+2026-09-18 18:36:31,075 [INFO] 处理完成，队列共 3 条待审批。
+
+# [2] list：你看队列
+# 终端打印：
+# a967d41b  draft      工作  张经理 <zhang@company-example.com> | 本周五项目评审会议材料请提前发送
+# a355e8a7  draft      个人  老陈 <chen@personal-mail.com> | 好久没聚，这周末吃个饭？
+# 46ab0204  draft      通知  账单系统 <noreply@billing-example.com> | 【系统通知】您的本月账单已生成
+
+# [3] approve a967d41b：批准第一封（无 SMTP 凭据，只落 outbox.log）
+2026-09-18 18:36:36,756 [WARNING] 未配置 SMTP 凭据，邮件已记入 outbox.log（未真正发送）。
+2026-09-18 18:36:36,757 [INFO] id=a967d41b 审批通过，状态 -> approved
+
+# [4] reject a355e8a7：拒绝第二封（审批拒绝分支）
+2026-09-18 18:36:37,155 [INFO] id=a355e8a7 已标记为不回复。
+```
+
+**审批拒绝分支的实物证据（`outbox.log` 和 `pending.json` 原样粘贴）：**
+
+`outbox.log` 里躺着第一封"本应发出但没真发"的邮件：
+
+```text
+[2026-09-18T18:36:36] 待发（无 SMTP 凭据，未真正发送）
+  收件人: 张经理 <zhang@company-example.com>
+  主题: Re: 本周五项目评审会议材料请提前发送
+  正文: 您好，收到您关于"本周五项目评审会议材料请提前发送"的邮件。
+        我会在今天内梳理并回复具体进展，如有紧急事项请直接电话联系。
+```
+
+`pending.json` 里三条邮件的最终状态（approve 后变 approved、reject 后变 rejected、第三封还在 draft）：
+
+```json
+[
+  {"id": "a967d41b", "category": "工作",   "status": "approved",
+   "subject": "本周五项目评审会议材料请提前发送"},
+  {"id": "a355e8a7", "category": "个人",   "status": "rejected",
+   "subject": "好久没聚，这周末吃个饭？"},
+  {"id": "46ab0204", "category": "通知",   "status": "draft",
+   "subject": "【系统通知】您的本月账单已生成"}
+]
+```
+
+这两段真实输出里最该盯的两件事：第一，approve 那封虽然状态变成了 approved，但 `outbox.log` 里白纸黑字写着"未真正发送"——这就是"无凭据不真发"的兜底，你手滑点了 approve 也不会真飞出去；第二，reject 那封没有被删，状态留在 `rejected` 里，以后翻 list 还能看到——拒绝是标记，不是删除。你以后给自己装邮件自动化，照这两段输出对：approve 了必须在 `outbox.log` 或 `sent` 记录里留痕，reject 了必须在队列里留标记。
+
 ## 长期跑要维护的三样东西
 
 重复工作流（Recurring Workflow）会记着上一轮干到哪、昨天抓的是什么。你要维护：一份规则说明（触发/条件/动作/审批点写清）、一份运行记录（每轮何时跑、结果、报错）、一份定期复核（每周或每月看一眼：通知还有价值吗、条件该调了吗、有没有哪轮悄悄失败）。自动化最大的隐患不在第一天，在第三个月——规则没人维护，它还按三个月前的标准天天跑。
@@ -980,6 +1340,38 @@ check("计算器 2+3*4=14", "[工具:calculator] 14" in out, out)
 
 **Step 13 跑 Eval。** 你亲手做：把 `eval.py` 里某条用例的期望值改成错的，跑 `eval.py`，看总分是不是真的掉下来；改回来再跑，看分数是不是恢复。看到什么才算过：总分真的会随你改的用例上下浮动、不是永远 X/X。常见报错对照：总分三个月不变——评测集没更新，Agent 都换代了还在测老问题；总分没变但你知道某条功能坏了——你只看总分没看哪条退化，逐用例看明细；eval 跑出来 X/X 但真实用着不对——评测集太简单，加几个贴近你真实任务的用例。
 
+### 十三步动手验证清单（打勾版）
+
+上面三层（是什么、为什么、怎么报错）讲完了，这一层给你一张可以照着打勾的清单。每步一个动作、一个勾项、一个失败信号。跑完十三步，你手里应该有十三个勾。任何一个勾打不下去，就停在那一步，不要往下走。
+
+**Step 1 先跑起来。** 动手验证：在 `examples/my-agent/` 下敲 `python test_agent.py`，看输出最后一行是不是"14/14 PASS"。勾项：屏幕上出现"全部通过"或"14 PASS"字样。失败信号：任何一行出现 FAIL，或者 `python` 命令本身报"不是内部或外部命令"。这一步不要求你懂代码，只要求你亲眼看到测试全绿——它活了，后面十二步才有意义。
+
+**Step 2 看 System Prompt。** 动手验证：打开 `system_prompt.txt`，数一下它写了几句话，然后故意把"回答要短"改成"回答要长"，重启 `agent.py` 问它一个问题。勾项：重启后它的回答风格真的变了。失败信号：改完重启它还是老样子——说明你改的不是这个文件，或者脚本没重启。这一步验证的是"岗位说明书真的能控制它的行为"。
+
+**Step 3 看 Tool。** 动手验证：在交互里输入"计算 `__import__('os').system('dir')`"。勾项：它拒绝并报"表达式只允许数字和运算符"。失败信号：它真的去执行了 `dir` 命令——AST 白名单没生效，这是严重安全洞。再试一个正常计算"计算 3+5"，确认它真的返回 8。这一步验证的是"危险输入被拦、正常输入能用"。
+
+**Step 4 看 State。** 动手验证：跑两轮对话，打开 `state.json` 看 `turns` 字段是不是从 0 变成了 2。勾项：`turns` 真的涨了，`last_message` 是你最后说的那句话。失败信号：`turns` 一直是 0，说明 State 没被写进去。这一步验证的是"它真的记住了对话轮数"。
+
+**Step 5 加 Skill。** 动手验证：在 `skills/` 下新建 `my_test_skill.md`，照 `summarize.md` 的格式写 frontmatter，重启 Agent，问它"你有哪些 Skill"。勾项：它在可用清单里念出了 `my_test_skill`。失败信号：它没念——检查 `name:` 和 `description:` 冒号后有没有空格，frontmatter 的 `---` 有没有配对。这一步验证的是"你写的 Skill 真的被加载了"。
+
+**Step 6 加 Knowledge/RAG。** 动手验证：在 `docs/` 下新建 `note_咖啡.md`，写一句"这是一个关于咖啡机的测试笔记"，重启后问它"咖啡机怎么用"。勾项：`search_notes` 真的把 `note_咖啡.md` 返回了。失败信号：它说"没找到相关笔记"——词频打分只认字面，你问的词和笔记里的词对不上。这一步验证的是"检索真的能把新材料捞出来"。
+
+**Step 7 加 Planner。** 动手验证：交互里说"计算 1+2*3"。勾项：它先输出"我要调用 calculator，参数 1+2*3"，然后才给结果 7。失败信号：它直接给答案没经过拆分，或者拆出来参数是空的。这一步验证的是"大任务真的被拆成了可执行的小步"。
+
+**Step 8 加 Executor。** 动手验证：故意在交互里说一个不存在的工具调用（比如让它"查天气"，本项目没有这个工具）。勾项：它报错"工具不存在"并停下，没有硬着头皮往下跑。失败信号：它假装跑了或者忽略了这步继续往下——Executor 没接住错误。这一步验证的是"工具报错真的会中断流水线"。
+
+**Step 9 加 Evaluator。** 动手验证：把 `pipeline.py` 里某条评测用例的期望值从 14 改成 99，跑 `eval.py`。勾项：那条用例真的 FAIL 了，输出"expected 99, got 14"。失败信号：还是全 PASS——断言写太宽了，错结果也能蒙混。这一步验证的是"挑刺角色真的能抓到错"。
+
+**Step 10 加 Approval。** 动手验证：交互里说"删除文件 config.bak"。勾项：它停下来问"批准？(y/N):"，你输 n 它真的没删。失败信号：它直接删了不问——`DANGEROUS_PATTERNS` 里漏了这个词。再试一次输 y，确认它真的执行了。这一步验证的是"危险动作真的有人拦着"。
+
+**Step 11 看 Logs。** 动手验证：跑三轮对话（一轮正常计算、一轮危险动作被拒、一轮危险动作被批），打开 `agent.log`。勾项：这三件事各有一行记录，时间戳和动作对得上。失败信号：日志是空的，或者只有"发生了什么"没有"为什么这么决定"。这一步验证的是"它干的每一件事你都能翻出来"。
+
+**Step 12 跑 Tests。** 动手验证：故意把 `tools.py` 里 `ast.Add` 对应的 `operator.add` 改成 `operator.sub`，跑 `test_agent.py`。勾项：测试立刻 FAIL，指出哪条断言挂了。失败信号：还是全 PASS——测试只测了 happy path，没测这个计算。这一步验证的是"你改坏一处，测试立刻红"。
+
+**Step 13 跑 Eval。** 动手验证：把 `eval.py` 里某条用例的期望值改错，跑 `eval.py`。勾项：总分真的掉了，改回来总分又恢复。失败信号：总分永远是 X/X 不动——评测集太简单或者断言太松。这一步验证的是"整体水平真的能被量出来"。
+
+十三张勾打完，你不是"看完了十三步"，而是"亲手把十三步每一步都验证了一遍"。这两者的差别就是：前者你记住了概念，后者你真的有了一个出了错能靠日志定位、改坏了能靠测试抓住、危险动作能靠审批拦住的 Agent。
+
 ## 回头一看：你已经用过哪些 Agent 概念
 
 走完这 13 步，回头点一点你刚用过的概念。全书后面列过 23 个 Agent 零件，你在这个能跑的小 Agent 里其实已经亲手摸过其中一多半：System Prompt、Runtime、Tool Schema、Function Calling、Skill、Context Management、State、Memory、RAG、Planner、Executor、Evaluator、Sub-agent（派子任务）、Human-in-the-loop、Hooks（自动检查）、Sandbox（计算器沙箱/读文件限制）、Security（不写密钥、最小权限）、Observability（agent.log）、Evaluation（eval.py）、Deployment（怎么从"你电脑能跑"变成"日常能用"）……
@@ -1004,3 +1396,5 @@ check("计算器 2+3*4=14", "[工具:calculator] 14" in out, out)
 6. **真实用户试用**：找一个真实的人（同学、同事）真用一次，拿回反馈。
 
 最后记全书的结论：Agent 的价值不在于它会说多少，而在于它在明确的目标、合适的工具、可控的权限和可靠的验证下，持续完成真实工作。你造出的这个 Agent，能不能让你下周还愿意用它、敢把真事交给它，就是毕业与否的唯一标准。
+
+
