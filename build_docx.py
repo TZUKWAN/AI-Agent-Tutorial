@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 AI Agent 零基础工作方法教程 - Word 文档组装脚本
 Option 2: 无模板创建
@@ -1272,3 +1272,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
