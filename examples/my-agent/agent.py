@@ -36,6 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent
 STATE_PATH = BASE_DIR / "state.json"
 LOG_PATH = BASE_DIR / "agent.log"
 SYSTEM_PROMPT_PATH = BASE_DIR / "system_prompt.txt"
+SKILLS_DIR = BASE_DIR / "skills"
 
 DEFAULT_SYSTEM_PROMPT = (
     "你是一个助教式 Agent，服务于零基础学习者。"
@@ -61,6 +62,8 @@ class MyAgent:
         self.history: list[dict] = []
         # 4. State：从 state.json 恢复
         self.state = self._load_state()
+        # 加载 skills/ 目录下的技能清单（教学简化：只解析 name/description）
+        self.skills = self._load_skills()
 
         # 6. Logging
         self.logger = logging.getLogger("my_agent")
@@ -84,6 +87,32 @@ class MyAgent:
             json.dumps(self.state, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
+
+    # ---- Skills 加载（教学简化：本地文件扫描，非远程注册中心） ----------
+    @staticmethod
+    def _load_skills() -> list[dict]:
+        """扫描 skills/*.md，解析 frontmatter 里的 name/description。
+
+        这是教学简化版：只认 `---` 包裹的 name:/description: 两行，
+        不做完整 YAML 解析，也不联网拉取技能。
+        """
+        skills: list[dict] = []
+        if not SKILLS_DIR.exists():
+            return skills
+        for path in sorted(SKILLS_DIR.glob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            name = path.stem
+            description = ""
+            if text.startswith("---"):
+                parts = text.split("---", 2)
+                if len(parts) >= 3:
+                    for line in parts[1].splitlines():
+                        if line.strip().lower().startswith("name:"):
+                            name = line.split(":", 1)[1].strip() or name
+                        elif line.strip().lower().startswith("description:"):
+                            description = line.split(":", 1)[1].strip()
+            skills.append({"file": path.name, "name": name, "description": description})
+        return skills
 
     # ---- 意图路由（确定性规则引擎） --------------------------------------
     def _route(self, user_text: str) -> dict:
@@ -111,14 +140,19 @@ class MyAgent:
         if m:
             return {"action": "tool", "tool": "read_file", "arg": m.group(1)}
 
+        # 检索笔记意图：在 docs/ 下关键词检索（教学简化版 RAG）
+        if re.search(r"(检索|查笔记|找笔记|搜索笔记|相关笔记|笔记里)", text):
+            return {"action": "tool", "tool": "search_notes", "arg": text}
+
         return self._fallback(text)
 
     def _fallback(self, text: str) -> dict:
         return {
             "action": "reply",
             "text": (
-                "我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、"
-                "读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。"
+                "我目前能做这些事：查时间、做算术计算（说“计算 2+3*4”）、"
+                "读文件（说“读文件 xxx.txt”）、检索笔记（说“检索笔记 …”）。"
+                "删除/发送类动作我会先请你确认。"
             ),
         }
 

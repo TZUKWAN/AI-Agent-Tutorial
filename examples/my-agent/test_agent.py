@@ -10,6 +10,9 @@ test_agent.py — my-agent 的冒烟测试（不依赖网络、不依赖 API Key
   - 危险动作触发人工审批（注入自动同意 / 自动拒绝两种回调）
   - 兜底回复
   - State 落到 state.json
+  - skills/ 技能清单加载
+  - 关键词检索（RAG 教学简化版）工具
+  - Planner -> Executor -> Evaluator 三段式完整流程
 
 运行：python test_agent.py
 """
@@ -20,6 +23,7 @@ import json
 from pathlib import Path
 
 from agent import MyAgent
+from pipeline import run_task
 
 BASE_DIR = Path(__file__).resolve().parent
 STATE_PATH = BASE_DIR / "state.json"
@@ -73,11 +77,38 @@ def main() -> None:
 
     # 9. 兜底
     out = agent.chat("今天天气怎么样")
-    check("未知指令走兜底", "我目前只能" in out, out)
+    check("未知指令走兜底", "我目前能做这些事" in out, out)
 
-    # 10. State 落盘
+    # 10. skills/ 技能清单被正确加载
+    skill_names = {s["name"] for s in agent.skills}
+    check("skills/ 加载到 summarize 技能", "summarize" in skill_names, str(agent.skills))
+    summarize = next(s for s in agent.skills if s["name"] == "summarize")
+    check("技能 description 非空", bool(summarize["description"]), summarize["description"])
+
+    # 11. 关键词检索（RAG 教学简化版）：命中 docs/ 里的笔记
+    out = agent.chat("检索笔记 工具 安全")
+    check("检索工具返回结果", "[工具:search_notes]" in out and "note_02" in out, out[:80])
+
+    # 12. Planner -> Executor -> Evaluator 完整流程（无 API Key）
+    verdict = run_task(
+        "计算 2+3*4 并检索笔记 Planner",
+        [
+            {"tool": "calculator", "assert": {"type": "number", "equals": 14}},
+            {"tool": "search_notes", "assert": {"type": "list", "min_len": 1, "contains": "Planner"}},
+        ],
+    )
+    check("三段式流程全部断言通过", verdict["verdict"]["passed"], str(verdict["verdict"]["checks"]))
+
+    # 13. Evaluator 能正确判失败（数值断言不通过时应为 False）
+    bad = run_task(
+        "计算 1+1",
+        [{"tool": "calculator", "assert": {"type": "number", "equals": 999}}],
+    )
+    check("Evaluator 能识别错误数值断言", not bad["verdict"]["passed"], str(bad["verdict"]))
+
+    # 14. State 落盘（共 chat 调用 10 次：check 1-9 + check 11）
     state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
-    check("State 已落盘且轮次正确", state["turns"] == 9 and state["task_status"] == "done",
+    check("State 已落盘且轮次正确", state["turns"] == 10 and state["task_status"] == "done",
           f"turns={state['turns']}")
 
     print("\n全部测试通过。")

@@ -1,0 +1,8 @@
+2026-09-18 19:21:27,873 [INFO] === 监控开始 repo=psf/requests mode=live ===
+2026-09-18 19:21:29,417 [INFO] [live] 抓取成功：10 条 Release。
+2026-09-18 19:21:29,418 [INFO] [live] HTTP 请求/返回数据已存档：D:\AISOP\AI-Agent-Tutorial\examples\automation\http_live\http_20260918_192129.json
+2026-09-18 19:21:29,419 [INFO] 首次运行：建立基准快照（10 条），不生成通知。snapshot=monitor_snapshot_live.json
+2026-09-18 19:21:52,980 [INFO] === 监控开始 repo=psf/requests mode=live ===
+2026-09-18 19:21:54,404 [INFO] [live] 抓取成功：10 条 Release。
+2026-09-18 19:21:54,406 [INFO] [live] HTTP 请求/返回数据已存档：D:\AISOP\AI-Agent-Tutorial\examples\automation\http_live\http_20260918_192154.json
+2026-09-18 19:21:54,411 [INFO] 发现 1 条新 Release，摘要已写入：D:\AISOP\AI-Agent-Tutorial\examples\automation\reports\live\change_20260918_192154.md

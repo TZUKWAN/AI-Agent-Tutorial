@@ -1,0 +1,11 @@
+﻿2874e5f lab-f: add smoke banner to demo01 and add standalone smoke test
+841634e Merge pull request #422 from brianwing90/patch-1
+commit 2874e5f5d0b7383cc7f75c8699d289ebc5ec39e6
+Author: LAB-F-Student <labf@example.local>
+Date:   Fri Sep 18 19:18:23 2026 +0800
+
+    lab-f: add smoke banner to demo01 and add standalone smoke test
+
+ demos/demo01.py |  4 ++++
+ test_smoke.py   | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)

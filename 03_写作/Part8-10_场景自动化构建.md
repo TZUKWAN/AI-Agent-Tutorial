@@ -242,6 +242,9 @@ PDF：PDF 是最麻烦的格式——扫描件、图片版、表格跨页、乱�
 - 产物：整理后的 Word 报告、带数据字典和复算说明的 Excel、十页左右的 PPT 汇报、输出文件夹（原始材料只读不动）。
 - 验收标准：Excel 每个结论点开单元格可复核；Word 数字与 Excel、PPT 完全一致；PPT 每页一个结论不堆字；原始文件夹原封未动。
 
+> ✅ **本教程已落地的真实案例**：见 `examples/labs/lab_c_office/`。
+> 输入 `input_data.csv`（15 行销售明细），运行 `python run_lab_c.py` 即产出 `sales_report.xlsx`（明细/区域汇总/产品汇总三表）、`sales_report.docx`（Word 报告）、`talking_points.md`（汇报要点）；运行日志 `lab_c.log`，逐项验收见 `CHECKLIST.md`。复算证据：Excel 区域/产品合计与 Word 总额均为 **62,818.00 元**，三方一致。
+
 ---
 
 ## LAB D：网络研究 Agent
@@ -358,6 +361,9 @@ EDA（Exploratory Data Analysis，探索性分析）：先不加任何判断，�
 - 步骤：先报表的长相（行/列/类型）→ 写数据字典给你确认 → 列数据质量清单 → 在副本上清洗 → EDA 出图带图注 → 按研究问题选方法 → 模型诊断与稳健性检验 → 每个结论标注数据/方法/适用范围。
 - 产物：数据字典、清洗与分析代码、带图注的 EDA 图、结论报告（含适用范围与局限一节）。
 - 验收标准：每个关键数字都能在你的数据上用附的代码复算；每个图表都有图注说明坐标轴和范围；报告有一节写清结论在什么条件下成立、什么情况下不成立。
+
+> ✅ **本教程已落地的真实案例**：见 `examples/labs/lab_e_data/`。
+> 自建脏数据 `dirty_data.csv`（22 行，含缺失/越界/格式不一致三类脏数据），运行 `python run_lab_e.py` 即产出 `cleaned_data.csv`（清洗后 10 行）、`quality_report.md`（数据字典+质量检查+剔除留痕）、`analysis_report.md`（描述统计+结论+局限）、`income_by_city.png`（各城市平均收入柱状图）；运行日志 `lab_e.log`，逐项验收见 `CHECKLIST.md`。复算证据：清洗后恒为 **10 行**，月收入均值恒为 **10,180.05 元**。
 
 ---
 
@@ -491,6 +497,9 @@ Release（发布）就是你正式宣布"这个版本做好了"，给它起个�
 - 步骤：Clone 到本地 → 读 README 跑起来 → 让 Agent 画一张"文件地图" → 选一个最小改动（改文字/换颜色/加一句欢迎语）→ 写成 Task List → 按清单改 → 本地看效果 → 测几种情况 → 回归测旧功能 → 本地 Commit 存档。有余力再注册账号，走 Push → 开 PR → 部署 → Release。
 - 产物：跑起来的本地项目、一份"文件地图"、一次最小功能改动、测试记录、本地 Git 提交历史。
 - 验收标准：你亲眼在自己屏幕上看到它跑起来；改动后效果符合预期；以前能用的功能回归正常；每完成一个小步都有 Git Commit 存档；对外动作（Push/PR/Deploy/Release）发生前你已确认内容且没有密钥外泄。
+
+> ✅ **本教程已落地的真实案例**：见 `examples/labs/labf_project/`。
+> 选真实开源项目 [tartley/colorama](https://github.com/tartley/colorama)（BSD-3，纯标准库，浅克隆至 `repo/`），已完成：`git clone` → 读 README → 运行 `demos/demo01.py` → 改 demo01 末尾加一行 banner（diff 存 `change.diff`）→ 写 `test_smoke.py` 并跑通（`smoke_test.log` 输出 `SMOKE OK`）→ 本地 commit（`git_log.txt`，commit `2874e5f`）。**如实标注**：未执行 `git push`、未向上游提 PR——第三方仓库无写权限，教学改动只留在本地。逐项验收见 `CHECKLIST.md`。
 
 ### 走完 F1–F21 你该有的心态
 

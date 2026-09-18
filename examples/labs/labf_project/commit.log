@@ -1,0 +1,3 @@
+﻿[master 2874e5f] lab-f: add smoke banner to demo01 and add standalone smoke test
+ 2 files changed, 50 insertions(+)
+ create mode 100644 test_smoke.py

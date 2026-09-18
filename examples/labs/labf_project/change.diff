@@ -1,0 +1,12 @@
+﻿diff --git a/demos/demo01.py b/demos/demo01.py
+index 9075b7a..97645b2 100644
+--- a/demos/demo01.py
++++ b/demos/demo01.py
+@@ -45,3 +45,7 @@ for background in BACKS:
+     print(Style.RESET_ALL)
+ 
+ print()
++# [LAB F 教学改动] 追加一行 banner，验证"改文案 -> 跑通 -> 提交"闭环
++print(Fore.GREEN + Back.RESET + Style.BRIGHT
++      + "LAB F smoke: colorama 颜色网格已渲染完毕。"
++      + Style.RESET_ALL)

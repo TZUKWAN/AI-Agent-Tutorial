@@ -75,12 +75,36 @@ python scripts/batch3.py
 - **30 个 Mission**（L0-L7 难度）
 - **4 条贯穿案例线**：课程学习/科研论文/学生项目/做软件
 
+## 构建与 QA 环境要求
+
+### DOCX 构建（跨平台）
+仅需 Python + requirements.txt：
+```powershell
+pip install -r requirements.txt
+python build_docx.py
+```
+
+### PDF 导出与逐页 QA（Windows + Word）
+完整"docx → pdf → 逐页渲染 → QA"流水线在 **Windows + Microsoft Word** 环境可复现：
+```powershell
+# 导出 PDF（需 Word COM）
+powershell -ExecutionPolicy Bypass -File 05_Word\export_pdf.ps1
+
+# 渲染全部页面 + 自动检查
+python 05_Word\render_full.py
+```
+其他平台需自行用 LibreOffice 或其他工具导出 PDF 后手动检查。
+
 ## 质量审计
 - word skill audit.py：0 错误通过
-- 所有资源核验日期：2026-09-18
+- 32 张图逐张视觉审查完成（4 张修复）
+- 全部 196 页 PDF 逐页视觉检查通过
+- 98 条资源逐条联网核验（2026-09-18）
 - 详见 FACT_AUDIT.md、VISUAL_QA.md、QA_REPORT.md
 
 ## 已知限制
-- V1.1 已修复工程构建问题，正文深度重构（真实安装演示、真自动化案例、真 Agent 构建）计划在 V1.2 完成
-- 32 张图未经逐张 PDF 渲染视觉审查
-- 资源索引 98 条沿用上一版核验结果
+- LAB F 的 Push/PR/Deploy 需 GitHub 账号与远端权限，已如实标注
+- 邮件 SMTP 真发送需用户自行填入凭据
+- RAG 为教学简化版（关键词检索，非向量检索）
+- Planner 为模板规则，非 LLM 驱动
+

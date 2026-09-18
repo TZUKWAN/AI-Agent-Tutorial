@@ -10,11 +10,5 @@
     "name": "v2.30.0",
     "published_at": "2026-06-15T00:00:00Z",
     "url": "https://example.com/release/v2.30.0"
-  },
-  {
-    "tag": "v2.32.0",
-    "name": "v2.32.0 (self-test)",
-    "published_at": "2026-09-18T00:00:00Z",
-    "url": "https://example.com/release/v2.32.0"
   }
 ]

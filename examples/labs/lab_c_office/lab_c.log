@@ -1,0 +1,16 @@
+2026-09-18 19:15:22 [INFO] ============================================================
+2026-09-18 19:15:22 [INFO] LAB C 开始运行
+2026-09-18 19:15:22 [INFO] 读取明细 15 行，来自 D:\AISOP\AI-Agent-Tutorial\examples\labs\lab_c_office\input_data.csv
+2026-09-18 19:15:22 [INFO] 汇总完成：总销售额 62818.00 元，覆盖 4 个区域、4 个产品
+2026-09-18 19:15:22 [INFO] Excel[明细] 写入 15 行明细 + 合计行
+2026-09-18 19:15:22 [INFO] Excel[区域汇总] 写入 4 个区域
+2026-09-18 19:15:22 [INFO] Excel[产品汇总] 写入 4 个产品
+2026-09-18 19:15:22 [INFO] Excel 已保存：D:\AISOP\AI-Agent-Tutorial\examples\labs\lab_c_office\sales_report.xlsx
+2026-09-18 19:15:22 [INFO] Word 报告已保存：D:\AISOP\AI-Agent-Tutorial\examples\labs\lab_c_office\sales_report.docx
+2026-09-18 19:15:22 [INFO] 汇报要点已保存：D:\AISOP\AI-Agent-Tutorial\examples\labs\lab_c_office\talking_points.md
+2026-09-18 19:15:22 [INFO] LAB C 全部产物生成完毕：
+2026-09-18 19:15:22 [INFO]   - sales_report.xlsx (7450 bytes)
+2026-09-18 19:15:22 [INFO]   - sales_report.docx (36158 bytes)
+2026-09-18 19:15:22 [INFO]   - talking_points.md (601 bytes)
+2026-09-18 19:15:22 [INFO]   - lab_c.log (1190 bytes)
+2026-09-18 19:15:22 [INFO] LAB C 运行成功

@@ -1,72 +1,62 @@
-# QA_REPORT.md - V1.1 最终质量报告
+# QA_REPORT.md - 严格质量报告
 
 > 日期：2026-09-18
+> 版本：V1.1.1
+> 判定标准：只有仓库内有可复核证据文件的标PASS；模板/理论可运行/offline fixture/未连接环节标PARTIAL并写明边界
 
-## 逐条验收（PASS/FAIL）
+## 严格验收表
 
-### FAIL 1：正文深度重构 — PASS
+| # | 验收项 | 判定 | 证据路径 |
+|---|--------|------|----------|
+| 1 | Word构建（build_docx.py） | PASS | build_docx.py真实运行，32图全部插入，audit.py 0错误 |
+| 2 | Word PDF导出 | PASS | 05_Word/preview.pdf（197页，5.5MB） |
+| 3 | 全页视觉检查（自动） | PASS | 05_Word/page_audit.json：0空白页，全部197页有内容 |
+| 4 | 全页视觉检查（人工） | PARTIAL | 25张collage覆盖197页，抽查关键页正常；非逐页放大检查 |
+| 5 | 32张图逐张审查 | PASS | VISUAL_QA.md逐张记录，4张修复 |
+| 6 | 资源98条逐条核验 | PASS | FACT_AUDIT.md逐条记录，CSV已更新 |
+| 7 | 正文PART 0-5修订 | PASS | 03_写作/Part0-3_基础入门.md（概念光谱/权限实验/中断恢复/故障注入） |
+| 8 | 正文PART 6五层结构 | PASS | 03_写作/Part6-7_Agent组成与扩展.md（6.1-6.20连续） |
+| 9 | 正文PART 7真实安装演示 | PARTIAL | 演示基于本机环境（.claude/skills、gh CLI scopes）；真实MCP客户端连接未完成 |
+| 10 | LAB C Office闭环 | PASS | examples/labs/lab_c_office/（xlsx+docx+md+log+CHECKLIST） |
+| 11 | LAB E数据分析 | PASS | examples/labs/lab_e_data/（csv+png+report+log+CHECKLIST） |
+| 12 | LAB F真实开源项目 | PARTIAL | examples/labs/labf_project/（clone+运行+改功能+测试+commit）；未push/PR（无权限） |
+| 13 | daily_monitor live模式 | PASS | examples/automation/http_live/（真实HTTP 200，10条Release） |
+| 14 | email_triage | PARTIAL | 样例数据跑通分类审批；无SMTP凭据未真发送 |
+| 15 | my-agent基础（tools/state/logging） | PASS | examples/my-agent/test_agent.py 14/14通过 |
+| 16 | my-agent Skill加载 | PASS | examples/my-agent/skills/summarize.md + agent._load_skills |
+| 17 | my-agent RAG检索 | PARTIAL | 关键词词频检索（非向量），docs/4篇笔记 |
+| 18 | my-agent Planner/Executor/Evaluator | PARTIAL | 模板规则（非LLM），pipeline.py实现 |
+| 19 | my-agent eval | PASS | examples/my-agent/eval.py 10/10通过 |
+| 20 | 硬编码路径修复 | PASS | render_full.py/export_pdf.ps1改为相对路径 |
+| 21 | requirements.txt完整 | PASS | 含pymupdf/openpyxl |
+| 22 | README与实际状态一致 | PASS | 已删除V1.2过时表述 |
+| 23 | git提交push | PASS | commit在main分支，本地远端一致 |
 
-| 子项 | 状态 | 证据 |
-|------|------|------|
-| PART 0-5 概念光谱修正 | PASS | Part0-3_基础入门.md 0.4节改为"能力递进光谱" |
-| 权限实验（L1-L4） | PASS | 新增1.7节"四级权限实测" |
-| 长任务中断恢复 | PASS | 新增3.15节"中断后如何续跑" |
-| examples/模板文件 | PASS | WORKLOG.md/TASKS.md/PROGRESS.md/DECISIONS.md 均带真实示例 |
-| 故障注入实验（5个） | PASS | Part4-5_验证与失败.md 新增4.14节 |
-| PART 6 五层认知结构 | PASS | 6.1-6.20连续，五层：Model→记忆→感官→扩展→编排 |
-| PART 7 真实安装演示 | PASS | 7.2.1 Skill（.claude/skills真实路径）、7.7.1 MCP（@modelcontextprotocol/server-filesystem）、7.8.1 Connector（gh CLI真实scopes） |
-| PART 8 七个LAB旗舰项目 | PASS | A-G各加旗舰项目模板 |
-| LAB B 科研政策修订 | PASS | 删除无依据表述，新增AI使用政策查找方法 |
-| PART 9 真实自动化案例 | PASS | daily_monitor.py（GitHub Releases监控，三分支实测）+ email_triage.py（分类审批工作流，分类全对） |
-| PART 10 真Agent构建 | PASS | examples/my-agent/：test_agent.py 10/10通过，eval.py 7/7通过，交互模式人工审批正常 |
+## PARTIAL项详细说明
 
-### FAIL 2：98条资源逐条核验 — PASS
+### #9 PART 7真实安装
+- 已完成：Skill用本机.claude/skills真实路径演示；Connector用gh CLI真实scopes
+- 未完成：MCP用最小客户端真实握手连接（需读者自行在对应Agent产品中配置）
 
-- Active 85 / Slowing 5 / Deprecated 1 / 证据不足 2 / Reference 1
-- 12项关键修正（openai/plugins状态升级、Pi-Bench链接错误、MCPZoo数据更正、仓库更名等）
-- 证据：FACT_AUDIT.md逐条记录，CSV已更新
-- 所有GitHub数据来自 gh api repos/... 真实返回
+### #12 LAB F
+- 已完成：clone colorama、运行demo、改功能、smoke test、本地commit
+- 未完成：push/PR/Deploy（第三方仓库无写权限）
 
-### FAIL 3：32张图逐张视觉审查 — PASS
+### #14 email_triage
+- 已完成：样例邮件分类、起草、pending队列、approve/reject
+- 未完成：SMTP真发送（需用户填入凭据）
 
-- 28张一次通过
-- 4张修复后通过：F01（中英文字重叠）、F02（方框重叠）、F25（角色名重叠）、F31（文字溢出）
-- 证据：VISUAL_QA.md逐张记录
+### #17 my-agent RAG
+- 已完成：docs/4篇笔记 + 词频打分检索
+- 限制：教学简化版，非向量检索
 
-### FAIL 4：Word PDF逐页视觉检查 — PASS
-
-- PDF总页数：196页
-- 封面：深蓝底白字，排版正常
-- 目录：含Heading 1-3层级，页码正确
-- 页眉："教程正文"静态文本（修复了STYLEREF错误）
-- 正文：字体/行距/图注/表格均正常
-- 附录C：最后一页正常结束
-- word skill audit.py：0错误通过
-
-### FAIL 5：真实案例走通证据 — PASS（部分限制如实标注）
-
-| 操作 | 状态 | 证据 |
-|------|------|------|
-| daily_monitor.py | 实测通过 | 三分支：首跑建基准→检出新版→幂等静默 |
-| email_triage.py | 实测通过 | 三条样例邮件分类全对，approve/reject正常 |
-| my-agent test_agent.py | 实测通过 | 10/10断言PASS |
-| my-agent eval.py | 实测通过 | 7/7通过 |
-| my-agent交互模式 | 实测通过 | 人工审批y/N正常 |
-| LAB F Clone/PR/Deploy | 未完成 | 如实标注：需账号和远端权限 |
-| 邮件SMTP真发送 | 未完成 | 如实标注：需用户填入SMTP凭据 |
+### #18 my-agent Planner
+- 已完成：模板规划→执行→断言评估
+- 限制：规则模板，非LLM驱动
 
 ## 文档统计
-- 总字数：96,584
-- 段落数：3,945
-- 标题数：473+
-- 表格数：116+
-- 图片数：32
-- PDF页数：196
+- PDF页数：197
+- 总字数：96,969
+- 图片：32
+- 表格：116+
 - 文件大小：4.5MB
-
-## 构建可复现性
-```powershell
-pip install -r requirements.txt
-python build_docx.py
-```
-从干净环境可从零复现。

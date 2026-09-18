@@ -1,0 +1,17 @@
+2026-09-18 19:16:48 [INFO] ============================================================
+2026-09-18 19:16:48 [INFO] LAB E 开始运行
+2026-09-18 19:16:48 [INFO] 读取原始数据 22 行，来自 dirty_data.csv
+2026-09-18 19:16:48 [INFO] 质量检查完成：缺年龄3、异常年龄2、缺收入2、异常收入5、疑似单位错误4、性别未映射0、日期未解析0
+2026-09-18 19:16:48 [INFO] 清洗完成：保留 10 行，剔除 12 行
+2026-09-18 19:16:48 [INFO] 描述统计：n=10 年龄均值31.1 收入均值10180.05
+2026-09-18 19:16:48 [INFO] 图已保存：D:\AISOP\AI-Agent-Tutorial\examples\labs\lab_e_data\income_by_city.png
+2026-09-18 19:16:48 [INFO] 清洗后数据已保存：cleaned_data.csv（10 行）
+2026-09-18 19:16:48 [INFO] 质量报告已保存：quality_report.md
+2026-09-18 19:16:48 [INFO] 分析报告已保存：analysis_report.md
+2026-09-18 19:16:48 [INFO] LAB E 全部产物：
+2026-09-18 19:16:48 [INFO]   - cleaned_data.csv (504 bytes)
+2026-09-18 19:16:48 [INFO]   - quality_report.md (2334 bytes)
+2026-09-18 19:16:48 [INFO]   - analysis_report.md (1463 bytes)
+2026-09-18 19:16:48 [INFO]   - income_by_city.png (37783 bytes)
+2026-09-18 19:16:48 [INFO]   - lab_e.log (1180 bytes)
+2026-09-18 19:16:48 [INFO] LAB E 运行成功

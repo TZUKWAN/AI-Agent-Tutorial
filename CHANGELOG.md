@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## v1.1.1 (2026-09-18)
+
+### 真实案例补齐
+- 新增 examples/labs/lab_c_office/：真实Office闭环（CSV→Excel→Word→汇报要点）
+- 新增 examples/labs/lab_e_data/：真实数据分析闭环（脏数据→清洗→统计→图→报告）
+- 新增 examples/labs/labf_project/：真实开源项目（colorama clone→改功能→测试→commit）
+- daily_monitor.py新增live模式：真实GitHub API调用（HTTP 200，10条Release）
+- my-agent补齐：Skill加载、RAG关键词检索、Planner/Executor/Evaluator、test 14/14 eval 10/10
+
+### 工程修复
+- render_full.py/export_pdf.ps1硬编码路径改为相对路径
+- requirements.txt补充pymupdf/openpyxl
+- README删除过时V1.2表述，新增构建与QA环境要求
+- QA_REPORT重写为严格PASS/PARTIAL/FAIL表
+
 ## v1.1.0 (2026-09-18)
 
 ### 正文深度重构

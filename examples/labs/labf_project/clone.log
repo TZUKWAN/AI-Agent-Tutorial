@@ -1,0 +1,7 @@
+﻿git : Cloning into 'repo'...
+所在位置 行:1 字符: 134
++ ... bf_project; git clone --depth 1 https://github.com/tartley/colorama.g ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Cloning into 'repo'...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

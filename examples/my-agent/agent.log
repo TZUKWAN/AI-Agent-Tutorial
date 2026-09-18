@@ -463,3 +463,448 @@ if __name__ == "__main__":
 2026-09-18 18:41:00,326 [INFO] 回复：人工拒绝：未执行“发邮件给客户”。
 2026-09-18 18:41:00,326 [INFO] 用户输入：讲个笑话
 2026-09-18 18:41:00,327 [INFO] 回复：我目前只能做三类事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）。删除/发送类动作我会先请你确认。
+2026-09-18 19:19:06,649 [INFO] 用户输入：检索笔记 工具 安全
+2026-09-18 19:19:06,655 [INFO] 调用工具 search_notes 参数=检索笔记 工具 安全 -> {'ok': True, 'result': [{'file': 'note_02_tools_safety.md', 'score': 21, 'snippet': '# 笔记：工具调用与安全边界'}, {'file': 'note_04_plan_exec_eval.md', 'score': 12, 'snippet': '# 笔记：Planner / Executor / Evaluator 三段式'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}], 'error': None}
+2026-09-18 19:19:06,656 [INFO] 回复：[工具:search_notes] [{'file': 'note_02_tools_safety.md', 'score': 21, 'snippet': '# 笔记：工具调用与安全边界'}, {'file': 'note_04_plan_exec_eval.md', 'score': 12, 'snippet': '# 笔记：Planner / Executor / Evaluator 三段式'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}]
+2026-09-18 19:20:03,665 [INFO] 用户输入：现在几点了
+2026-09-18 19:20:03,665 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 19:20:03', 'error': None}
+2026-09-18 19:20:03,665 [INFO] 回复：[工具:now] 2026-09-18 19:20:03
+2026-09-18 19:20:03,665 [INFO] 用户输入：计算 2+3*4
+2026-09-18 19:20:03,666 [INFO] 调用工具 calculator 参数=2+3*4 -> {'ok': True, 'result': 14, 'error': None}
+2026-09-18 19:20:03,666 [INFO] 回复：[工具:calculator] 14
+2026-09-18 19:20:03,666 [INFO] 用户输入：10/2
+2026-09-18 19:20:03,666 [INFO] 调用工具 calculator 参数=10/2 -> {'ok': True, 'result': 5.0, 'error': None}
+2026-09-18 19:20:03,666 [INFO] 回复：[工具:calculator] 5.0
+2026-09-18 19:20:03,667 [INFO] 用户输入：计算 __import__('os').system('echo hi')
+2026-09-18 19:20:03,667 [INFO] 调用工具 calculator 参数=__import__('os').system('echo hi') -> {'ok': False, 'result': None, 'error': '计算失败：表达式只允许数字和 + - * / // % ** 运算'}
+2026-09-18 19:20:03,667 [INFO] 回复：[工具:calculator] 失败：计算失败：表达式只允许数字和 + - * / // % ** 运算
+2026-09-18 19:20:03,667 [INFO] 用户输入：读文件 tools.py
+2026-09-18 19:20:03,668 [INFO] 调用工具 read_file 参数=tools.py -> {'ok': True, 'result': '#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n"""\ntools.py — my-agent 的工具函数集合。\n\n三个工具：\n  - read_file(rel_path)  在允许的工作目录内读一个文本文件\n  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）\n  - now()               返回当前日期时间\n\n每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，\n这样上层 Agent 可以统一处理成功与失败。\n"""\n\nfrom __future__ import annotations\n\nimport ast\nimport operator\nimport re\nfrom datetime import datetime\nfrom pathlib import Path\n\n# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置\nWORKSPACE = Path(__file__).resolve().parent\nDOCS_DIR = WORKSPACE / "docs"\n\n\n# ---- 安全计算器：只允许算术运算 -----------------------------------------\n_ALLOWED_BIN_OPS = {\n    ast.Add: operator.add,\n    ast.Sub: operator.sub,\n    ast.Mult: operator.mul,\n    ast.Div: operator.truediv,\n    ast.FloorDiv: operator.floordiv,\n    ast.Mod: operator.mod,\n    ast.Pow: operator.pow,\n}\n_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}\n\n\ndef _eval_node(node):\n    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）\n        if isinstance(node.value, (int, float)):\n            return node.value\n        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")\n    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:\n        left = _eval_node(node.left)\n        right = _eval_node(node.right)\n        return _ALLOWED_BIN_OPS[type(node.op)](left, right)\n    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:\n        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))\n    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")\n\n\ndef calculator(expr: str):\n    """安全计算算术表达式。任何非算术语法直接拒绝。"""\n    try:\n        tree = ast.parse(expr, mode="eval")\n        value = _eval_node(tree.body)\n        return {"ok": True, "result": value, "error": None}\n    except Exception as exc:  # noqa: BLE001\n        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}\n\n\n# ---- 文件读取（限定工作目录） -------------------------------------------\ndef read_file(rel_path: str, max_bytes: int = 8000):\n    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""\n    target = (WORKSPACE / rel_path).resolve()\n    try:\n        target.relative_to(WORKSPACE.resolve())\n    except ValueError:\n        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}\n\n    if not target.exists():\n        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}\n\n    text = target.read_text(encoding="utf-8", errors="replace")\n    if len(text) > max_bytes:\n        text = text[:max_bytes] + "\\n...（已截断）"\n    return {"ok": True, "result": text, "error": None}\n\n\n# ---- 时间 ----------------------------------------------------------------\ndef now():\n    """返回当前日期时间字符串。"""\n    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}\n\n\n# ---- 轻量笔记检索（教学简化版：关键词词频打分，非向量检索） -----------------\n_CJK = r"\\u4e00-\\u9fff"\n\n\ndef _tokenize(text: str) -> list[str]:\n    """极简分词：英文按 [a-z0-9_] 成词；中文按单字 + 相邻二元组。\n\n    这是刻意的教学简化：不做停用词、不做词形还原、不做向量嵌入。\n    """\n    text = text.lower()\n    tokens: list[str] = []\n    # 英文/数字词\n    for m in re.findall(r"[a-z0-9_]+", text):\n        tokens.append(m)\n    # 中文：单字 + 二元组\n    cjk_chars = re.findall(f"[{_CJK}]", text)\n    tokens.extend(cjk_chars)\n    tokens.extend(\n        "".join(pair) for pair in zip(cjk_chars, cjk_chars[1:])\n    )\n    return tokens\n\n\ndef _load_docs() -> list[dict]:\n    docs = []\n    if not DOCS_DIR.exists():\n        return docs\n    for path in sorted(DOCS_DIR.glob("*.md")):\n        docs.append({"path": path.name, "text": path.read_text(encoding="utf-8")})\n    return docs\n\n\ndef search_notes(query: str, top_k: int = 3):\n    """在 docs/ 目录下按关键词词频打分检索相关笔记。\n\n    教学简化版：不是向量检索，不理解语义，只按查询词在文档中的字面命中次数排序。\n    返回 {"ok", "result": [{"file","score","snippet"}], "error"}。\n    """\n    if not query or not query.strip():\n        return {"ok": False, "result": None, "error": "查询为空"}\n    q_tokens = _tokenize(query)\n    if not q_tokens:\n        return {"ok": False, "result": None, "error": "查询未解析出任何词"}\n\n    docs = _load_docs()\n    if not docs:\n        return {"ok": True, "result": [], "error": None}\n\n    scored = []\n    for doc in docs:\n        d_tokens = _tokenize(doc["text"])\n        d_counter: dict[str, int] = {}\n        for t in d_tokens:\n            d_counter[t] = d_counter.get(t, 0) + 1\n        score = sum(d_counter.get(tok, 0) for tok in q_tokens)\n        if score > 0:\n            snippet = doc["text"].strip().splitlines()[0][:60]\n            scored.append({"file": doc["path"], "score": score, "snippet": snippet})\n\n    scored.sort(key=lambda x: x["score"], reverse=True)\n    return {"ok": True, "result": scored[:top_k], "error": None}\n\n\n# 工具注册表：名字 -> (函数, 一句话说明)\nTOOLS = {\n    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),\n    "calculator": (calculator, "计算算术表达式，参数：如 \'2+3*4\'"),\n    "now": (now, "返回当前日期时间，无参数"),\n    "search_notes": (search_notes, "在 docs/ 下按关键词检索笔记，参数：查询词"),\n}\n\n\nif __name__ == "__main__":\n    # 简单自检\n    print(calculator("2+3*4"))\n    print(calculator("__import__(\'os\').system(\'echo hi\')"))  # 应被拒绝\n    print(now())\n', 'error': None}
+2026-09-18 19:20:03,668 [INFO] 回复：[工具:read_file] #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+tools.py — my-agent 的工具函数集合。
+
+三个工具：
+  - read_file(rel_path)  在允许的工作目录内读一个文本文件
+  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）
+  - now()               返回当前日期时间
+
+每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，
+这样上层 Agent 可以统一处理成功与失败。
+"""
+
+from __future__ import annotations
+
+import ast
+import operator
+import re
+from datetime import datetime
+from pathlib import Path
+
+# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置
+WORKSPACE = Path(__file__).resolve().parent
+DOCS_DIR = WORKSPACE / "docs"
+
+
+# ---- 安全计算器：只允许算术运算 -----------------------------------------
+_ALLOWED_BIN_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+}
+_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def _eval_node(node):
+    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）
+        if isinstance(node.value, (int, float)):
+            return node.value
+        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")
+    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:
+        left = _eval_node(node.left)
+        right = _eval_node(node.right)
+        return _ALLOWED_BIN_OPS[type(node.op)](left, right)
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:
+        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))
+    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")
+
+
+def calculator(expr: str):
+    """安全计算算术表达式。任何非算术语法直接拒绝。"""
+    try:
+        tree = ast.parse(expr, mode="eval")
+        value = _eval_node(tree.body)
+        return {"ok": True, "result": value, "error": None}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}
+
+
+# ---- 文件读取（限定工作目录） -------------------------------------------
+def read_file(rel_path: str, max_bytes: int = 8000):
+    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""
+    target = (WORKSPACE / rel_path).resolve()
+    try:
+        target.relative_to(WORKSPACE.resolve())
+    except ValueError:
+        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}
+
+    if not target.exists():
+        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}
+
+    text = target.read_text(encoding="utf-8", errors="replace")
+    if len(text) > max_bytes:
+        text = text[:max_bytes] + "\n...（已截断）"
+    return {"ok": True, "result": text, "error": None}
+
+
+# ---- 时间 ----------------------------------------------------------------
+def now():
+    """返回当前日期时间字符串。"""
+    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}
+
+
+# ---- 轻量笔记检索（教学简化版：关键词词频打分，非向量检索） -----------------
+_CJK = r"\u4e00-\u9fff"
+
+
+def _tokenize(text: str) -> list[str]:
+    """极简分词：英文按 [a-z0-9_] 成词；中文按单字 + 相邻二元组。
+
+    这是刻意的教学简化：不做停用词、不做词形还原、不做向量嵌入。
+    """
+    text = text.lower()
+    tokens: list[str] = []
+    # 英文/数字词
+    for m in re.findall(r"[a-z0-9_]+", text):
+        tokens.append(m)
+    # 中文：单字 + 二元组
+    cjk_chars = re.findall(f"[{_CJK}]", text)
+    tokens.extend(cjk_chars)
+    tokens.extend(
+        "".join(pair) for pair in zip(cjk_chars, cjk_chars[1:])
+    )
+    return tokens
+
+
+def _load_docs() -> list[dict]:
+    docs = []
+    if not DOCS_DIR.exists():
+        return docs
+    for path in sorted(DOCS_DIR.glob("*.md")):
+        docs.append({"path": path.name, "text": path.read_text(encoding="utf-8")})
+    return docs
+
+
+def search_notes(query: str, top_k: int = 3):
+    """在 docs/ 目录下按关键词词频打分检索相关笔记。
+
+    教学简化版：不是向量检索，不理解语义，只按查询词在文档中的字面命中次数排序。
+    返回 {"ok", "result": [{"file","score","snippet"}], "error"}。
+    """
+    if not query or not query.strip():
+        return {"ok": False, "result": None, "error": "查询为空"}
+    q_tokens = _tokenize(query)
+    if not q_tokens:
+        return {"ok": False, "result": None, "error": "查询未解析出任何词"}
+
+    docs = _load_docs()
+    if not docs:
+        return {"ok": True, "result": [], "error": None}
+
+    scored = []
+    for doc in docs:
+        d_tokens = _tokenize(doc["text"])
+        d_counter: dict[str, int] = {}
+        for t in d_tokens:
+            d_counter[t] = d_counter.get(t, 0) + 1
+        score = sum(d_counter.get(tok, 0) for tok in q_tokens)
+        if score > 0:
+            snippet = doc["text"].strip().splitlines()[0][:60]
+            scored.append({"file": doc["path"], "score": score, "snippet": snippet})
+
+    scored.sort(key=lambda x: x["score"], reverse=True)
+    return {"ok": True, "result": scored[:top_k], "error": None}
+
+
+# 工具注册表：名字 -> (函数, 一句话说明)
+TOOLS = {
+    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),
+    "calculator": (calculator, "计算算术表达式，参数：如 '2+3*4'"),
+    "now": (now, "返回当前日期时间，无参数"),
+    "search_notes": (search_notes, "在 docs/ 下按关键词检索笔记，参数：查询词"),
+}
+
+
+if __name__ == "__main__":
+    # 简单自检
+    print(calculator("2+3*4"))
+    print(calculator("__import__('os').system('echo hi')"))  # 应被拒绝
+    print(now())
+
+2026-09-18 19:20:03,668 [INFO] 用户输入：读文件 ../../etc/passwd
+2026-09-18 19:20:03,669 [INFO] 调用工具 read_file 参数=../../etc/passwd -> {'ok': False, 'result': None, 'error': '拒绝访问工作目录之外的文件：../../etc/passwd'}
+2026-09-18 19:20:03,669 [INFO] 回复：[工具:read_file] 失败：拒绝访问工作目录之外的文件：../../etc/passwd
+2026-09-18 19:20:03,669 [INFO] 用户输入：删除旧备份 config.bak
+2026-09-18 19:20:03,669 [WARNING] 危险动作已获批准：删除旧备份 config.bak
+2026-09-18 19:20:03,669 [INFO] 回复：已获人工批准：你要求执行“删除旧备份 config.bak”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 19:20:03,669 [INFO] 用户输入：发送全部客户邮件
+2026-09-18 19:20:03,669 [WARNING] 危险动作被拒绝：发送全部客户邮件
+2026-09-18 19:20:03,670 [INFO] 回复：人工拒绝：未执行“发送全部客户邮件”。
+2026-09-18 19:20:03,670 [INFO] 用户输入：今天天气怎么样
+2026-09-18 19:20:03,670 [INFO] 回复：我目前能做这些事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）、检索笔记（说“检索笔记 …”）。删除/发送类动作我会先请你确认。
+2026-09-18 19:20:03,670 [INFO] 用户输入：检索笔记 工具 安全
+2026-09-18 19:20:03,672 [INFO] 调用工具 search_notes 参数=检索笔记 工具 安全 -> {'ok': True, 'result': [{'file': 'note_02_tools_safety.md', 'score': 21, 'snippet': '# 笔记：工具调用与安全边界'}, {'file': 'note_04_plan_exec_eval.md', 'score': 12, 'snippet': '# 笔记：Planner / Executor / Evaluator 三段式'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}], 'error': None}
+2026-09-18 19:20:03,672 [INFO] 回复：[工具:search_notes] [{'file': 'note_02_tools_safety.md', 'score': 21, 'snippet': '# 笔记：工具调用与安全边界'}, {'file': 'note_04_plan_exec_eval.md', 'score': 12, 'snippet': '# 笔记：Planner / Executor / Evaluator 三段式'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}]
+2026-09-18 19:20:03,796 [INFO] 用户输入：现在几点了
+2026-09-18 19:20:03,796 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 19:20:03', 'error': None}
+2026-09-18 19:20:03,796 [INFO] 回复：[工具:now] 2026-09-18 19:20:03
+2026-09-18 19:20:03,796 [INFO] 用户输入：计算 1+2*3
+2026-09-18 19:20:03,796 [INFO] 调用工具 calculator 参数=1+2*3 -> {'ok': True, 'result': 7, 'error': None}
+2026-09-18 19:20:03,797 [INFO] 回复：[工具:calculator] 7
+2026-09-18 19:20:03,797 [INFO] 用户输入：计算 100/4
+2026-09-18 19:20:03,797 [INFO] 调用工具 calculator 参数=100/4 -> {'ok': True, 'result': 25.0, 'error': None}
+2026-09-18 19:20:03,797 [INFO] 回复：[工具:calculator] 25.0
+2026-09-18 19:20:03,797 [INFO] 用户输入：读文件 state.json
+2026-09-18 19:20:03,798 [INFO] 调用工具 read_file 参数=state.json -> {'ok': True, 'result': '{\n  "task_status": "done",\n  "turns": 3,\n  "last_message": "计算 100/4"\n}', 'error': None}
+2026-09-18 19:20:03,798 [INFO] 回复：[工具:read_file] {
+  "task_status": "done",
+  "turns": 3,
+  "last_message": "计算 100/4"
+}
+2026-09-18 19:20:03,798 [INFO] 用户输入：删除临时文件
+2026-09-18 19:20:03,798 [WARNING] 危险动作已获批准：删除临时文件
+2026-09-18 19:20:03,799 [INFO] 回复：已获人工批准：你要求执行“删除临时文件”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 19:20:03,799 [INFO] 用户输入：发邮件给客户
+2026-09-18 19:20:03,799 [WARNING] 危险动作被拒绝：发邮件给客户
+2026-09-18 19:20:03,799 [INFO] 回复：人工拒绝：未执行“发邮件给客户”。
+2026-09-18 19:20:03,799 [INFO] 用户输入：讲个笑话
+2026-09-18 19:20:03,800 [INFO] 回复：我目前能做这些事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）、检索笔记（说“检索笔记 …”）。删除/发送类动作我会先请你确认。
+2026-09-18 19:20:03,800 [INFO] 用户输入：检索笔记 Agent 零件
+2026-09-18 19:20:03,802 [INFO] 调用工具 search_notes 参数=检索笔记 Agent 零件 -> {'ok': True, 'result': [{'file': 'note_01_agent_parts.md', 'score': 18, 'snippet': '# 笔记：Agent 的六个零件'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}, {'file': 'note_02_tools_safety.md', 'score': 5, 'snippet': '# 笔记：工具调用与安全边界'}], 'error': None}
+2026-09-18 19:20:03,803 [INFO] 回复：[工具:search_notes] [{'file': 'note_01_agent_parts.md', 'score': 18, 'snippet': '# 笔记：Agent 的六个零件'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}, {'file': 'note_02_tools_safety.md', 'score': 5, 'snippet': '# 笔记：工具调用与安全边界'}]
+2026-09-18 19:22:22,375 [INFO] 用户输入：现在几点了
+2026-09-18 19:22:22,375 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 19:22:22', 'error': None}
+2026-09-18 19:22:22,376 [INFO] 回复：[工具:now] 2026-09-18 19:22:22
+2026-09-18 19:22:22,376 [INFO] 用户输入：计算 2+3*4
+2026-09-18 19:22:22,376 [INFO] 调用工具 calculator 参数=2+3*4 -> {'ok': True, 'result': 14, 'error': None}
+2026-09-18 19:22:22,376 [INFO] 回复：[工具:calculator] 14
+2026-09-18 19:22:22,376 [INFO] 用户输入：10/2
+2026-09-18 19:22:22,376 [INFO] 调用工具 calculator 参数=10/2 -> {'ok': True, 'result': 5.0, 'error': None}
+2026-09-18 19:22:22,377 [INFO] 回复：[工具:calculator] 5.0
+2026-09-18 19:22:22,377 [INFO] 用户输入：计算 __import__('os').system('echo hi')
+2026-09-18 19:22:22,377 [INFO] 调用工具 calculator 参数=__import__('os').system('echo hi') -> {'ok': False, 'result': None, 'error': '计算失败：表达式只允许数字和 + - * / // % ** 运算'}
+2026-09-18 19:22:22,377 [INFO] 回复：[工具:calculator] 失败：计算失败：表达式只允许数字和 + - * / // % ** 运算
+2026-09-18 19:22:22,377 [INFO] 用户输入：读文件 tools.py
+2026-09-18 19:22:22,378 [INFO] 调用工具 read_file 参数=tools.py -> {'ok': True, 'result': '#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n"""\ntools.py — my-agent 的工具函数集合。\n\n三个工具：\n  - read_file(rel_path)  在允许的工作目录内读一个文本文件\n  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）\n  - now()               返回当前日期时间\n\n每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，\n这样上层 Agent 可以统一处理成功与失败。\n"""\n\nfrom __future__ import annotations\n\nimport ast\nimport operator\nimport re\nfrom datetime import datetime\nfrom pathlib import Path\n\n# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置\nWORKSPACE = Path(__file__).resolve().parent\nDOCS_DIR = WORKSPACE / "docs"\n\n\n# ---- 安全计算器：只允许算术运算 -----------------------------------------\n_ALLOWED_BIN_OPS = {\n    ast.Add: operator.add,\n    ast.Sub: operator.sub,\n    ast.Mult: operator.mul,\n    ast.Div: operator.truediv,\n    ast.FloorDiv: operator.floordiv,\n    ast.Mod: operator.mod,\n    ast.Pow: operator.pow,\n}\n_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}\n\n\ndef _eval_node(node):\n    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）\n        if isinstance(node.value, (int, float)):\n            return node.value\n        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")\n    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:\n        left = _eval_node(node.left)\n        right = _eval_node(node.right)\n        return _ALLOWED_BIN_OPS[type(node.op)](left, right)\n    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:\n        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))\n    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")\n\n\ndef calculator(expr: str):\n    """安全计算算术表达式。任何非算术语法直接拒绝。"""\n    try:\n        tree = ast.parse(expr, mode="eval")\n        value = _eval_node(tree.body)\n        return {"ok": True, "result": value, "error": None}\n    except Exception as exc:  # noqa: BLE001\n        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}\n\n\n# ---- 文件读取（限定工作目录） -------------------------------------------\ndef read_file(rel_path: str, max_bytes: int = 8000):\n    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""\n    target = (WORKSPACE / rel_path).resolve()\n    try:\n        target.relative_to(WORKSPACE.resolve())\n    except ValueError:\n        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}\n\n    if not target.exists():\n        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}\n\n    text = target.read_text(encoding="utf-8", errors="replace")\n    if len(text) > max_bytes:\n        text = text[:max_bytes] + "\\n...（已截断）"\n    return {"ok": True, "result": text, "error": None}\n\n\n# ---- 时间 ----------------------------------------------------------------\ndef now():\n    """返回当前日期时间字符串。"""\n    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}\n\n\n# ---- 轻量笔记检索（教学简化版：关键词词频打分，非向量检索） -----------------\n_CJK = r"\\u4e00-\\u9fff"\n\n\ndef _tokenize(text: str) -> list[str]:\n    """极简分词：英文按 [a-z0-9_] 成词；中文按单字 + 相邻二元组。\n\n    这是刻意的教学简化：不做停用词、不做词形还原、不做向量嵌入。\n    """\n    text = text.lower()\n    tokens: list[str] = []\n    # 英文/数字词\n    for m in re.findall(r"[a-z0-9_]+", text):\n        tokens.append(m)\n    # 中文：单字 + 二元组\n    cjk_chars = re.findall(f"[{_CJK}]", text)\n    tokens.extend(cjk_chars)\n    tokens.extend(\n        "".join(pair) for pair in zip(cjk_chars, cjk_chars[1:])\n    )\n    return tokens\n\n\ndef _load_docs() -> list[dict]:\n    docs = []\n    if not DOCS_DIR.exists():\n        return docs\n    for path in sorted(DOCS_DIR.glob("*.md")):\n        docs.append({"path": path.name, "text": path.read_text(encoding="utf-8")})\n    return docs\n\n\ndef search_notes(query: str, top_k: int = 3):\n    """在 docs/ 目录下按关键词词频打分检索相关笔记。\n\n    教学简化版：不是向量检索，不理解语义，只按查询词在文档中的字面命中次数排序。\n    返回 {"ok", "result": [{"file","score","snippet"}], "error"}。\n    """\n    if not query or not query.strip():\n        return {"ok": False, "result": None, "error": "查询为空"}\n    q_tokens = _tokenize(query)\n    if not q_tokens:\n        return {"ok": False, "result": None, "error": "查询未解析出任何词"}\n\n    docs = _load_docs()\n    if not docs:\n        return {"ok": True, "result": [], "error": None}\n\n    scored = []\n    for doc in docs:\n        d_tokens = _tokenize(doc["text"])\n        d_counter: dict[str, int] = {}\n        for t in d_tokens:\n            d_counter[t] = d_counter.get(t, 0) + 1\n        score = sum(d_counter.get(tok, 0) for tok in q_tokens)\n        if score > 0:\n            snippet = doc["text"].strip().splitlines()[0][:60]\n            scored.append({"file": doc["path"], "score": score, "snippet": snippet})\n\n    scored.sort(key=lambda x: x["score"], reverse=True)\n    return {"ok": True, "result": scored[:top_k], "error": None}\n\n\n# 工具注册表：名字 -> (函数, 一句话说明)\nTOOLS = {\n    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),\n    "calculator": (calculator, "计算算术表达式，参数：如 \'2+3*4\'"),\n    "now": (now, "返回当前日期时间，无参数"),\n    "search_notes": (search_notes, "在 docs/ 下按关键词检索笔记，参数：查询词"),\n}\n\n\nif __name__ == "__main__":\n    # 简单自检\n    print(calculator("2+3*4"))\n    print(calculator("__import__(\'os\').system(\'echo hi\')"))  # 应被拒绝\n    print(now())\n', 'error': None}
+2026-09-18 19:22:22,378 [INFO] 回复：[工具:read_file] #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+tools.py — my-agent 的工具函数集合。
+
+三个工具：
+  - read_file(rel_path)  在允许的工作目录内读一个文本文件
+  - calculator(expr)    安全计算一个算术表达式（用 ast 白名单，禁止任意函数调用）
+  - now()               返回当前日期时间
+
+每个工具都返回 dict：{"ok": bool, "result": ..., "error": ...}，
+这样上层 Agent 可以统一处理成功与失败。
+"""
+
+from __future__ import annotations
+
+import ast
+import operator
+import re
+from datetime import datetime
+from pathlib import Path
+
+# Agent 允许读写的根目录（本项目目录），防止 read_file 读到系统任意位置
+WORKSPACE = Path(__file__).resolve().parent
+DOCS_DIR = WORKSPACE / "docs"
+
+
+# ---- 安全计算器：只允许算术运算 -----------------------------------------
+_ALLOWED_BIN_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.FloorDiv: operator.floordiv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+}
+_ALLOWED_UNARY_OPS = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+
+def _eval_node(node):
+    if isinstance(node, ast.Constant):  # Python 3.8+ 常量（3.14 已移除 ast.Num）
+        if isinstance(node.value, (int, float)):
+            return node.value
+        raise ValueError(f"不允许的常量类型：{type(node.value).__name__}")
+    if isinstance(node, ast.BinOp) and type(node.op) in _ALLOWED_BIN_OPS:
+        left = _eval_node(node.left)
+        right = _eval_node(node.right)
+        return _ALLOWED_BIN_OPS[type(node.op)](left, right)
+    if isinstance(node, ast.UnaryOp) and type(node.op) in _ALLOWED_UNARY_OPS:
+        return _ALLOWED_UNARY_OPS[type(node.op)](_eval_node(node.operand))
+    raise ValueError("表达式只允许数字和 + - * / // % ** 运算")
+
+
+def calculator(expr: str):
+    """安全计算算术表达式。任何非算术语法直接拒绝。"""
+    try:
+        tree = ast.parse(expr, mode="eval")
+        value = _eval_node(tree.body)
+        return {"ok": True, "result": value, "error": None}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "result": None, "error": f"计算失败：{exc}"}
+
+
+# ---- 文件读取（限定工作目录） -------------------------------------------
+def read_file(rel_path: str, max_bytes: int = 8000):
+    """在 WORKSPACE 内读取文本文件。拒绝越出工作目录的路径。"""
+    target = (WORKSPACE / rel_path).resolve()
+    try:
+        target.relative_to(WORKSPACE.resolve())
+    except ValueError:
+        return {"ok": False, "result": None, "error": f"拒绝访问工作目录之外的文件：{rel_path}"}
+
+    if not target.exists():
+        return {"ok": False, "result": None, "error": f"文件不存在：{rel_path}"}
+
+    text = target.read_text(encoding="utf-8", errors="replace")
+    if len(text) > max_bytes:
+        text = text[:max_bytes] + "\n...（已截断）"
+    return {"ok": True, "result": text, "error": None}
+
+
+# ---- 时间 ----------------------------------------------------------------
+def now():
+    """返回当前日期时间字符串。"""
+    return {"ok": True, "result": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "error": None}
+
+
+# ---- 轻量笔记检索（教学简化版：关键词词频打分，非向量检索） -----------------
+_CJK = r"\u4e00-\u9fff"
+
+
+def _tokenize(text: str) -> list[str]:
+    """极简分词：英文按 [a-z0-9_] 成词；中文按单字 + 相邻二元组。
+
+    这是刻意的教学简化：不做停用词、不做词形还原、不做向量嵌入。
+    """
+    text = text.lower()
+    tokens: list[str] = []
+    # 英文/数字词
+    for m in re.findall(r"[a-z0-9_]+", text):
+        tokens.append(m)
+    # 中文：单字 + 二元组
+    cjk_chars = re.findall(f"[{_CJK}]", text)
+    tokens.extend(cjk_chars)
+    tokens.extend(
+        "".join(pair) for pair in zip(cjk_chars, cjk_chars[1:])
+    )
+    return tokens
+
+
+def _load_docs() -> list[dict]:
+    docs = []
+    if not DOCS_DIR.exists():
+        return docs
+    for path in sorted(DOCS_DIR.glob("*.md")):
+        docs.append({"path": path.name, "text": path.read_text(encoding="utf-8")})
+    return docs
+
+
+def search_notes(query: str, top_k: int = 3):
+    """在 docs/ 目录下按关键词词频打分检索相关笔记。
+
+    教学简化版：不是向量检索，不理解语义，只按查询词在文档中的字面命中次数排序。
+    返回 {"ok", "result": [{"file","score","snippet"}], "error"}。
+    """
+    if not query or not query.strip():
+        return {"ok": False, "result": None, "error": "查询为空"}
+    q_tokens = _tokenize(query)
+    if not q_tokens:
+        return {"ok": False, "result": None, "error": "查询未解析出任何词"}
+
+    docs = _load_docs()
+    if not docs:
+        return {"ok": True, "result": [], "error": None}
+
+    scored = []
+    for doc in docs:
+        d_tokens = _tokenize(doc["text"])
+        d_counter: dict[str, int] = {}
+        for t in d_tokens:
+            d_counter[t] = d_counter.get(t, 0) + 1
+        score = sum(d_counter.get(tok, 0) for tok in q_tokens)
+        if score > 0:
+            snippet = doc["text"].strip().splitlines()[0][:60]
+            scored.append({"file": doc["path"], "score": score, "snippet": snippet})
+
+    scored.sort(key=lambda x: x["score"], reverse=True)
+    return {"ok": True, "result": scored[:top_k], "error": None}
+
+
+# 工具注册表：名字 -> (函数, 一句话说明)
+TOOLS = {
+    "read_file": (read_file, "读取工作目录内的文本文件，参数：相对路径"),
+    "calculator": (calculator, "计算算术表达式，参数：如 '2+3*4'"),
+    "now": (now, "返回当前日期时间，无参数"),
+    "search_notes": (search_notes, "在 docs/ 下按关键词检索笔记，参数：查询词"),
+}
+
+
+if __name__ == "__main__":
+    # 简单自检
+    print(calculator("2+3*4"))
+    print(calculator("__import__('os').system('echo hi')"))  # 应被拒绝
+    print(now())
+
+2026-09-18 19:22:22,378 [INFO] 用户输入：读文件 ../../etc/passwd
+2026-09-18 19:22:22,379 [INFO] 调用工具 read_file 参数=../../etc/passwd -> {'ok': False, 'result': None, 'error': '拒绝访问工作目录之外的文件：../../etc/passwd'}
+2026-09-18 19:22:22,379 [INFO] 回复：[工具:read_file] 失败：拒绝访问工作目录之外的文件：../../etc/passwd
+2026-09-18 19:22:22,379 [INFO] 用户输入：删除旧备份 config.bak
+2026-09-18 19:22:22,379 [WARNING] 危险动作已获批准：删除旧备份 config.bak
+2026-09-18 19:22:22,380 [INFO] 回复：已获人工批准：你要求执行“删除旧备份 config.bak”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 19:22:22,380 [INFO] 用户输入：发送全部客户邮件
+2026-09-18 19:22:22,380 [WARNING] 危险动作被拒绝：发送全部客户邮件
+2026-09-18 19:22:22,380 [INFO] 回复：人工拒绝：未执行“发送全部客户邮件”。
+2026-09-18 19:22:22,380 [INFO] 用户输入：今天天气怎么样
+2026-09-18 19:22:22,380 [INFO] 回复：我目前能做这些事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）、检索笔记（说“检索笔记 …”）。删除/发送类动作我会先请你确认。
+2026-09-18 19:22:22,380 [INFO] 用户输入：检索笔记 工具 安全
+2026-09-18 19:22:22,382 [INFO] 调用工具 search_notes 参数=检索笔记 工具 安全 -> {'ok': True, 'result': [{'file': 'note_02_tools_safety.md', 'score': 21, 'snippet': '# 笔记：工具调用与安全边界'}, {'file': 'note_04_plan_exec_eval.md', 'score': 12, 'snippet': '# 笔记：Planner / Executor / Evaluator 三段式'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}], 'error': None}
+2026-09-18 19:22:22,382 [INFO] 回复：[工具:search_notes] [{'file': 'note_02_tools_safety.md', 'score': 21, 'snippet': '# 笔记：工具调用与安全边界'}, {'file': 'note_04_plan_exec_eval.md', 'score': 12, 'snippet': '# 笔记：Planner / Executor / Evaluator 三段式'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}]
+2026-09-18 19:22:22,565 [INFO] 用户输入：现在几点了
+2026-09-18 19:22:22,565 [INFO] 调用工具 now 参数=None -> {'ok': True, 'result': '2026-09-18 19:22:22', 'error': None}
+2026-09-18 19:22:22,565 [INFO] 回复：[工具:now] 2026-09-18 19:22:22
+2026-09-18 19:22:22,566 [INFO] 用户输入：计算 1+2*3
+2026-09-18 19:22:22,566 [INFO] 调用工具 calculator 参数=1+2*3 -> {'ok': True, 'result': 7, 'error': None}
+2026-09-18 19:22:22,566 [INFO] 回复：[工具:calculator] 7
+2026-09-18 19:22:22,566 [INFO] 用户输入：计算 100/4
+2026-09-18 19:22:22,566 [INFO] 调用工具 calculator 参数=100/4 -> {'ok': True, 'result': 25.0, 'error': None}
+2026-09-18 19:22:22,567 [INFO] 回复：[工具:calculator] 25.0
+2026-09-18 19:22:22,567 [INFO] 用户输入：读文件 state.json
+2026-09-18 19:22:22,567 [INFO] 调用工具 read_file 参数=state.json -> {'ok': True, 'result': '{\n  "task_status": "done",\n  "turns": 3,\n  "last_message": "计算 100/4"\n}', 'error': None}
+2026-09-18 19:22:22,568 [INFO] 回复：[工具:read_file] {
+  "task_status": "done",
+  "turns": 3,
+  "last_message": "计算 100/4"
+}
+2026-09-18 19:22:22,568 [INFO] 用户输入：删除临时文件
+2026-09-18 19:22:22,568 [WARNING] 危险动作已获批准：删除临时文件
+2026-09-18 19:22:22,568 [INFO] 回复：已获人工批准：你要求执行“删除临时文件”。本最小示例仅记录批准，不真正执行删除/发送。
+2026-09-18 19:22:22,568 [INFO] 用户输入：发邮件给客户
+2026-09-18 19:22:22,568 [WARNING] 危险动作被拒绝：发邮件给客户
+2026-09-18 19:22:22,568 [INFO] 回复：人工拒绝：未执行“发邮件给客户”。
+2026-09-18 19:22:22,568 [INFO] 用户输入：讲个笑话
+2026-09-18 19:22:22,569 [INFO] 回复：我目前能做这些事：查时间、做算术计算（说“计算 2+3*4”）、读文件（说“读文件 xxx.txt”）、检索笔记（说“检索笔记 …”）。删除/发送类动作我会先请你确认。
+2026-09-18 19:22:22,569 [INFO] 用户输入：检索笔记 Agent 零件
+2026-09-18 19:22:22,571 [INFO] 调用工具 search_notes 参数=检索笔记 Agent 零件 -> {'ok': True, 'result': [{'file': 'note_01_agent_parts.md', 'score': 18, 'snippet': '# 笔记：Agent 的六个零件'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}, {'file': 'note_02_tools_safety.md', 'score': 5, 'snippet': '# 笔记：工具调用与安全边界'}], 'error': None}
+2026-09-18 19:22:22,572 [INFO] 回复：[工具:search_notes] [{'file': 'note_01_agent_parts.md', 'score': 18, 'snippet': '# 笔记：Agent 的六个零件'}, {'file': 'note_03_rag_simplified.md', 'score': 9, 'snippet': '# 笔记：检索增强（RAG）的教学简化版'}, {'file': 'note_02_tools_safety.md', 'score': 5, 'snippet': '# 笔记：工具调用与安全边界'}]
