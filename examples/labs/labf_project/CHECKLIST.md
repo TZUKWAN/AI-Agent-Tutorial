@@ -36,5 +36,12 @@
 cd examples\labs\labf_project\repo
 python test_smoke.py        # 应输出 SMOKE OK
 python demos/demo01.py      # 末尾应出现绿色 banner
-git log --oneline -n 3      # 应能看到 commit 2874e5f
 ```
+
+## Vendoring 说明（V1.1.1 修正）
+
+- 上游项目：tartley/colorama，clone 时上游 HEAD：`841634e`
+- 本地教学提交：`2874e5f`（在 demo01.py 尾部加 banner + 新增 test_smoke.py）
+- BSD-3 License 保留于 `repo/LICENSE.txt`
+- repo/ 目录已作为普通文件 vendoring 进父仓库（非 submodule），克隆仓库者可直接获取全部代码
+- 改动仅：demos/demo01.py 尾部 + test_smoke.py 新增
