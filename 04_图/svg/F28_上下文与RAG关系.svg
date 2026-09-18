@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="739.8pt" height="430.2pt" viewBox="0 0 739.8 430.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-18T17:02:44.943758</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 430.2 
+L 739.8 430.2 
+L 739.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 44.1954 341.5032 
+L 318.3966 341.5032 
+Q 329.2776 341.5032 329.2776 335.2662 
+L 329.2776 94.9338 
+Q 329.2776 88.6968 318.3966 88.6968 
+L 44.1954 88.6968 
+Q 33.3144 88.6968 33.3144 94.9338 
+L 33.3144 335.2662 
+Q 33.3144 341.5032 44.1954 341.5032 
+z
+" clip-path="url(#pa988000c19)" style="fill: #fbedec; stroke: #b44948; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 421.4034 341.5032 
+L 695.6046 341.5032 
+Q 706.4856 341.5032 706.4856 335.2662 
+L 706.4856 94.9338 
+Q 706.4856 88.6968 695.6046 88.6968 
+L 421.4034 88.6968 
+Q 410.5224 88.6968 410.5224 94.9338 
+L 410.5224 335.2662 
+Q 410.5224 341.5032 421.4034 341.5032 
+z
+" clip-path="url(#pa988000c19)" style="fill: #edf6ec; stroke: #5a8a55; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 342.885226 215.1 
+Q 369.900308 215.1 394.455715 215.1 
+" clip-path="url(#pa988000c19)" style="fill: none; stroke: #263238; stroke-width: 2.2; stroke-linecap: round"/>
+    <path d="M 388.055715 211.9 
+L 394.455715 215.1 
+L 388.055715 218.3 
+z
+" clip-path="url(#pa988000c19)" style="fill: #263238; stroke: #263238; stroke-width: 2.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="369.9" y="29.379295" transform="rotate(-0 369.9 29.379295)">F28  上下文 vs RAG：别把所有东西都塞进去</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #b44948" x="181.296" y="115.308" transform="rotate(-0 181.296 115.308)">做法一：全部塞进上下文</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="156.888" transform="rotate(-0 65.232 156.888)">· 材料越多越好</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="190.152" transform="rotate(-0 65.232 190.152)">· 模型看不过来</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="223.416" transform="rotate(-0 65.232 223.416)">· 重要信息被淹没</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="256.68" transform="rotate(-0 65.232 256.68)">· 成本高/变慢</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="289.944" transform="rotate(-0 65.232 289.944)">· 容易抓错重点</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #5a8a55" x="558.504" y="115.308" transform="rotate(-0 558.504 115.308)">做法二：RAG 检索相关片段</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="442.44" y="156.888" transform="rotate(-0 442.44 156.888)">· 先建库索引全部材料</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="442.44" y="190.152" transform="rotate(-0 442.44 190.152)">· 按问题检索相关片段</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="442.44" y="223.416" transform="rotate(-0 442.44 223.416)">· 只把相关片段放进上下文</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="442.44" y="256.68" transform="rotate(-0 442.44 256.68)">· 上下文小而准</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="442.44" y="289.944" transform="rotate(-0 442.44 289.944)">· 大材料也能用</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #444444" x="369.9" y="364.788" transform="rotate(-0 369.9 364.788)">上下文是「工作台面」，RAG 是「资料室」——按问题取相关资料上台面</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa988000c19">
+   <rect x="7.2" y="7.2" width="725.4" height="415.8"/>
+  </clipPath>
+ </defs>
+</svg>

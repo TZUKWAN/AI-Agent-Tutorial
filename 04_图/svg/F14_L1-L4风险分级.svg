@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="739.8pt" height="446.832pt" viewBox="0 0 739.8 446.832" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-18T17:01:02.493855</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 446.832 
+L 739.8 446.832 
+L 739.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 71.0352 150.767424 
+L 683.2728 150.767424 
+Q 690.5268 150.767424 690.5268 146.443104 
+L 690.5268 110.118816 
+Q 690.5268 105.794496 683.2728 105.794496 
+L 71.0352 105.794496 
+Q 63.7812 105.794496 63.7812 110.118816 
+L 63.7812 146.443104 
+Q 63.7812 150.767424 71.0352 150.767424 
+z
+" clip-path="url(#pe40c78d8e5)" style="fill: #e5f1e3; stroke: #5a8a55; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 81.9162 222.118704 
+L 672.3918 222.118704 
+Q 679.6458 222.118704 679.6458 217.794384 
+L 679.6458 168.497136 
+Q 679.6458 164.172816 672.3918 164.172816 
+L 81.9162 164.172816 
+Q 74.6622 164.172816 74.6622 168.497136 
+L 74.6622 217.794384 
+Q 74.6622 222.118704 81.9162 222.118704 
+z
+" clip-path="url(#pe40c78d8e5)" style="fill: #eaf0f6; stroke: #7ba05b; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 92.7972 293.469984 
+L 661.5108 293.469984 
+Q 668.7648 293.469984 668.7648 289.145664 
+L 668.7648 226.875456 
+Q 668.7648 222.551136 661.5108 222.551136 
+L 92.7972 222.551136 
+Q 85.5432 222.551136 85.5432 226.875456 
+L 85.5432 289.145664 
+Q 85.5432 293.469984 92.7972 293.469984 
+z
+" clip-path="url(#pe40c78d8e5)" style="fill: #ede9f4; stroke: #c9a24b; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 103.6782 364.821264 
+L 650.6298 364.821264 
+Q 657.8838 364.821264 657.8838 360.496944 
+L 657.8838 285.253776 
+Q 657.8838 280.929456 650.6298 280.929456 
+L 103.6782 280.929456 
+Q 96.4242 280.929456 96.4242 285.253776 
+L 96.4242 360.496944 
+Q 96.4242 364.821264 103.6782 364.821264 
+z
+" clip-path="url(#pe40c78d8e5)" style="fill: #f1d7d4; stroke: #b44948; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="369.9" y="30.026762" transform="rotate(-0 369.9 30.026762)">F14  第三方资源风险分级 L1-L4</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #5a8a55" x="101.502" y="131.911819" transform="rotate(-0 101.502 131.911819)">L1</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="166.788" y="125.118811" transform="rotate(-0 166.788 125.118811)">低风险</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="297.36" y="124.880598" transform="rotate(-0 297.36 124.880598)">示例：只读公开资料</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #444444" x="297.36" y="142.002014" transform="rotate(-0 297.36 142.002014)">策略：可直接用</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7ba05b" x="101.502" y="196.776619" transform="rotate(-0 101.502 196.776619)">L2</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="166.788" y="190.000681" transform="rotate(-0 166.788 190.000681)">中低</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="297.36" y="189.710022" transform="rotate(-0 297.36 189.710022)">示例：装公开 Skill/Plugin</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #444444" x="297.36" y="206.866814" transform="rotate(-0 297.36 206.866814)">策略：看一眼来源即可</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #c9a24b" x="101.502" y="261.641419" transform="rotate(-0 101.502 261.641419)">L3</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="166.788" y="254.904114" transform="rotate(-0 166.788 254.904114)">中高</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="297.36" y="254.574925" transform="rotate(-0 297.36 254.574925)">示例：联网/可写文件</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #444444" x="297.36" y="271.775364" transform="rotate(-0 297.36 271.775364)">策略：12问审查后再装</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #b44948" x="101.502" y="326.506219" transform="rotate(-0 101.502 326.506219)">L4</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="166.788" y="319.768914" transform="rotate(-0 166.788 319.768914)">高风险</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start" x="297.36" y="319.444647" transform="rotate(-0 297.36 319.444647)">示例：可删/可发送/可执行</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #444444" x="297.36" y="336.605789" transform="rotate(-0 297.36 336.605789)">策略：默认拒绝，必须人确认</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #444444" x="369.9" y="413.68608" transform="rotate(-0 369.9 413.68608)">风险随「能否影响外部/能否不可逆」递增，不随热度递减</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pe40c78d8e5">
+   <rect x="7.2" y="7.2" width="725.4" height="432.432"/>
+  </clipPath>
+ </defs>
+</svg>

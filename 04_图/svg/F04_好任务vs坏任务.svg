@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="739.8pt" height="446.832pt" viewBox="0 0 739.8 446.832" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-18T16:59:46.601025</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 446.832 
+L 739.8 446.832 
+L 739.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 44.1954 363.523968 
+L 332.9046 363.523968 
+Q 343.7856 363.523968 343.7856 357.037488 
+L 343.7856 98.443152 
+Q 343.7856 91.956672 332.9046 91.956672 
+L 44.1954 91.956672 
+Q 33.3144 91.956672 33.3144 98.443152 
+L 33.3144 357.037488 
+Q 33.3144 363.523968 44.1954 363.523968 
+z
+" clip-path="url(#pc34ff6b421)" style="fill: #fbedec; stroke: #b44948; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 406.8954 363.523968 
+L 695.6046 363.523968 
+Q 706.4856 363.523968 706.4856 357.037488 
+L 706.4856 98.443152 
+Q 706.4856 91.956672 695.6046 91.956672 
+L 406.8954 91.956672 
+Q 396.0144 91.956672 396.0144 98.443152 
+L 396.0144 357.037488 
+Q 396.0144 363.523968 406.8954 363.523968 
+z
+" clip-path="url(#pc34ff6b421)" style="fill: #edf6ec; stroke: #5a8a55; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 350.13834 227.74032 
+Q 369.900348 227.74032 386.867271 227.74032 
+" clip-path="url(#pc34ff6b421)" style="fill: none; stroke: #263238; stroke-width: 2.5; stroke-linecap: round"/>
+    <path d="M 380.467271 224.54032 
+L 386.867271 227.74032 
+L 380.467271 230.94032 
+z
+" clip-path="url(#pc34ff6b421)" style="fill: #263238; stroke: #263238; stroke-width: 2.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #222222" x="369.9" y="30.026762" transform="rotate(-0 369.9 30.026762)">F04  好任务 vs 坏任务</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #b44948" x="188.55" y="119.63232" transform="rotate(-0 188.55 119.63232)">坏任务（模糊）</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="154.22688" transform="rotate(-0 65.232 154.22688)">×  「帮我看看这个文件」</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="188.82144" transform="rotate(-0 65.232 188.82144)">×  「随便写点东西」</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="223.416" transform="rotate(-0 65.232 223.416)">×  「把这件事搞定」</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="258.01056" transform="rotate(-0 65.232 258.01056)">×  没有材料 / 没有验收标准</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #7a3b3a" x="65.232" y="292.60512" transform="rotate(-0 65.232 292.60512)">×  没有边界 / 允许它乱改</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #5a8a55" x="551.25" y="119.63232" transform="rotate(-0 551.25 119.63232)">好任务（明确）</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="427.932" y="154.22688" transform="rotate(-0 427.932 154.22688)">√  「读这3篇PDF，对比方法异同」</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="427.932" y="188.82144" transform="rotate(-0 427.932 188.82144)">√  「输出500字综述+表格」</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="427.932" y="223.416" transform="rotate(-0 427.932 223.416)">√  「存到 output/ 目录」</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="427.932" y="258.01056" transform="rotate(-0 427.932 258.01056)">√  材料已给 / 验收标准写明</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10.5px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: start; fill: #3a6b36" x="427.932" y="292.60512" transform="rotate(-0 427.932 292.60512)">√  只允许读，不允许删</text>
+   </g>
+   <g id="text_14">
+    <g id="patch_5">
+     <path d="M 360.9 234.334754 
+L 378.9 234.334754 
+Q 380.7 234.334754 380.7 232.534754 
+L 380.7 222.945886 
+Q 380.7 221.145886 378.9 221.145886 
+L 360.9 221.145886 
+Q 359.1 221.145886 359.1 222.945886 
+L 359.1 232.534754 
+Q 359.1 234.334754 360.9 234.334754 
+z
+" style="fill: #ffffff; stroke: #999999; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #444444" x="369.9" y="230.253992" transform="rotate(-0 369.9 230.253992)">重写</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 11px; font-family: 'Microsoft YaHei', 'SimHei', sans-serif; text-anchor: middle; fill: #444444" x="369.9" y="396.3888" transform="rotate(-0 369.9 396.3888)">差别不在句子长短，而在：目标可判、材料可见、边界清楚、能验收</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pc34ff6b421">
+   <rect x="7.2" y="7.2" width="725.4" height="432.432"/>
+  </clipPath>
+ </defs>
+</svg>
