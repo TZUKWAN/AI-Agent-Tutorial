@@ -110,27 +110,58 @@ def f20():
             ha="center", fontsize=11, color="#444")
     return save(fig, "F20_四大铁律警示")
 
-# ========== F21 自动化闭环 ==========
+# ========== F21 工作流拆解：从真实案例拆 6 个字段 ==========
 def f21():
-    fig, ax = new_canvas(11, 8, "F21  自动化闭环")
-    elems = [("Trigger", "触发\n(时间/事件)", "INPUT"),
-             ("Condition", "条件\n(满足才做)", "HEAD"),
-             ("Action", "动作\n(执行任务)", "PROC"),
-             ("Notification", "通知\n(告诉人结果)", "OUT")]
-    cx, cy, R = 50, 50, 30
-    pts = []
-    for i, (en, cn, k) in enumerate(elems):
-        ang = np.pi/2 - i*(2*np.pi/4)
-        x = cx + R*np.cos(ang); y = cy + R*np.sin(ang)
-        pts.append((x, y))
-        rbox(ax, x, y, 18, 13, k, en, fs=11.5, fw="bold", sub=cn, sub_fs=9.5)
-    for i in range(4):
-        arrow(ax, pts[i], pts[(i+1)%4], lw=2, curve=-0.2)
-    ax.text(cx, cy, "无人值守\n自动跑", ha="center", va="center",
-            fontsize=11, color=C["CORE_E"], fontweight="bold")
-    ax.text(50, 8, "前提：任务本身可验收，且失败路径有人能接手",
-            ha="center", fontsize=10.5, color="#444")
-    legend_row(ax, ALL_LEGEND, y=2)
+    fig, ax = new_canvas(13.5, 8.5, "F21  工作流拆解：以「每日竞品价格监控」为例")
+    # 案例说明条
+    ax.add_patch(FancyBboxPatch((5, 86), 90, 6,
+                 boxstyle="round,pad=0.2,rounding_size=1",
+                 linewidth=1.4, edgecolor=C["HEAD_E"], facecolor=C["HEAD_F"]))
+    ax.text(50, 89, "真实案例：每天自动抓 3 家竞品价格，变动超阈值才推送，调价建议需人审批",
+            ha="center", va="center", fontsize=10.5, color=C["HEAD_E"],
+            fontweight="bold")
+
+    # 6 个字段：2 行 3 列
+    fields = [
+        ("Trigger",       "触发",     "事件/动作",
+         "定时到点 08:00\n（也可改成：竞品页更新时）", "INPUT",  20, 66),
+        ("Schedule",      "调度",     "什么时候跑",
+         "cron: 0 8 * * *\n工作日跑，周末停",        "STD",    50, 66),
+        ("Condition",     "条件",     "满足才执行",
+         "价格变动 ≥ 5%\n或新品上架",               "HEAD",   80, 66),
+        ("Action",        "动作",     "执行任务",
+         "抓 3 家价格 → 对比昨日\n→ 生成对比表 + 建议", "PROC", 20, 38),
+        ("Notification",  "通知",     "告诉人结果",
+         "IM 推送给运营\n无变化则静默",              "OUT",    50, 38),
+        ("Human Approval","人工审批", "关键节点人确认",
+         "调价建议 → 运营点「同意」\n才回写到自家后台", "CORE", 80, 38),
+    ]
+    bw, bh = 28, 20
+    for en, cn, what, ex, k, x, y in fields:
+        rbox(ax, x, y, bw, bh, k, "", fs=11)
+        ax.text(x, y + 6.5, en, ha="center", va="center",
+                fontsize=11.5, fontweight="bold", color=C[k+"_E"], zorder=3)
+        ax.text(x, y + 3.2, f"{cn} · {what}", ha="center", va="center",
+                fontsize=9.2, color="#333", zorder=3)
+        ax.text(x, y - 3.5, ex, ha="center", va="center",
+                fontsize=9.0, color="#444", zorder=3, linespacing=1.4)
+
+    # 字段间流程箭头
+    arrow(ax, (34, 66), (36, 66), lw=1.4)              # Trigger -> Schedule
+    arrow(ax, (64, 66), (66, 66), lw=1.4)              # Schedule -> Condition
+    # Condition 满足 -> Action（斜跨到下排左）；不满足 -> 静默
+    arrow(ax, (66, 60), (34, 44), lw=1.6, curve=0.15, label="满足条件 → 执行")
+    ax.text(80, 58, "不满足 → 静默", ha="center", va="center",
+            fontsize=9, color=ARROW_AUX)
+    arrow(ax, (20, 56), (20, 48), lw=1.4)              # Trigger -> Action
+    arrow(ax, (34, 38), (36, 38), lw=1.4)              # Action -> Notification
+    arrow(ax, (64, 38), (66, 38), lw=1.4)              # Notification -> Human Approval
+
+    ax.text(50, 18, "拆解任何一个自动化工作流，都先把这 6 个字段填出来——填不出，就还不能自动化",
+            ha="center", fontsize=10.8, color=C["CORE_E"], fontweight="bold")
+    ax.text(50, 12, "其中 Human Approval 是「不可逆动作」的安全闸门：不是每次都要人，是关键节点必须人",
+            ha="center", fontsize=10, color="#444")
+    legend_row(ax, ALL_LEGEND, y=5)
     return save(fig, "F21_自动化闭环")
 
 # ========== F22 每日信息监控 ==========

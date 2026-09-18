@@ -19,1164 +19,612 @@
   },
   {
     "page": 4,
-    "text_chars": 3146,
+    "text_chars": 2919,
     "images": 0,
     "issues": []
   },
   {
     "page": 5,
-    "text_chars": 3307,
+    "text_chars": 3038,
     "images": 0,
     "issues": []
   },
   {
     "page": 6,
-    "text_chars": 3281,
+    "text_chars": 2738,
     "images": 0,
     "issues": []
   },
   {
     "page": 7,
-    "text_chars": 3377,
+    "text_chars": 2838,
     "images": 0,
     "issues": []
   },
   {
     "page": 8,
-    "text_chars": 3531,
+    "text_chars": 3224,
     "images": 0,
     "issues": []
   },
   {
     "page": 9,
-    "text_chars": 3592,
+    "text_chars": 3164,
     "images": 0,
     "issues": []
   },
   {
     "page": 10,
-    "text_chars": 3554,
+    "text_chars": 3276,
     "images": 0,
     "issues": []
   },
   {
     "page": 11,
-    "text_chars": 3553,
-    "images": 0,
+    "text_chars": 183,
+    "images": 1,
     "issues": []
   },
   {
     "page": 12,
-    "text_chars": 3003,
+    "text_chars": 676,
     "images": 0,
     "issues": []
   },
   {
     "page": 13,
-    "text_chars": 3450,
+    "text_chars": 849,
     "images": 0,
     "issues": []
   },
   {
     "page": 14,
-    "text_chars": 3443,
+    "text_chars": 861,
     "images": 0,
     "issues": []
   },
   {
     "page": 15,
-    "text_chars": 3466,
+    "text_chars": 338,
     "images": 0,
     "issues": []
   },
   {
     "page": 16,
-    "text_chars": 3451,
-    "images": 0,
+    "text_chars": 451,
+    "images": 1,
     "issues": []
   },
   {
     "page": 17,
-    "text_chars": 3306,
+    "text_chars": 785,
     "images": 0,
     "issues": []
   },
   {
     "page": 18,
-    "text_chars": 3207,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 19,
-    "text_chars": 3330,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 20,
-    "text_chars": 3125,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 21,
-    "text_chars": 3439,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 22,
-    "text_chars": 2968,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 23,
-    "text_chars": 569,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 24,
-    "text_chars": 493,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 25,
-    "text_chars": 912,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 26,
-    "text_chars": 935,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 27,
-    "text_chars": 929,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 28,
-    "text_chars": 851,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 29,
-    "text_chars": 869,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 30,
-    "text_chars": 817,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 31,
-    "text_chars": 166,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 32,
-    "text_chars": 346,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 33,
-    "text_chars": 945,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 34,
-    "text_chars": 911,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 35,
-    "text_chars": 887,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 36,
-    "text_chars": 885,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 37,
-    "text_chars": 872,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 38,
-    "text_chars": 712,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 39,
-    "text_chars": 813,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 40,
-    "text_chars": 815,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 41,
-    "text_chars": 766,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 42,
-    "text_chars": 348,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 43,
-    "text_chars": 329,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 44,
-    "text_chars": 646,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 45,
-    "text_chars": 742,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 46,
-    "text_chars": 692,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 47,
-    "text_chars": 1082,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 48,
-    "text_chars": 715,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 49,
-    "text_chars": 379,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 50,
-    "text_chars": 622,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 51,
-    "text_chars": 787,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 52,
-    "text_chars": 471,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 53,
-    "text_chars": 414,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 54,
-    "text_chars": 924,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 55,
-    "text_chars": 625,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 56,
-    "text_chars": 799,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 57,
-    "text_chars": 885,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 58,
-    "text_chars": 920,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 59,
-    "text_chars": 951,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 60,
-    "text_chars": 573,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 61,
-    "text_chars": 670,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 62,
-    "text_chars": 830,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 63,
-    "text_chars": 720,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 64,
-    "text_chars": 477,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 65,
-    "text_chars": 682,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 66,
-    "text_chars": 747,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 67,
-    "text_chars": 753,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 68,
-    "text_chars": 774,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 69,
-    "text_chars": 623,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 70,
-    "text_chars": 613,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 71,
-    "text_chars": 731,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 72,
-    "text_chars": 675,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 73,
-    "text_chars": 737,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 74,
-    "text_chars": 620,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 75,
-    "text_chars": 842,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 76,
-    "text_chars": 771,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 77,
-    "text_chars": 711,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 78,
-    "text_chars": 647,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 79,
-    "text_chars": 615,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 80,
-    "text_chars": 716,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 81,
-    "text_chars": 603,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 82,
-    "text_chars": 675,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 83,
-    "text_chars": 609,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 84,
-    "text_chars": 730,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 85,
-    "text_chars": 636,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 86,
-    "text_chars": 615,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 87,
-    "text_chars": 658,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 88,
-    "text_chars": 604,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 89,
-    "text_chars": 741,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 90,
-    "text_chars": 347,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 91,
-    "text_chars": 732,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 92,
-    "text_chars": 693,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 93,
-    "text_chars": 669,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 94,
-    "text_chars": 843,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 95,
-    "text_chars": 697,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 96,
-    "text_chars": 846,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 97,
-    "text_chars": 845,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 98,
-    "text_chars": 197,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 99,
-    "text_chars": 382,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 100,
-    "text_chars": 768,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 101,
-    "text_chars": 630,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 102,
-    "text_chars": 546,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 103,
-    "text_chars": 587,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 104,
-    "text_chars": 582,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 105,
-    "text_chars": 602,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 106,
-    "text_chars": 591,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 107,
-    "text_chars": 565,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 108,
-    "text_chars": 510,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 109,
-    "text_chars": 475,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 110,
-    "text_chars": 564,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 111,
-    "text_chars": 577,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 112,
-    "text_chars": 480,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 113,
-    "text_chars": 529,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 114,
-    "text_chars": 599,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 115,
-    "text_chars": 366,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 116,
-    "text_chars": 815,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 117,
-    "text_chars": 631,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 118,
-    "text_chars": 603,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 119,
-    "text_chars": 466,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 120,
-    "text_chars": 946,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 121,
-    "text_chars": 1053,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 122,
-    "text_chars": 946,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 123,
-    "text_chars": 843,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 124,
-    "text_chars": 907,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 125,
-    "text_chars": 835,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 126,
-    "text_chars": 846,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 127,
     "text_chars": 860,
     "images": 0,
     "issues": []
   },
   {
-    "page": 128,
-    "text_chars": 907,
+    "page": 19,
+    "text_chars": 705,
     "images": 0,
     "issues": []
   },
   {
-    "page": 129,
-    "text_chars": 930,
+    "page": 20,
+    "text_chars": 710,
     "images": 0,
     "issues": []
   },
   {
-    "page": 130,
-    "text_chars": 964,
+    "page": 21,
+    "text_chars": 383,
     "images": 0,
     "issues": []
   },
   {
-    "page": 131,
-    "text_chars": 1028,
+    "page": 22,
+    "text_chars": 417,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 23,
+    "text_chars": 794,
     "images": 0,
     "issues": []
   },
   {
-    "page": 132,
-    "text_chars": 1016,
+    "page": 24,
+    "text_chars": 615,
     "images": 0,
     "issues": []
   },
   {
-    "page": 133,
-    "text_chars": 902,
+    "page": 25,
+    "text_chars": 700,
     "images": 0,
     "issues": []
   },
   {
-    "page": 134,
+    "page": 26,
+    "text_chars": 1033,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 27,
+    "text_chars": 508,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 28,
+    "text_chars": 489,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 29,
+    "text_chars": 401,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 30,
+    "text_chars": 906,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 31,
+    "text_chars": 934,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 32,
+    "text_chars": 959,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 33,
+    "text_chars": 704,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 34,
+    "text_chars": 517,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 35,
+    "text_chars": 672,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 36,
+    "text_chars": 711,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 37,
+    "text_chars": 1037,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 38,
+    "text_chars": 838,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 39,
+    "text_chars": 496,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 40,
+    "text_chars": 406,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 41,
+    "text_chars": 835,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 42,
+    "text_chars": 980,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 43,
+    "text_chars": 673,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 44,
+    "text_chars": 524,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 45,
     "text_chars": 1007,
     "images": 0,
     "issues": []
   },
   {
-    "page": 135,
-    "text_chars": 469,
+    "page": 46,
+    "text_chars": 1098,
     "images": 0,
     "issues": []
   },
   {
-    "page": 136,
-    "text_chars": 319,
+    "page": 47,
+    "text_chars": 974,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 48,
+    "text_chars": 1123,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 49,
+    "text_chars": 487,
     "images": 1,
     "issues": []
   },
   {
-    "page": 137,
-    "text_chars": 533,
+    "page": 50,
+    "text_chars": 758,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 51,
+    "text_chars": 148,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 52,
+    "text_chars": 455,
     "images": 1,
     "issues": []
   },
   {
-    "page": 138,
-    "text_chars": 1351,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 139,
-    "text_chars": 1077,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 140,
-    "text_chars": 1014,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 141,
-    "text_chars": 940,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 142,
-    "text_chars": 1068,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 143,
-    "text_chars": 1209,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 144,
-    "text_chars": 1009,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 145,
-    "text_chars": 983,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 146,
-    "text_chars": 595,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 147,
-    "text_chars": 882,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 148,
-    "text_chars": 527,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 149,
-    "text_chars": 1189,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 150,
-    "text_chars": 643,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 151,
-    "text_chars": 879,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 152,
-    "text_chars": 890,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 153,
-    "text_chars": 282,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 154,
-    "text_chars": 351,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 155,
-    "text_chars": 1138,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 156,
-    "text_chars": 1073,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 157,
-    "text_chars": 1152,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 158,
-    "text_chars": 899,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 159,
-    "text_chars": 1003,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 160,
-    "text_chars": 981,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 161,
-    "text_chars": 825,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 162,
-    "text_chars": 305,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 163,
-    "text_chars": 949,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 164,
-    "text_chars": 653,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 165,
-    "text_chars": 1288,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 166,
-    "text_chars": 496,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 167,
-    "text_chars": 991,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 168,
-    "text_chars": 886,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 169,
-    "text_chars": 956,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 170,
-    "text_chars": 1104,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 171,
-    "text_chars": 830,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 172,
-    "text_chars": 518,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 173,
-    "text_chars": 530,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 174,
-    "text_chars": 1013,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 175,
-    "text_chars": 995,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 176,
-    "text_chars": 689,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 177,
-    "text_chars": 497,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 178,
-    "text_chars": 1213,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 179,
-    "text_chars": 1339,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 180,
-    "text_chars": 716,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 181,
-    "text_chars": 307,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 182,
-    "text_chars": 421,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 183,
-    "text_chars": 877,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 184,
-    "text_chars": 590,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 185,
-    "text_chars": 118,
-    "images": 2,
-    "issues": []
-  },
-  {
-    "page": 186,
-    "text_chars": 1028,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 187,
-    "text_chars": 725,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 188,
-    "text_chars": 744,
-    "images": 1,
-    "issues": []
-  },
-  {
-    "page": 189,
-    "text_chars": 692,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 190,
-    "text_chars": 784,
-    "images": 0,
-    "issues": []
-  },
-  {
-    "page": 191,
+    "page": 53,
     "text_chars": 856,
     "images": 0,
     "issues": []
   },
   {
-    "page": 192,
+    "page": 54,
+    "text_chars": 946,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 55,
+    "text_chars": 995,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 56,
+    "text_chars": 1139,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 57,
+    "text_chars": 846,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 58,
+    "text_chars": 1060,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 59,
+    "text_chars": 1059,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 60,
+    "text_chars": 938,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 61,
+    "text_chars": 1099,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 62,
+    "text_chars": 1066,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 63,
+    "text_chars": 626,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 64,
+    "text_chars": 443,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 65,
+    "text_chars": 265,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 66,
+    "text_chars": 609,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 67,
+    "text_chars": 883,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 68,
+    "text_chars": 1092,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 69,
+    "text_chars": 1249,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 70,
+    "text_chars": 984,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 71,
+    "text_chars": 1180,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 72,
+    "text_chars": 578,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 73,
+    "text_chars": 423,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 74,
+    "text_chars": 1028,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 75,
+    "text_chars": 576,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 76,
+    "text_chars": 508,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 77,
+    "text_chars": 622,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 78,
+    "text_chars": 854,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 79,
+    "text_chars": 221,
+    "images": 2,
+    "issues": []
+  },
+  {
+    "page": 80,
+    "text_chars": 1014,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 81,
+    "text_chars": 1027,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 82,
+    "text_chars": 766,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 83,
+    "text_chars": 910,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 84,
+    "text_chars": 607,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 85,
+    "text_chars": 959,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 86,
+    "text_chars": 693,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 87,
+    "text_chars": 1285,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 88,
+    "text_chars": 814,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 89,
+    "text_chars": 424,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 90,
+    "text_chars": 1102,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 91,
+    "text_chars": 779,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 92,
+    "text_chars": 1267,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 93,
+    "text_chars": 157,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 94,
+    "text_chars": 583,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 95,
+    "text_chars": 1416,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 96,
+    "text_chars": 1259,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 97,
+    "text_chars": 525,
+    "images": 1,
+    "issues": []
+  },
+  {
+    "page": 98,
+    "text_chars": 783,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 99,
+    "text_chars": 855,
+    "images": 0,
+    "issues": []
+  },
+  {
+    "page": 100,
     "text_chars": 261,
     "images": 0,
     "issues": []
   },
   {
-    "page": 193,
+    "page": 101,
     "text_chars": 1479,
     "images": 0,
     "issues": []
   },
   {
-    "page": 194,
+    "page": 102,
     "text_chars": 1930,
     "images": 0,
     "issues": []
   },
   {
-    "page": 195,
+    "page": 103,
     "text_chars": 1714,
     "images": 0,
     "issues": []
   },
   {
-    "page": 196,
+    "page": 104,
     "text_chars": 1397,
     "images": 0,
     "issues": []
   },
   {
-    "page": 197,
+    "page": 105,
     "text_chars": 553,
     "images": 0,
     "issues": []

@@ -2,31 +2,54 @@
 """F00, F31, F30, F01, F02, F03, F04, F29, F05, F06"""
 from draw_common import *
 
-# ========== F00 认知框架 ==========
+# ========== F00 全书总模型：八阶段主线 ==========
 def f00():
-    fig, ax = new_canvas(14, 7.5, "F00  AI Agent 认知框架：七步工作法")
-    steps = [
-        ("Goal", "目标", "要什么结果"),
-        ("Context", "情境", "背景与材料"),
-        ("Resources", "资源", "可用工具/文件"),
-        ("Capabilities", "能力", "Agent能做什么"),
-        ("Workflow", "流程", "如何一步步做"),
-        ("Verification", "验证", "如何证明做对"),
-        ("Reuse", "复用", "沉淀为下次经验"),
+    fig, ax = new_canvas(15, 7.6, "F00  全书总模型：八阶段任务主线")
+    stages = [
+        ("1", "定义任务",   "要什么结果？",   "8要素任务法",        "HEAD"),
+        ("2", "准备上下文\n与能力", "材料齐了吗？\n工具够吗？", "RAG / 权限 / 工具清单", "INPUT"),
+        ("3", "执行",       "开始动手做",     "Planner + 工具调用",  "PROC"),
+        ("4", "观察",       "刚才发生了什么？","读日志 / 看中间产物","STD"),
+        ("5", "验证",       "做对了吗？",     "三层证据 + 验收标准", "CORE"),
+        ("6", "修复",       "不对就改",       "回退 / 重试 / 换路径","PROC"),
+        ("7", "交付",       "交给人用",       "文件 / 链接 / 通知",  "OUT"),
+        ("8", "沉淀",       "下次怎么更快",   "Skill / 模板 / 记忆", "OUT"),
     ]
-    n = len(steps)
-    xs = np.linspace(8, 92, n)
-    y = 55
-    kinds = ["HEAD","INPUT","STD","PROC","PROC","CORE","OUT"]
-    for i, ((en, cn, desc), k, x) in enumerate(zip(steps, kinds, xs)):
-        rbox(ax, x, y, 11.5, 16, k, cn, fs=13, fw="bold", sub=f"{en}\n{desc}", sub_fs=9)
-        if i < n-1:
-            arrow(ax, (x+5.9, y), (xs[i+1]-5.9, y))
-    ax.text(50, 22, "人负责：定义目标 · 提供判断 · 设置边界 · 承担决策",
-            ha="center", fontsize=12, color=C["CORE_E"], fontweight="bold")
-    ax.text(50, 14, "Agent负责：检索 · 阅读 · 操作 · 计算 · 制作 · 执行 · 迭代",
-            ha="center", fontsize=12, color=C["OUT_E"], fontweight="bold")
-    legend_row(ax, ALL_LEGEND)
+    n = len(stages)
+    xs = np.linspace(7, 93, n)
+    y = 56
+    bw, bh = 10.5, 26
+    for i, ((no, name, q, m, k), x) in enumerate(zip(stages, xs)):
+        rbox(ax, x, y, bw, bh, k, "", fs=11, fw="bold")
+        # 序号圆
+        ax.add_patch(Circle((x, y + bh/2 - 2.2), 1.6,
+                     facecolor=C[k+"_E"], edgecolor=C[k+"_E"], zorder=3))
+        ax.text(x, y + bh/2 - 2.2, no, ha="center", va="center",
+                fontsize=9.5, fontweight="bold", color="white", zorder=4)
+        # 阶段名
+        ax.text(x, y + 4.2, name, ha="center", va="center",
+                fontsize=10.5, fontweight="bold", color=TXT, zorder=3,
+                linespacing=1.15)
+        # 核心问题
+        ax.text(x, y - 1.2, q, ha="center", va="center",
+                fontsize=8.6, color="#333", zorder=3, linespacing=1.25)
+        # 方法
+        ax.text(x, y - 8.5, m, ha="center", va="center",
+                fontsize=8.0, color=C[k+"_E"], zorder=3, linespacing=1.2)
+        if i < n - 1:
+            arrow(ax, (x + bw/2 + 0.15, y), (xs[i+1] - bw/2 - 0.15, y), lw=1.8)
+    # 反馈回路：验证失败 -> 修复 -> 执行（下移到框下方，避免压字）
+    loop_y = y - bh/2 - 4.5
+    arrow(ax, (xs[5], loop_y), (xs[2], loop_y),
+          aux=True, curve=-0.18, lw=1.4)
+    ax.text(50, loop_y - 2.2, "验证不通过 → 修复 → 回到执行",
+            ha="center", fontsize=9.5, color=ARROW_AUX, zorder=4)
+    # 双行总结
+    ax.text(50, 20, "人负责：定义任务 · 设定边界 · 验收拍板 · 决定是否沉淀",
+            ha="center", fontsize=11.5, color=C["CORE_E"], fontweight="bold")
+    ax.text(50, 13, "Agent负责：准备 · 执行 · 观察 · 自检 · 修复 · 交付",
+            ha="center", fontsize=11.5, color=C["OUT_E"], fontweight="bold")
+    legend_row(ax, ALL_LEGEND, y=6)
     return save(fig, "F00_认知框架")
 
 # ========== F31 学习路径地图 ==========
@@ -85,29 +108,67 @@ def f30():
     legend_row(ax, ALL_LEGEND, y=5)
     return save(fig, "F30_贯穿案例成长路线")
 
-# ========== F01 从聊天到Agent ==========
+# ========== F01 AI 能力三维度 ==========
 def f01():
-    fig, ax = new_canvas(13, 7.5, "F01  从聊天到 Agent：能力四级递增")
-    cols = [
-        ("Chatbot", "聊天机器人", "你问一句\n它答一句\n无记忆/无工具", "INPUT", 15),
-        ("Copilot", "副驾驶", "能引用文档\n能补全建议\n你主导执行", "STD", 38),
-        ("Agent", "智能体", "能自己拆任务\n调用工具\n多步执行", "PROC", 61),
-        ("Autonomous\nWorkflow", "自主工作流", "触发→执行→检查\n→修复→交付\n人只定边界", "CORE", 84),
+    axes_labels = ["工具调用能力\n(能调多少工具/外部系统)",
+                   "自主推进能力\n(能否自己拆步/多步执行)",
+                   "持续运行能力\n(能否长时/定时/无人值守)"]
+    N = len(axes_labels)
+    ang = np.linspace(0, 2*np.pi, N, endpoint=False).tolist()
+    ang += ang[:1]
+    forms = [
+        ("聊天机器人 Chatbot",   [1.5, 1.5, 1.0], "#63758A"),
+        ("副驾驶 Copilot",       [3.5, 3.5, 2.0], "#7B6A9A"),
+        ("单轮任务 Agent",       [7.0, 6.0, 4.0], "#9A7B3F"),
+        ("自主工作流 Agent",     [9.0, 9.0, 8.5], "#B44948"),
     ]
-    for name, cn, desc, k, x in cols:
-        rbox(ax, x, 55, 18, 26, k, "", fs=13, fw="bold")
-        ax.text(x, 61.5, cn, ha="center", va="center", fontsize=13,
-                fontweight="bold", color=TXT, zorder=3)
-        ax.text(x, 56.3, name, ha="center", va="center", fontsize=10,
-                color="#333", zorder=3, linespacing=1.2)
-        ax.text(x, 48.5, desc, ha="center", va="center", fontsize=9.5,
-                color="#444", zorder=3, linespacing=1.4)
-    for x1, x2 in [(24, 29), (47, 52), (70, 75)]:
-        arrow(ax, (x1, 55), (x2, 55), lw=2.4)
-    ax.text(50, 22, "自主度 ↑  |  你从「每步都操作」变成「只定目标和验收」",
-            ha="center", fontsize=11.5, color=C["CORE_E"], fontweight="bold")
-    legend_row(ax, ALL_LEGEND)
-    return save(fig, "F01_从聊天到Agent")
+    fig = plt.figure(figsize=(12, 7.8), dpi=200)
+    # 左：雷达图
+    ax = fig.add_subplot(121, polar=True)
+    ax.set_theta_offset(np.pi/2); ax.set_theta_direction(-1)
+    ax.set_xticks(ang[:-1]); ax.set_xticklabels(axes_labels, fontsize=10.5)
+    ax.set_ylim(0, 10); ax.set_yticks([2, 4, 6, 8, 10])
+    ax.set_yticklabels(["2","4","6","8","10"], fontsize=8, color="#888")
+    for name, vals, col in forms:
+        v = vals + vals[:1]
+        ax.plot(ang, v, color=col, lw=2, label=name)
+        ax.fill(ang, v, color=col, alpha=0.10)
+    ax.set_title("三维度雷达：能力不是「几级」，是三条独立轴",
+                 fontsize=13, fontweight="bold", pad=22, color=TXT)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.12),
+              fontsize=10, frameon=False, ncol=2)
+
+    # 右：三维度说明卡
+    ax2 = fig.add_subplot(122); ax2.axis("off")
+    ax2.set_xlim(0, 100); ax2.set_ylim(0, 100)
+    dims = [
+        ("① 工具调用能力", "Tools / MCP / API",
+         "能不能查、能不能改、能不能发出去\n数量 × 类型 × 权限边界", "INPUT", 82),
+        ("② 自主推进能力", "Planner / Sub-agent",
+         "能不能自己拆任务、看中间结果\n遇到错能不能自己换路子", "PROC", 50),
+        ("③ 持续运行能力", "Schedule / Long-running",
+         "能不能定时跑、挂着跑、断了续跑\n失败能不能自己告警", "CORE", 18),
+    ]
+    for name, sub, desc, k, y in dims:
+        ax2.add_patch(FancyBboxPatch((4, y-13), 92, 26,
+                     boxstyle="round,pad=0.3,rounding_size=1.2",
+                     linewidth=1.6, edgecolor=C[k+"_E"], facecolor=C[k+"_F"], zorder=2))
+        ax2.text(8, y+6, name, fontsize=12.5, fontweight="bold",
+                 color=C[k+"_E"], va="center")
+        ax2.text(8, y+0.5, sub, fontsize=9.5, color="#444", va="center")
+        ax2.text(8, y-6, desc, fontsize=9.5, color="#333",
+                 va="center", linespacing=1.4)
+    fig.suptitle("F01  AI 能力三维度：工具调用 × 自主推进 × 持续运行",
+                 fontsize=16, fontweight="bold", y=0.98, color=TXT)
+    fig.text(0.5, 0.03,
+             "三维独立：一个 Agent 可以工具很强但跑不长，也可以挂着跑但只会一件事——别再用「Chatbot/Copilot/Agent」一句话概括",
+             ha="center", fontsize=10, color="#444")
+    png = os.path.join(PNG_DIR, "F01_从聊天到Agent.png")
+    svg = os.path.join(SVG_DIR, "F01_从聊天到Agent.svg")
+    fig.savefig(png, dpi=200, bbox_inches="tight", facecolor="white")
+    fig.savefig(svg, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return png, svg
 
 # ========== F02 工作区与权限模型 ==========
 def f02():

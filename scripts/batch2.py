@@ -106,44 +106,95 @@ def f10():
     legend_row(ax, ALL_LEGEND, y=3)
     return save(fig, "F10_恢复策略决策树")
 
-# ========== F11 Agent 架构全景 ==========
+# ========== F11 Agent 认知模型：四系统 + 扩展接口层 ==========
 def f11():
-    fig, ax = new_canvas(12.5, 8.5, "F11  Agent 架构全景")
-    rows = [
-        (86, "Model 大模型（推理与决策）", "HEAD", 60),
-        (70, "Context 上下文  |  Tools 工具  |  Memory 记忆", "STD", 80),
-        (52, "Agent 核心：规划 / 调用 / 观察 / 反思", "CORE", 60),
-        (34, "Workflow 工作流（多步编排）", "PROC", 60),
-        (16, "Result 结果交付", "OUT", 40),
+    fig, ax = new_canvas(13, 8.6, "F11  Agent 认知模型：四个基本系统 + 一个扩展接口层")
+    # 顶部：扩展接口层
+    ax.add_patch(FancyBboxPatch((5, 80), 90, 9,
+                 boxstyle="round,pad=0.3,rounding_size=1.2",
+                 linewidth=1.8, edgecolor=C["HEAD_E"], facecolor=C["HEAD_F"], zorder=2))
+    ax.text(50, 86.5, "扩展接口层（Extensibility Layer）",
+            ha="center", va="center", fontsize=11.5, fontweight="bold",
+            color=C["HEAD_E"], zorder=3)
+    ax.text(50, 82.5, "API   ·   Connector   ·   Plugin   ·   MCP   ·   Skill",
+            ha="center", va="center", fontsize=10.5, color="#333", zorder=3)
+
+    # 四个基本系统 2x2
+    sys4 = [
+        ("① 推理系统", "Model",
+         "大模型 / 推理 / 决策\n「想」这一步怎么做", "HEAD", 27, 62),
+        ("② 信息系统", "Context / Memory / State / RAG",
+         "上下文窗口 · 长期记忆\n当前状态 · 检索增强", "INPUT", 73, 62),
+        ("③ 行动系统", "Tools",
+         "函数调用 · 浏览器\n文件 · 代码执行", "PROC", 27, 38),
+        ("④ 编排系统", "Workflow / Planner / Sub-agent",
+         "主循环 · 任务拆解\n子 Agent 调度", "CORE", 73, 38),
     ]
-    for y, t, k, w in rows:
-        rbox(ax, 50, y, w, 11, k, t, fs=12.5, fw="bold")
-    for y1, y2 in [(80.5, 75.5), (64.5, 57.5), (46.5, 39.5), (28.5, 21.5)]:
-        arrow(ax, (50, y1), (50, y2), lw=2.2)
-    ax.text(50, 6, "自顶向下：模型决定怎么想，Agent 核心把它变成动作",
-            ha="center", fontsize=10.5, color="#444")
-    legend_row(ax, ALL_LEGEND, y=2)
+    bw, bh = 38, 20
+    for name, sub, desc, k, x, y in sys4:
+        rbox(ax, x, y, bw, bh, k, "", fs=12)
+        ax.text(x, y + 5.5, name, ha="center", va="center",
+                fontsize=12.5, fontweight="bold", color=TXT, zorder=3)
+        ax.text(x, y + 1.8, sub, ha="center", va="center",
+                fontsize=9.5, color=C[k+"_E"], zorder=3, fontweight="bold")
+        ax.text(x, y - 4.5, desc, ha="center", va="center",
+                fontsize=9.2, color="#444", zorder=3, linespacing=1.35)
+        # 从扩展接口层向下的虚线
+        arrow(ax, (x, 80), (x, y + bh/2 + 0.4), aux=True, lw=1.2)
+
+    # 系统间协作箭头（顺时针）
+    arrow(ax, (46, 62), (54, 62), lw=1.4)            # 推理 -> 信息
+    arrow(ax, (73, 48), (73, 52), aux=True, lw=1.2)  # 信息 -> 编排
+    arrow(ax, (54, 38), (46, 38), lw=1.4)            # 编排 -> 行动
+    arrow(ax, (27, 48), (27, 52), aux=True, lw=1.2)  # 行动 -> 推理
+
+    # 底部说明
+    ax.text(50, 22,
+            "四个系统缺一不可：推理是脑，信息是记忆与感官，行动是手脚，编排是指挥链",
+            ha="center", fontsize=10.5, color=TXT)
+    ax.text(50, 16,
+            "扩展接口层横切四层：所有外部能力都通过这一层接进来，不污染内部结构",
+            ha="center", fontsize=10, color=C["HEAD_E"])
+    legend_row(ax, ALL_LEGEND, y=8)
     return save(fig, "F11_Agent架构全景")
 
-# ========== F12 能力扩展层级 ==========
+# ========== F12 能力供应链 ==========
 def f12():
-    fig, ax = new_canvas(13, 7.8, "F12  能力扩展层级：Tool → Plugin → MCP → Skill")
-    layers = [
-        ("Tool", "单个函数/调用", "扩展：能调一个能力", "INPUT", 14),
-        ("Plugin", "一组相关工具", "扩展：一套相关能力", "STD", 38),
-        ("MCP", "标准协议连接外部", "扩展：对接外部系统", "PROC", 62),
-        ("Skill", "可复用工作方法", "扩展：一整套做法", "CORE", 86),
+    fig, ax = new_canvas(15, 7.4, "F12  能力供应链：从「发现一个能力」到「安全用上它」")
+    steps = [
+        ("发现",      "Discover",     "GitHub / 社区\n文档 / 同事推荐",      "INPUT"),
+        ("判断来源",  "Source Check", "谁做的？\n是否官方/可信？",          "HEAD"),
+        ("读权限",    "Read Perm.",   "要读什么？\n要写什么？要不要钱？",   "STD"),
+        ("安装",      "Install",      "隔离环境\n锁定版本",                 "PROC"),
+        ("沙箱验证",  "Sandbox Test", "跑一遍看行为\n对照 L1-L4 风险",      "CORE"),
+        ("升级",      "Upgrade",      "按需升级\n变更点要重验",             "PROC"),
+        ("撤销",      "Rollback",     "出问题卸载\n恢复原状",               "OUT"),
     ]
-    for name, what, ext, k, x in layers:
-        rbox(ax, x, 58, 19, 22, k, name, fs=13, fw="bold",
-             sub=f"{what}\n{ext}", sub_fs=9.5)
-    for x1, x2 in [(23.5, 28.5), (47.5, 52.5), (71.5, 76.5)]:
-        arrow(ax, (x1, 58), (x2, 58), lw=2.4)
-    ax.text(50, 25, "颗粒度越来越大：从「调一下」到「整套方法可复用」",
-            ha="center", fontsize=11, color="#444")
-    ax.text(50, 18, "越上层越接近「工作方式」，越下层越接近「接口」",
-            ha="center", fontsize=10.5, color=ARROW_AUX)
-    legend_row(ax, ALL_LEGEND)
+    n = len(steps)
+    xs = np.linspace(7, 93, n)
+    y = 56
+    bw, bh = 10.8, 26
+    for i, ((cn, en, desc, k), x) in enumerate(zip(steps, xs)):
+        rbox(ax, x, y, bw, bh, k, "", fs=11, fw="bold")
+        ax.text(x, y + 7.5, cn, ha="center", va="center",
+                fontsize=12.5, fontweight="bold", color=TXT, zorder=3)
+        ax.text(x, y + 3.5, en, ha="center", va="center",
+                fontsize=8.8, color=C[k+"_E"], zorder=3, style="italic")
+        ax.text(x, y - 3.5, desc, ha="center", va="center",
+                fontsize=8.6, color="#444", zorder=3, linespacing=1.35)
+        if i < n - 1:
+            arrow(ax, (x + bw/2 + 0.15, y), (xs[i+1] - bw/2 - 0.15, y), lw=1.8)
+    # 撤销回到发现的反馈虚线（供应链回流，下移避免压字）
+    loop_y = y - bh/2 - 4.5
+    arrow(ax, (xs[6], loop_y), (xs[0], loop_y),
+          aux=True, curve=-0.15, lw=1.4)
+    ax.text(50, loop_y - 2.2, "能力出问题 → 撤销 → 重新评估（供应链回流）",
+            ha="center", fontsize=9.5, color=ARROW_AUX, zorder=4)
+    ax.text(50, 20, "原则：能力不是「装上就行」，而是一条可审计、可回退的供应链",
+            ha="center", fontsize=11.5, color=C["CORE_E"], fontweight="bold")
+    ax.text(50, 13, "每一步都留痕：来源、权限、验证结果、版本号——出事能定位到哪一环",
+            ha="center", fontsize=10.5, color="#444")
+    legend_row(ax, ALL_LEGEND, y=6)
     return save(fig, "F12_能力扩展层级")
 
 # ========== F13 社区资源生态 ==========
